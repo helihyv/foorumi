@@ -4,7 +4,7 @@ Tietokantasovellus -kurssin harjoitustyö.
 
 [Tietokantakaavio](dokumentaatio/Tietokantakaavio.png)
 
-##Kuvaus
+## Kuvaus
 
 Keskustelufoorumisovellus. Sovelluksella voi luoda yhteisön sisäiseen käyttöön tarkoitettuja foorumeita ja käyttää niitä. Foorumit ovat erillisiä toisistaan, käyttäjän on luotava erillinen käyttäjätunnus kuhunkin foorumiin, johon hän liittyy.
 
@@ -16,15 +16,16 @@ Kirjautuneilla Käyttäjillä on pääsy myös tilastonäkymään. Siinä näyte
 
 Foorumia luotaessa sille luodaan ylläpitäjä-tunnus. Foorumin ylläpitäjällä on oma näkymä, josta ylläpidetään foorumin käyttäjien tietoja, kuulumista eri ryhmiin, ja määritellään aiheita, joiden perusteella kirjoituksia voidaan merkitä ja hakea.
 
-###Toimintoja:
--Foorumin perustaminen
--Käyttäjän lisääminen foorumiin
--Kirjautuminen
--Viestien näyttäminen (oletusnäkymä, erilaiset haut)
--Viestin lisääminen (erillisenä ja vastauksena)
--Tilastonäkymän näyttäminen
--Käyttäjätietojen muokkaaminen
--Ryhmien lisääminen , muokkaus ja poistaminen,
--Ryhmäjäsenyyden lisääminen ja poistaminen
--Viestin poistaminen
--Aiheiden määrittely, muokkaus ja poisto
+### Toimintoja:
+
+- Foorumin perustaminen
+- Käyttäjän lisääminen foorumiin
+- Kirjautuminen
+- Viestien näyttäminen (oletusnäkymä, erilaiset haut)
+- Viestin lisääminen (erillisenä ja vastauksena)
+- Tilastonäkymän näyttäminen
+- Käyttäjätietojen muokkaaminen
+- Ryhmien lisääminen , muokkaus ja poistaminen,
+- Ryhmäjäsenyyden lisääminen ja poistaminen
+- Viestin poistaminen
+- Aiheiden määrittely, muokkaus ja poisto
