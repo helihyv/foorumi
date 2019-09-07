@@ -1,0 +1,7 @@
+{% extends "layout.html" %} {% block body %}
+<form method="POST" action="{{ url_for('viestit_luo') }}">
+  <input type="text" name="otsikko" />
+  <input type="text" name="teksti" />
+  <input type="submit" value="Lisää viesti" />
+</form>
+{% endblock %}
