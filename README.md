@@ -6,14 +6,14 @@ Tietokantasovellus -kurssin harjoitustyö.
 
 ## Kuvaus
 
-Keskustelufoorumisovellus. Sovelluksella voi luoda yhteisön sisäiseen käyttöön tarkoitettuja foorumeita ja käyttää niitä. Foorumit ovat erillisiä toisistaan, käyttäjän on luotava erillinen käyttäjätunnus kuhunkin foorumiin, johon hän liittyy.
+Keskustelufoorumisovellus yhteisön sisäiseen käyttöön.
 
-Käyttäjä voi lukea fooruminsa kirjoituksia (viestejä) ja lisätä uusia kirjoituksia, jotka voivat olla myös vastauksia aiempiin viesteihin. Kirjoituksia voi hakea kirjoittajan nimen tai kirjoituksen aiheen tai iän perusteella. Lukija voi myös seurata viestiketjuja.
+Käyttäjä voi lukea fooruminsa kirjoituksia (viestejä) ja lisätä uusia kirjoituksia, jotka voivat olla myös vastauksia aiempiin viesteihin. Kirjoituksia voi hakea kirjoittajan nimen tai ryhmän tai kirjoituksen aiheen tai iän perusteella. Lukija voi myös seurata viestiketjuja.
 
 Käyttäjän tulee olla kirjautunut sovellukseen nähdäkseen viestit tai lisätäkseen niitä. Oletusarvoisesti lukijalle näytetään tuoreimmat kirjoitukset. Käyttäjä näkee onko lukenut viestin, ja ovatko kaikki muut foorumin käyttäjät lukeneet viestin. Tieto siitä,ketkä ovat lukeneet viestin, on nähtävissä kaikille kirjautuneille käyttäjille.
 
 Kirjautuneilla Käyttäjillä on pääsy myös tilastonäkymään. Siinä näytetään, miten kirjoitukset jakautuvat eri aiheiden kesken, miten eri ryhmien jäsenten kirjoitukset jakautvat aiheittain, sekä aktiivisimmin kirjoittavat käyttäjät ja ryhmät.
 
-Foorumia luotaessa sille luodaan ylläpitäjä-tunnus. Foorumin ylläpitäjällä on oma näkymä, josta ylläpidetään foorumin käyttäjien tietoja, kuulumista eri ryhmiin, ja määritellään aiheita, joiden perusteella kirjoituksia voidaan merkitä ja hakea.
+Sovellusta käyttöönotettaessa sille luodaan ylläpitäjä-tunnus. Foorumin ylläpitäjällä on oma näkymä, josta ylläpidetään foorumin ryhmiä ja käyttäjien kuulumista niihin, sekä määritellään aiheita, joiden perusteella kirjoituksia voidaan merkitä ja hakea. Foorumin ylläpitäjä voi myös poistaa tai muokata asiattomia viestejä.
 
 [User Stories](dokumentaatio/UserStories.md)
