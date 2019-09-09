@@ -11,7 +11,7 @@ db = SQLAlchemy(app)
 
 from application import views
 
-from application.forum import models
-from application.forum import views
+from application.viestit import models
+from application.viestit import views
 
 db.create_all()
