@@ -14,4 +14,7 @@ from application import views
 from application.viestit import models
 from application.viestit import views
 
+from application.aiheet import models
+from application.aiheet import views
+
 db.create_all()

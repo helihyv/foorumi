@@ -1,0 +1,30 @@
+{% extends "layout.html" %} {% block body %}
+<h1>Viestien aihetunnisteet</h1>
+<h2>Lisää uusi aihetunniste</h2>
+<form method="POST" , action="{{ url_for('aiheet_luo') }}">
+  Aihetunniste:
+  <input type="text" name="aihe" />
+  <input type="submit" value="Lisää" />
+</form>
+
+<h2>Aiheet</h2>
+<table>
+  {% for aihe in aiheet %}
+  <tr>
+    <td>
+      {{ aihe.aihe }}
+    </td>
+    <td>
+      <form
+        method="POST"
+        action="{{ url_for('aiheet_muokkaa', aihe_id=aihe.id) }}"
+      >
+        <input type="text" name="aihe" value="{{ aihe.aihe }}" />
+        <input type="submit" value="Muuta" />
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}
