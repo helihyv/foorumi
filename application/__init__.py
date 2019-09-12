@@ -17,6 +17,9 @@ from application.viestit import views
 from application.aiheet import models
 from application.aiheet import views
 
+from application.ryhmat import models
+from application.ryhmat import views
+
 from application.tilastot import views
 
 db.create_all()
