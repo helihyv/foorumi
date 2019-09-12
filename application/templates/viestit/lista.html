@@ -4,4 +4,9 @@
 <h2>{{ viesti.otsikko }}</h2>
 <p>{{ viesti.teksti }}</p>
 <p>{{ viesti.kirjoitusaika }}</p>
+<ul>
+  {% for aihe in viesti.aiheet %}
+  <li>{{ aihe.aihe }}</li>
+  {% endfor %}
+</ul>
 {% endfor %} {% endblock %}
