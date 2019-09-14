@@ -1,3 +1,38 @@
 {% extends "layout.html" %} {% block body %}
 <h1>Käyttäjäryhmät</h1>
+<h2>Luo uusi ryhmä</h2>
+<form method="POST" action="{{ url_for('ryhmat_luo') }}">
+  <table>
+    <tr>
+      <td>
+        {{ form.nimi.label }}
+      </td>
+      <td>
+        {{ form.nimi }}
+      </td>
+      <td>
+        <ul>
+          {% for error in form.nimi.errors %}
+          <li>
+            {{ error }}
+          </li>
+          {% endfor %}
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input type="submit" value="Lisää ryhmä" />
+      </td>
+    </tr>
+  </table>
+</form>
+<ul>
+  <h2>Ryhmät</h2>
+  {% for ryhma in ryhmat %}
+  <li>
+    <a href="{{ url_for('ryhma', ryhma_id=ryhma.id) }}"> {{ ryhma.nimi }}</a>
+  </li>
+  {% endfor %}
+</ul>
 {% endblock %}

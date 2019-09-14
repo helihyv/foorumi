@@ -1,0 +1,29 @@
+{% extends "layout.html" %} {% block body %}
+<h1>{{ ryhma.nimi }}</h1>
+<h2>Lisää jäseniä</h2>
+<form method="POST" action="{{ url_for('lisaa_jasenia', ryhma_id=ryhma.id) }}">
+  <table>
+    <tr>
+      <td>
+        {{ form.jasenet.label }}
+      </td>
+      <td>
+        {{ form.jasenet }}
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input type="submit" label="Lisää jäseniksi" />
+      </td>
+    </tr>
+  </table>
+</form>
+<h2>Jäsenet</h2>
+<ul>
+  {% for jasen in ryhma.jasenet %}
+  <li>
+    {{ jasen.nimi }}
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
