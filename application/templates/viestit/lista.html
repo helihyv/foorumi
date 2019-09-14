@@ -4,9 +4,19 @@
 <h2>{{ viesti.otsikko }}</h2>
 <p>{{ viesti.teksti }}</p>
 <p>{{ viesti.kirjoitusaika }}</p>
+<p>Aihetunnisteet:</p>
 <ul>
-  {% for aihe in viesti.aiheet %}
+  {% if aihe is iterable %} {% for aihe in viesti.aiheet %}
   <li>{{ aihe.aihe }}</li>
+  {% endfor %} {% endif %}
+</ul>
+<form method="GET" action="{{url_for('viestit_vastaa', viesti_id=viesti.id)}}">
+  <input type="submit" value="Vastaa" />
+</form>
+<p>Vastaukset:</p>
+<ul>
+  {% for vastaus in viesti.vastaukset %}
+  <li>{{ vastaus.otsikko }} {{ vastaus.kirjoitusaika }}</li>
   {% endfor %}
 </ul>
 {% endfor %} {% endblock %}
