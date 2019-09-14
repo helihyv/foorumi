@@ -8,3 +8,4 @@ class AiheLomake(FlaskForm):
     class Meta:
         csrf = False
 
+

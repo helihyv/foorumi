@@ -1,6 +1,6 @@
 {% extends "layout.html" %} {% block body %}
 <h1>Aihe {{ aihe.aihe }}</h1>
-<p>Muokkaa aihetta</p>
+<h2>Muokkaa aihetta</h2>
 <form method="POST" , action="{{ url_for('aiheet_muokkaa', aihe_id=aihe.id) }}">
   <table>
     <tr>
@@ -26,5 +26,10 @@
       </td>
     </tr>
   </table>
+</form>
+
+<h2>Poista aihe</h2>
+<form method="POST" action="{{ url_for('aiheet_poista', aihe_id=aihe.id)}}">
+  <input type="submit" value="Poista" />
 </form>
 {% endblock %}

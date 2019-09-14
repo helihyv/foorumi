@@ -15,7 +15,7 @@ def aiheet_luo():
 
     aihe = Aihe(form.aihe.data)
     db.session.add(aihe)
-    db.session().commit()
+    db.session.commit()
 
     return redirect(url_for("aiheet"))
 
@@ -34,3 +34,12 @@ def aihe(aihe_id):
     form = AiheLomake()
     form.aihe.data = aihe.aihe
     return render_template("aiheet/aihe.html", aihe = aihe, form = form)
+
+@app.route("/aiheet/<aihe_id>/poista", methods=["POST"])
+def aiheet_poista(aihe_id):
+    aihe = Aihe.query.get_or_404(aihe_id)
+
+    db.session.delete(aihe)
+    db.session.commit()
+
+    return redirect(url_for("aiheet"))
