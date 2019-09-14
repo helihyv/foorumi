@@ -4,7 +4,7 @@ from application import bcrypt
 class Kayttaja(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nimi = db.Column(db.String(100), nullable=False)
-    tunnus = db.Column(db.String(40), nullable=False)
+    tunnus = db.Column(db.String(40), unique=True, nullable=False)
     salasanaHash = db.Column(db.String(200), nullable=False)
     admin = db.Column(db.Boolean, nullable=False)
 
