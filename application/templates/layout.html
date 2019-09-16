@@ -1,23 +1,48 @@
 {% extends "bootstrap/base.html" %} {% block title %}Foorumi{% endblock %} {%
 block navbar %}
-<ul>
-  <li>
-    <a href="/viestit">Viestit</a>
-  </li>
-  <li>
-    <a href="/viestit/uusi">Lisää viesti</a>
-  </li>
-  <li>
-    <a href="/tilastot">Tilastot</a>
-  </li>
-  <li>
-    <a href="/aiheet">Aiheet</a>
-  </li>
-  <li>
-    <a href="/ryhmat">Ryhmät</a>
-  </li>
-  <li>
-    <a href="/kayttajat/uusi">Lisää käyttäjä</a>
-  </li>
-</ul>
+
+<nav class="navbar navbar-default" role="navigation">
+  <div class="navbar-header">
+    <button
+      class="navbar-toggle"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navBarNavAltMarkup2"
+    >
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">Foorumi</a>
+  </div>
+
+  <div class="collapse navbar-collapse" id="navBarNavAltMarkup2">
+    <ul class="nav navbar-nav">
+      <li>
+        <a class="nav-item navbar-link" href="/viestit">Viestit</a>
+      </li>
+      <li>
+        <a class="nav-item navbar-link" href="/viestit/uusi">Lisää viesti</a>
+      </li>
+      <li>
+        <a class="nav-item navbar-link" href="/tilastot">Tilastot</a>
+      </li>
+      <li>
+        <a class="nav-item navbar-link" href="/aiheet">Aiheet</a>
+      </li>
+
+      <li>
+        <a class="nav-item navbar-link" href="/ryhmat">Ryhmät</a>
+      </li>
+      <li>
+        <a class="nav-item navbar-link" href="/kayttajat/uusi"
+          >Lisää käyttäjä</a
+        >
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<p><span class="navbar-toggler-icon"></span></p>
 {% endblock %}
