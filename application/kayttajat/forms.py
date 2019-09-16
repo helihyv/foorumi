@@ -8,3 +8,10 @@ class KayttajaLomake(FlaskForm):
 
     class Meta:
         csrf = False
+
+class KirjautumisLomake(FlaskForm):
+    tunnus = StringField("Käyttäjätunnus")
+    salasana = PasswordField("Salasana")
+
+    class Meta:
+        csrf = False

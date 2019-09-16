@@ -6,6 +6,9 @@
   </head>
 
   <body>
+    {% if current_user.is_authenticated %}
+    <p>Tervetuloa {{ current_user.nimi }}!</p>
+    {% endif %}
     <ul>
       <li>
         <a href="/viestit">Viestit</a>
