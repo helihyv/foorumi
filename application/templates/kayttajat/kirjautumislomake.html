@@ -4,6 +4,9 @@
 
 <form method="POST" action="{{ url_for('login') }}">
   <table>
+    {{
+      form.seuraava_sivu
+    }}
     <tr>
       <td>
         {{ form.tunnus.label }}

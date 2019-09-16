@@ -18,7 +18,16 @@ def kayttajat_luo():
 
 @app.route("/login", methods = ["GET"])
 def login_lomake():
-    return render_template("kayttajat/kirjautumislomake.html", form = KirjautumisLomake())
+     print("********PARAMETRIT*******")
+     print(request.args)
+     print(request.args.get("next"))
+  
+
+     form = KirjautumisLomake()
+     form.seuraava_sivu.data = request.args.get("next", default="/viestit")
+
+     print (form.seuraava_sivu.data)
+     return render_template("kayttajat/kirjautumislomake.html", form = form)
 
 
 @app.route("/login", methods= ["POST"])
@@ -32,7 +41,14 @@ def login():
 
     login_user(kayttaja)
 
-    return redirect(url_for("viestit_index"))
+    print("****SEURAAVA SIVU*****")
+    print (form.seuraava_sivu.data)
+
+    seuraava_sivu = form.seuraava_sivu.data
+    if not seuraava_sivu:
+          seuraava_sivu = "/viestit"
+
+    return redirect(seuraava_sivu)
 
 @app.route("/logout")
 def logout():
