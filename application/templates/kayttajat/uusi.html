@@ -1,4 +1,4 @@
-{% extends "layout.html" %} {% block body %}
+{% extends "layout.html" %} {% block content %}
 
 <h1>Luo uusi käyttäjä</h1>
 <form method="POST" action="{{ url_for('kayttajat_luo') }}">
@@ -34,4 +34,5 @@
     </tr>
   </table>
 </form>
+
 {% endblock %}

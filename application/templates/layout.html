@@ -1,35 +1,23 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Foorumi</title>
-  </head>
-
-  <body>
-    <ul>
-      <li>
-        <a href="/viestit">Viestit</a>
-      </li>
-      <li>
-        <a href="/viestit/uusi">Lisää viesti</a>
-      </li>
-      <li>
-        <a href="/tilastot">Tilastot</a>
-      </li>
-      <li>
-        <a href="/aiheet">Aiheet</a>
-      </li>
-      <li>
-        <a href="/ryhmat">Ryhmät</a>
-      </li>
-      <li>
-        <a href="/kayttajat/uusi">Lisää käyttäjä</a>
-      </li>
-    </ul>
-    {% block body %}
-    <p>
-      Content.
-    </p>
-    {% endblock %}
-  </body>
-</html>
+{% extends "bootstrap/base.html" %} {% block title %}Foorumi{% endblock %} {%
+block navbar %}
+<ul>
+  <li>
+    <a href="/viestit">Viestit</a>
+  </li>
+  <li>
+    <a href="/viestit/uusi">Lisää viesti</a>
+  </li>
+  <li>
+    <a href="/tilastot">Tilastot</a>
+  </li>
+  <li>
+    <a href="/aiheet">Aiheet</a>
+  </li>
+  <li>
+    <a href="/ryhmat">Ryhmät</a>
+  </li>
+  <li>
+    <a href="/kayttajat/uusi">Lisää käyttäjä</a>
+  </li>
+</ul>
+{% endblock %}

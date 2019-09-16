@@ -1,5 +1,4 @@
 from flask import Flask
-from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 
@@ -11,7 +10,13 @@ app.config["SQLALCHEMY_ECHO"] = True
 
 db = SQLAlchemy(app)
 
+from flask_bcrypt import Bcrypt
+
 bcrypt = Bcrypt(app)
+
+from flask_bootstrap import Bootstrap 
+
+Bootstrap(app)
 
 from application import views
 
