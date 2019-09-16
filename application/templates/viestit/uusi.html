@@ -1,36 +1,7 @@
-{% extends "layout.html" %} {% block content %}
+{% extends "layout.html" %} {% import "bootstrap/wtf.html" as wtf %} {% block
+content %}
 <h1>Lisää viesti</h1>
-<form method="POST" action="{{ url_for('viestit_luo') }}">
-  <table>
-    <tr>
-      <td>
-        {{ form.otsikko.label }}
-      </td>
-      <td>
-        {{ form.otsikko }}
-      </td>
-    </tr>
-    <tr>
-      <td>
-        {{ form.teksti.label }}
-      </td>
-      <td>
-        {{ form.teksti }}
-      </td>
-    </tr>
-    <tr>
-      <td>
-        {{ form.aiheet.label }}
-      </td>
-      <td>
-        {{ form.aiheet }}
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2">
-        <input type="submit" value="Lisää viesti" />
-      </td>
-    </tr>
-  </table>
-</form>
+
+{{ wtf.quick_form(form, action=url_for('viestit_luo'), button_map={"nappi" : "success"}) }}
+
 {% endblock %}
