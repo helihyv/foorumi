@@ -7,6 +7,7 @@ class Kayttaja(db.Model):
     tunnus = db.Column(db.String(40), nullable=False)
     salasanaHash = db.Column(db.String(200), nullable=False)
     admin = db.Column(db.Boolean, nullable=False)
+    kirjoitetut_viestit = db.relationship('Viesti', backref='kirjoittaja', lazy=True)
 
     def __init__(self, nimi, tunnus, salasana, admin):
         self.nimi = nimi

@@ -3,6 +3,7 @@
 {% for viesti in viestit %}
 <h2>{{ viesti.otsikko }}</h2>
 <p>{{ viesti.teksti }}</p>
+<p>Kirjoittanut {{ viesti.kirjoittaja.nimi }}</p>
 <p>{{ viesti.kirjoitusaika }}</p>
 <ul>
   {% for aihe in viesti.aiheet %}

@@ -5,11 +5,11 @@ class Viesti(db.Model):
     kirjoitusaika = db.Column(db.DateTime, default=db.func.current_timestamp(), nullable=False)
     otsikko = db.Column(db.String(100), nullable=False)
     teksti = db.Column(db.String(1000), nullable=False)
-   # vastattuviesti = db.Column(db.Integer, db.ForeignKey("Viesti.id"))
-   # vastaukset = db.relationship("Viesti", backref="Viesti", lazy="True")
+    kirjoittaja_id = db.Column(db.Integer, db.ForeignKey('kayttaja.id'), nullable=False)
 
-    def __init__(self, otsikko, teksti, aiheet):
+    def __init__(self, otsikko, teksti, aiheet, kirjoittanut_kayttaja_id):
         self.otsikko = otsikko
         self.teksti = teksti
         self.aiheet = aiheet
+        self.kirjoittaja_id = kirjoittanut_kayttaja_id
 
