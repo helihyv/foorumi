@@ -9,7 +9,14 @@ def kayttajat_lomake():
 
 @app.route("/kayttajat", methods=["POST"])
 def kayttajat_luo():
-    kayttaja = Kayttaja(request.form.get("nimi"), request.form.get("tunnus"), request.form.get("salasana"), False)
+
+    form = KayttajaLomake(request.form)
+    
+    if not form.validate():
+        return render_template("kayttajat/uusi.html", form = form)
+
+    kayttaja = Kayttaja(form.nimi.data, form.tunnus.data, form.salasana.data, False)
+
     db.session.add(kayttaja)
     db.session.commit()
 

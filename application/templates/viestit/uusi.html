@@ -1,6 +1,13 @@
 {% extends "layout.html" %} {% block body %}
 <h1>Lisää viesti</h1>
+
+{% if form.vastattava_viesti.data is string %}
+<p>Vastataan viestiin {{ form.vastattava_viesti.data }}</p>
+{% endif %}
+
 <form method="POST" action="{{ url_for('viestit_luo') }}">
+  {{ form.vastattava_viesti }}
+
   <table>
     <tr>
       <td>
@@ -9,6 +16,13 @@
       <td>
         {{ form.otsikko }}
       </td>
+      <td>
+        <ul>
+          {% for error in form.otsikko.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </td>
     </tr>
     <tr>
       <td>
@@ -16,6 +30,13 @@
       </td>
       <td>
         {{ form.teksti }}
+      </td>
+      <td>
+        <ul>
+          {% for error in form.teksti.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
       </td>
     </tr>
     <tr>
@@ -26,6 +47,13 @@
         {{ form.aiheet }}
       </td>
     </tr>
+    <td>
+      <ul>
+        {% for error in form.aiheet.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </td>
     <tr>
       <td colspan="2">
         <input type="submit" value="Lisää viesti" />
