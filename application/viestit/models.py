@@ -12,5 +12,6 @@ class Viesti(db.Model):
         self.otsikko = otsikko
         self.teksti = teksti
         self.aiheet = aiheet
-        self.vastattu_id = vastattu_id
+        if vastattu_id:
+            self.vastattu_id = vastattu_id
 
