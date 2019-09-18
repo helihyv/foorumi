@@ -1,58 +1,8 @@
-{% extends "layout.html" %} {% block body %}
+{% extends "layout.html" %} {% import "bootstrap/wtf.html" as wtf %} {% block
+content %}
 
 <h1>Luo uusi käyttäjä</h1>
-<form method="POST" action="{{ url_for('kayttajat_luo') }}">
-  <table>
-    <tr>
-      <td>
-        {{ form.nimi.label }}
-      </td>
-      <td>
-        {{ form.nimi }}
-      </td>
-      <td>
-        <ul>
-          {% for error in form.nimi.errors %}
-          <li>{{ error }}</li>
-          {% endfor %}
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        {{ form.tunnus.label }}
-      </td>
-      <td>
-        {{ form.tunnus }}
-      </td>
-      <td>
-        <ul>
-          {% for error in form.tunnus.errors %}
-          <li>{{ error }}</li>
-          {% endfor %}
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        {{ form.salasana.label }}
-      </td>
-      <td>
-        {{ form.salasana }}
-      </td>
-      <td>
-        <ul>
-          {% for error in form.salasana.errors %}
-          <li>{{ error }}</li>
-          {% endfor %}
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2">
-        <input type="submit" value="Luo käyttäjätunnus" />
-      </td>
-    </tr>
-  </table>
-</form>
+
+{{ wtf.quick_form(form, action=url_for('kayttajat_luo'), button_map={"nappi" : "success"}) }}
+
 {% endblock %}

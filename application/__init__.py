@@ -17,6 +17,10 @@ from os import urandom
 
 app.config["SECRET_KEY"] = urandom(32)
 
+from flask_bootstrap import Bootstrap 
+
+Bootstrap(app)
+
 from application import views
 
 from application.viestit import models

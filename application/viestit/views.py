@@ -35,10 +35,7 @@ def viestit_luo():
 
 
     if not form.validate():
-
-        print(form.aiheet.errors[0])
-
-        return render_template("viestit/uusi.html", form = form)
+         return render_template("viestit/uusi.html", form = form)
 
     aiheet = [Aihe.query.get(aihe_id) for aihe_id in form.aiheet.data]
 

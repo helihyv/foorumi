@@ -1,64 +1,11 @@
-{% extends "layout.html" %} {% block body %}
+{% extends "layout.html" %} {% import "bootstrap/wtf.html" as wtf %} {% block
+content %}
 <h1>Lisää viesti</h1>
-
 {% if form.vastattava_viesti.data is string %}
 <p>Vastataan viestiin {{ form.vastattava_viesti.data }}</p>
+
 {% endif %}
 
-<form method="POST" action="{{ url_for('viestit_luo') }}">
-  {{ form.vastattava_viesti }}
+{{ wtf.quick_form(form, action=url_for('viestit_luo'), button_map={"nappi" : "success"}) }}
 
-  <table>
-    <tr>
-      <td>
-        {{ form.otsikko.label }}
-      </td>
-      <td>
-        {{ form.otsikko }}
-      </td>
-      <td>
-        <ul>
-          {% for error in form.otsikko.errors %}
-          <li>{{ error }}</li>
-          {% endfor %}
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        {{ form.teksti.label }}
-      </td>
-      <td>
-        {{ form.teksti }}
-      </td>
-      <td>
-        <ul>
-          {% for error in form.teksti.errors %}
-          <li>{{ error }}</li>
-          {% endfor %}
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        {{ form.aiheet.label }}
-      </td>
-      <td>
-        {{ form.aiheet }}
-      </td>
-    </tr>
-    <td>
-      <ul>
-        {% for error in form.aiheet.errors %}
-        <li>{{ error }}</li>
-        {% endfor %}
-      </ul>
-    </td>
-    <tr>
-      <td colspan="2">
-        <input type="submit" value="Lisää viesti" />
-      </td>
-    </tr>
-  </table>
-</form>
 {% endblock %}
