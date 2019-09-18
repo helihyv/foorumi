@@ -28,6 +28,9 @@ def aiheet_muokkaa(aihe_id):
     aihe = Aihe.query.get_or_404(aihe_id)
     form = MuokkaaAihettaLomake(request.form)
 
+    if not form.validate():
+        return render_template("aiheet/aihe.html", aihe = aihe, form = form)
+
     aihe.aihe = form.aihe.data
     db.session.commit()
 
