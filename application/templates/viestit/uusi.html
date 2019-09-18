@@ -1,7 +1,7 @@
 {% extends "layout.html" %} {% import "bootstrap/wtf.html" as wtf %} {% block
 content %}
 <h1>Lisää viesti</h1>
-{% if not form.vastattava_viesti.data == "NULL" %}
+{% if form.vastattava_viesti.data is string %}
 <p>Vastataan viestiin {{ form.vastattava_viesti.data }}</p>
 
 {% endif %}

@@ -12,8 +12,7 @@ def viestit_lomake():
     form = ViestiLomake()
 
     form.aiheet.choices = [(aihe.id, aihe.aihe) for aihe in Aihe.query.all()]
-    form.vastattava_viesti.data = "NULL"
-  
+    form.vastattava_viesti.data = None
     return render_template("viestit/uusi.html", form = form)
 
 @app.route("/viestit/uusi/<viesti_id>")
@@ -39,7 +38,8 @@ def viestit_luo():
          return render_template("viestit/uusi.html", form = form)
 
     aiheet = [Aihe.query.get(aihe_id) for aihe_id in form.aiheet.data]
-    
+
+
     viesti = Viesti(form.otsikko.data, form.teksti.data, aiheet, form.vastattava_viesti.data)
     db.session().add(viesti)
     db.session().commit()
