@@ -48,4 +48,11 @@ def lisaa_jasenia(ryhma_id):
     
     return redirect(url_for("ryhma", ryhma_id=ryhma_id))
 
+@app.route("/ryhmat<ryhma_id>/poista", methods=["POST"])
+def ryhmat_poista(ryhma_id):
+    ryhma = Ryhma.query.get_or_404(ryhma_id)
 
+    db.session.delete(ryhma)
+    db.session.commit()
+
+    return redirect(url_for("ryhmat"))
