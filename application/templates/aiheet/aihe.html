@@ -6,6 +6,6 @@
 
 <h2>Poista aihe</h2>
 <form method="POST" action="{{ url_for('aiheet_poista', aihe_id=aihe.id)}}">
-  <input type="submit" value="Poista" />
+  <input class="btn btn-danger" type="submit" value="Poista" />
 </form>
 {% endblock %}

@@ -11,7 +11,7 @@
   {% endfor %} {% endif %}
 </ul>
 <form method="GET" action="{{url_for('viestit_vastaa', viesti_id=viesti.id)}}">
-  <input type="submit" value="Vastaa" />
+  <input class="btn btn-primary" type="submit" value="Vastaa" />
 </form>
 <p>Vastaukset:</p>
 <ul>
