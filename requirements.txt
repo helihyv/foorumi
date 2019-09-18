@@ -5,8 +5,8 @@ Click==7.0
 dominate==2.4.0
 Flask==1.1.1
 Flask-Bcrypt==0.7.1
-Flask-Login==0.4.1
 Flask-Bootstrap==3.3.7.1
+Flask-Login==0.4.1
 Flask-SQLAlchemy==2.4.0
 Flask-WTF==0.14.2
 gunicorn==19.9.0
@@ -16,6 +16,7 @@ Jinja2==2.10.1
 lazy-object-proxy==1.4.2
 MarkupSafe==1.1.1
 mccabe==0.6.1
+psycopg2==2.8.3
 pycparser==2.19
 pylint==2.3.1
 six==1.12.0

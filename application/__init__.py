@@ -4,8 +4,12 @@ app = Flask(__name__)
 
 from flask_sqlalchemy import SQLAlchemy
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///forum.db"
+import os
 
+if os.environ.get("HEROKU"):
+    app.config["SQLALCHEMY_DATABASE_URI"] = OS.ENVIRON.GET("DATABASE_URL")
+else:
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///forum.db"
 app.config["SQLALCHEMY_ECHO"] = True
 
 db = SQLAlchemy(app)
@@ -49,4 +53,7 @@ from application.kayttajat.models import Kayttaja
 def load_user(kayttaja_id):
     return Kayttaja.query.get(kayttaja_id)
 
+try:
 db.create_all()
+except:
+    pass
