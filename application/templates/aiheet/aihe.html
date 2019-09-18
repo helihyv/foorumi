@@ -1,4 +1,4 @@
-{% extends "layout.html" %} {% block body %}
+{% extends "layout.html" %} {% block content %}
 <h1>Aihe {{ aihe.aihe }}</h1>
 <h2>Muokkaa aihetta</h2>
 <form method="POST" , action="{{ url_for('aiheet_muokkaa', aihe_id=aihe.id) }}">

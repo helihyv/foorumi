@@ -1,4 +1,4 @@
-{% extends "layout.html" %} {% block body %}
+{% extends "layout.html" %} {% block content %}
 <h1>{{ ryhma.nimi }}</h1>
 <h2>Lisää jäseniä</h2>
 <form method="POST" action="{{ url_for('lisaa_jasenia', ryhma_id=ryhma.id) }}">
