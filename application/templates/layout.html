@@ -6,6 +6,9 @@
   </head>
 
   <body>
+    {% if current_user.is_authenticated %}
+    <p>Tervetuloa {{ current_user.nimi }}!</p>
+    {% endif %}
     <ul>
       <li>
         <a href="/viestit">Viestit</a>
@@ -25,6 +28,11 @@
       <li>
         <a href="/kayttajat/uusi">Lisää käyttäjä</a>
       </li>
+      {% if current_user.is_authenticated %}
+      <li>
+        <a href="{{ url_for('logout') }}">Kirjaudu ulos</a>
+      </li>
+      {% endif %}
     </ul>
     {% block body %}
     <p>

@@ -1,10 +1,12 @@
 from application import app, db
 from flask import render_template, redirect, request, url_for
+from flask_login import login_required
 from application.viestit.models import Viesti
 from application.viestit.forms import ViestiLomake
 from application.aiheet.models import Aihe
 
 @app.route("/viestit/uusi")
+@login_required
 def viestit_lomake():
 
     form = ViestiLomake()
@@ -21,6 +23,7 @@ def viestit_vastaa(viesti_id):
     return render_template("viestit/uusi.html", form = form)
 
 @app.route("/viestit/", methods=["POST"])
+@login_required
 def viestit_luo():
     form = ViestiLomake(request.form)
 
@@ -48,6 +51,7 @@ def viestit_luo():
     return redirect(url_for("viestit_index"))
 
 @app.route("/viestit", methods=["GET"])
+@login_required
 def viestit_index():
     return render_template("viestit/lista.html", viestit = Viesti.query.all())
     

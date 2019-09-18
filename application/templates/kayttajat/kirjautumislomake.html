@@ -1,0 +1,36 @@
+{% extends "layout.html" %} {% block body %}
+
+{{ error }}
+
+<form method="POST" action="{{ url_for('login') }}">
+  <table>
+    {{
+      form.seuraava_sivu
+    }}
+    <tr>
+      <td>
+        {{ form.tunnus.label }}
+      </td>
+      <td>
+        {{ form.tunnus }}
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        {{ form.salasana.label }}
+      </td>
+
+      <td>
+        {{ form.salasana }}
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input type="submit" value="Kirjaudu" />
+      </td>
+    </tr>
+  </table>
+</form>
+
+{% endblock %}

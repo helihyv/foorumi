@@ -1,13 +1,16 @@
 from application import app, db
 from flask import render_template, request, redirect, url_for
+from flask_login import login_required
 from application.aiheet.models import Aihe
 from application.aiheet.forms import AiheLomake
 
 @app.route("/aiheet",methods=["GET"])
+@login_required
 def aiheet():
     return render_template("aiheet/aiheet.html", aiheet= Aihe.query.all(), form=AiheLomake())
 
 @app.route("/aiheet", methods=["POST"])
+@login_required
 def aiheet_luo():
     form = AiheLomake(request.form)
     if not form.validate():
@@ -20,6 +23,7 @@ def aiheet_luo():
     return redirect(url_for("aiheet"))
 
 @app.route("/aiheet/<aihe_id>/", methods=["POST"])
+@login_required
 def aiheet_muokkaa(aihe_id):
     aihe = Aihe.query.get_or_404(aihe_id)
     aihe.aihe = request.form.get("aihe")

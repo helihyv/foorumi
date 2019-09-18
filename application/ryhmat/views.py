@@ -3,8 +3,10 @@ from flask import render_template, request, redirect, url_for
 from application.ryhmat.models import Ryhma
 from application.ryhmat.forms import RyhmaLomake, LisaaJasenLomake
 from application.kayttajat.models import Kayttaja
+from flask_login import login_required
 
 @app.route("/ryhmat", methods=["GET"])
+@login_required
 def ryhmat():
     return render_template("ryhmat/ryhmat.html", ryhmat = Ryhma.query.all(), form = RyhmaLomake())
 

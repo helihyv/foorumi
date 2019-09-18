@@ -13,3 +13,15 @@ class Kayttaja(db.Model):
         self.tunnus = tunnus
         self.salasanaHash = bcrypt.generate_password_hash(salasana).decode("utf-8")
         self.admin = admin
+
+    def get_id(self):
+        return self.id
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def is_authenticated(self):
+        return True
