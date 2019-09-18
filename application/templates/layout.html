@@ -1,9 +1,8 @@
-{% extends "bootstrap/base.html" %} {% block title %}Foorumi{% endblock %} {%
-block navbar %}
-
-    {% if current_user.is_authenticated %}
-    <p>Tervetuloa {{ current_user.nimi }}!</p>
-    {% endif %}
+{% extends "bootstrap/base.html" %} {% import "bootstrap/wtf.html" as wtf %} {%
+block title %}Foorumi{% endblock %} {% block navbar %} {% if
+current_user.is_authenticated %}
+<p>Tervetuloa {{ current_user.nimi }}!</p>
+{% endif %}
 <nav class="navbar navbar-default" role="navigation">
   <div class="navbar-header">
     <button
@@ -11,14 +10,14 @@ block navbar %}
       type="button"
       data-toggle="collapse"
       data-target="#navBarNavAltMarkup2"
-      <span class="sr-only">Toggle navigation</span>
     >
+      <span class="sr-only">Toggle navigation</span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
   </div>
-    <a class="navbar-brand" href="#">Foorumi</a>
+  <a class="navbar-brand" href="#">Foorumi</a>
 
   <div class="collapse navbar-collapse" id="navBarNavAltMarkup2">
     <ul class="nav navbar-nav">
