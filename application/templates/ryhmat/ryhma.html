@@ -5,9 +5,9 @@
 {{ wtf.quick_form(form, action=url_for('lisaa_jasenia', ryhma_id=ryhma.id), button_map={"nappi" : "success"}) }}
 
 <h2>Jäsenet</h2>
-<ul>
+<ul class="list-group">
   {% for jasen in ryhma.jasenet %}
-  <li>
+  <li class="list-group-item">
     {{ jasen.nimi }}
   </li>
   {% endfor %}

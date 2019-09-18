@@ -1,22 +1,32 @@
 {% extends "layout.html" %} {% block content %}
 <h1>Viestit</h1>
-{% for viesti in viestit %}
-<h2>{{ viesti.otsikko }}</h2>
-<p>{{ viesti.teksti }}</p>
-<p>{{ viesti.kirjoitusaika }}</p>
-<p>Aihetunnisteet:</p>
-<ul>
-  {% if aihe is iterable %} {% for aihe in viesti.aiheet %}
-  <li>{{ aihe.aihe }}</li>
-  {% endfor %} {% endif %}
-</ul>
-<form method="GET" action="{{url_for('viestit_vastaa', viesti_id=viesti.id)}}">
-  <input class="btn btn-primary" type="submit" value="Vastaa" />
-</form>
-<p>Vastaukset:</p>
-<ul>
-  {% for vastaus in viesti.vastaukset %}
-  <li>{{ vastaus.otsikko }} {{ vastaus.kirjoitusaika }}</li>
+<ul class="list-group">
+  {% for viesti in viestit %}
+  <li class="list-group-item">
+    <h2>{{ viesti.otsikko }}</h2>
+    <p>{{ viesti.teksti }}</p>
+    <p>{{ viesti.kirjoitusaika }}</p>
+    <p>Aihetunnisteet:</p>
+    <ul class="list-group">
+      {% if aihe is iterable %} {% for aihe in viesti.aiheet %}
+      <li class="list-group-item">{{ aihe.aihe }}</li>
+      {% endfor %} {% endif %}
+    </ul>
+    <form
+      method="GET"
+      action="{{url_for('viestit_vastaa', viesti_id=viesti.id)}}"
+    >
+      <input class="btn btn-primary" type="submit" value="Vastaa" />
+    </form>
+    <p>Vastaukset:</p>
+    <ul class="list-group">
+      {% for vastaus in viesti.vastaukset %}
+      <li class="list-group-item">
+        {{ vastaus.otsikko }} {{ vastaus.kirjoitusaika }}
+      </li>
+      {% endfor %}
+    </ul>
+  </li>
   {% endfor %}
 </ul>
-{% endfor %} {% endblock %}
+{% endblock %}

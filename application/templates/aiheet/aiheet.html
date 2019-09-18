@@ -5,13 +5,11 @@
 {{ wtf.quick_form(form, action=url_for('aiheet_luo'), button_map={"nappi" : "success"}) }}
 
 <h2>Aiheet</h2>
-<table>
+<ul class="list-group">
   {% for aihe in aiheet %}
-  <tr>
-    <td>
+  <li class="list-group-item">
       <a href="/aiheet/{{ aihe.id }}">{{ aihe.aihe }}</a>
-    </td>
-  </tr>
+  </li>
   {% endfor %}
 </table>
 
