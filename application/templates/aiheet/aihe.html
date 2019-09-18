@@ -1,32 +1,8 @@
 {% extends "layout.html" %} {% block content %}
 <h1>Aihe {{ aihe.aihe }}</h1>
 <h2>Muokkaa aihetta</h2>
-<form method="POST" , action="{{ url_for('aiheet_muokkaa', aihe_id=aihe.id) }}">
-  <table>
-    <tr>
-      <td>
-        {{ form.aihe.label }}
-      </td>
-      <td>
-        {{ form.aihe }}
-      </td>
-      <td>
-        <ul>
-          {% for error in form.aihe.errors %}
-          <li>
-            {{ error }}
-          </li>
-          {% endfor %}
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2">
-        <input type="submit" value="Muokkaa" />
-      </td>
-    </tr>
-  </table>
-</form>
+
+{{ wtf.quick_form(form, action=url_for('aiheet_muokkaa', aihe_id=aihe.id), button_map={"nappi" : "success"}) }}
 
 <h2>Poista aihe</h2>
 <form method="POST" action="{{ url_for('aiheet_poista', aihe_id=aihe.id)}}">

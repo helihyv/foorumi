@@ -2,17 +2,17 @@ from application import app, db
 from flask import render_template, request, redirect, url_for
 from flask_login import login_required
 from application.aiheet.models import Aihe
-from application.aiheet.forms import AiheLomake
+from application.aiheet.forms import LisaaAiheLomake, MuokkaaAihettaLomake
 
 @app.route("/aiheet",methods=["GET"])
 @login_required
 def aiheet():
-    return render_template("aiheet/aiheet.html", aiheet= Aihe.query.all(), form=AiheLomake())
+    return render_template("aiheet/aiheet.html", aiheet= Aihe.query.all(), form=LisaaAiheLomake())
 
 @app.route("/aiheet", methods=["POST"])
 @login_required
 def aiheet_luo():
-    form = AiheLomake(request.form)
+    form = LisaaAiheLomake(request.form)
     if not form.validate():
         return render_template("aiheet/aiheet.html", aiheet= Aihe.query.all(), form = form)
 
@@ -26,7 +26,9 @@ def aiheet_luo():
 @login_required
 def aiheet_muokkaa(aihe_id):
     aihe = Aihe.query.get_or_404(aihe_id)
-    aihe.aihe = request.form.get("aihe")
+    form = MuokkaaAihettaLomake(request.form)
+
+    aihe.aihe = form.aihe.data
     db.session.commit()
 
     return redirect(url_for("aiheet"))
@@ -35,7 +37,7 @@ def aiheet_muokkaa(aihe_id):
 def aihe(aihe_id):
     aihe = Aihe.query.get_or_404(aihe_id)
 
-    form = AiheLomake()
+    form = MuokkaaAihettaLomake()
     form.aihe.data = aihe.aihe
     return render_template("aiheet/aihe.html", aihe = aihe, form = form)
 
