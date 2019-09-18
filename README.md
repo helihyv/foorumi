@@ -4,6 +4,9 @@ Tietokantasovellus -kurssin harjoitustyö.
 
 [Sovellus toiminnassa herokussa](https://still-everglades-81805.herokuapp.com)
 
+Sovelluksessa on Herokussa valmiina testikäyttäjä tunnuksella otso ja salasanalla tsohaotso
+Lisää käyttäjiä voi itse luoda valikon linkistä "Lisää käyttäjä".
+
 [Tietokantakaavio](dokumentaatio/Tietokantakaavio.png)
 
 [User Stories](dokumentaatio/UserStories.md)
