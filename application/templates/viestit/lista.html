@@ -2,9 +2,10 @@
 <h1>Viestit</h1>
 <ul class="list-group">
   {% for viesti in viestit %}
-  <li class="list-group-item">
     <h2>{{ viesti.otsikko }}</h2>
+  <li class="list-group-item">
     <p>{{ viesti.teksti }}</p>
+<p>Kirjoittanut {{ viesti.kirjoittaja.nimi }}</p>
     <p>{{ viesti.kirjoitusaika }}</p>
     <p>Aihetunnisteet:</p>
     <ul class="list-group">
