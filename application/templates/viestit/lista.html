@@ -2,31 +2,54 @@
 <h1>Viestit</h1>
 <ul class="list-group">
   {% for viesti in viestit %}
-    <h2>{{ viesti.otsikko }}</h2>
   <li class="list-group-item">
-    <p>{{ viesti.teksti }}</p>
-<p>Kirjoittanut {{ viesti.kirjoittaja.nimi }}</p>
+    <h2>{{ viesti.otsikko }}</h2>
+
+    <p>Kirjoittanut {{ viesti.kirjoittaja.nimi }}</p>
     <p>{{ viesti.kirjoitusaika }}</p>
-    <p>Aihetunnisteet:</p>
-    <ul class="list-group">
-      {% if aihe is iterable %} {% for aihe in viesti.aiheet %}
-      <li class="list-group-item">{{ aihe.aihe }}</li>
-      {% endfor %} {% endif %}
-    </ul>
-    <form
-      method="GET"
-      action="{{url_for('viestit_vastaa', viesti_id=viesti.id)}}"
+
+    <div class="collapse" id="viestirunko{{ viesti.id }}">
+      <p>{{ viesti.teksti }}</p>
+      <p>Aihetunnisteet:</p>
+      <ul class="list-group">
+        {% if aihe is iterable %} {% for aihe in viesti.aiheet %}
+        <li class="list-group-item">{{ aihe.aihe }}</li>
+        {% endfor %} {% endif %}
+      </ul>
+      <form
+        method="GET"
+        action="{{url_for('viestit_vastaa', viesti_id=viesti.id)}}"
+      >
+        <input class="btn btn-primary" type="submit" value="Vastaa" />
+      </form>
+      <p>Vastaukset:</p>
+      <ul class="list-group">
+        {% for vastaus in viesti.vastaukset %}
+        <li class="list-group-item">
+          {{ vastaus.otsikko }} {{ vastaus.kirjoitusaika }}
+        </li>
+        {% endfor %}
+      </ul>
+      <p>Lukijat:</p>
+      <ul class="list-group">
+        {% for lukija in viesti.lukeneet %}
+        <li class="list-group-item">{{ lukija.nimi }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <button
+      class="btn btn-primary"
+      type="button"
+      data-toggle="collapse"
+      data-target="#viestirunko{{ viesti.id }}"
+      aria-expanded="raise"
+      aria-controls="viestirunko{{ viesti.id }}"
     >
-      <input class="btn btn-primary" type="submit" value="Vastaa" />
-    </form>
-    <p>Vastaukset:</p>
-    <ul class="list-group">
-      {% for vastaus in viesti.vastaukset %}
-      <li class="list-group-item">
-        {{ vastaus.otsikko }} {{ vastaus.kirjoitusaika }}
-      </li>
-      {% endfor %}
-    </ul>
+      Näytä koko viesti
+      <script>
+        Document.getElementById;
+      </script>
+    </button>
   </li>
   {% endfor %}
 </ul>
