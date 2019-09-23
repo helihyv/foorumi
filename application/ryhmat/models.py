@@ -21,8 +21,8 @@ class Ryhma(db.Model):
     @staticmethod
     def eniten_kirjoittaneet():
         kysely = text("SELECT ryhma.nimi, COUNT(viesti.kirjoittaja_id) AS viestilkm FROM ryhma"
-                      " LEFT JOIN KayttajaRyhma ON ryhma.id = KayttajaRyhma.ryhma_id"
-                      " LEFT JOIN viesti ON KayttajaRyhma.kayttaja_id = viesti.kirjoittaja_id"
+                      ' LEFT JOIN "KayttajaRyhma" ON ryhma.id = "KayttajaRyhma".ryhma_id'
+                      ' LEFT JOIN viesti ON "KayttajaRyhma".kayttaja_id = viesti.kirjoittaja_id'
                       " GROUP BY ryhma.id"
                       " ORDER BY viestilkm DESC"
                       " LIMIT 5")

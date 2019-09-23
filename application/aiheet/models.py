@@ -20,8 +20,8 @@ class Aihe(db.Model):
 
     @staticmethod
     def suosituimmat():
-        kysely = text("SELECT aihe.aihe, COUNT(ViestiAihe.viesti_id) AS viestilkm FROM aihe"
-                      " LEFT JOIN ViestiAihe ON aihe.id = ViestiAihe.aihe_id"
+        kysely = text('SELECT aihe.aihe, COUNT("ViestiAihe".viesti_id) AS viestilkm FROM aihe'
+                      ' LEFT JOIN "ViestiAihe" ON aihe.id = "ViestiAihe".aihe_id'
                       " GROUP BY aihe.id"
                       " ORDER BY viestilkm DESC"
                       " LIMIT 5")
@@ -37,12 +37,12 @@ class Aihe(db.Model):
 
     @staticmethod
     def ryhmien_aihe_jakaumat():
-        kysely = text("SELECT ryhma.nimi, aihe.aihe, COUNT(ViestiAihe.viesti_id) AS viestilkm FROM aihe"
-                      " JOIN ViestiAihe ON aihe.id = ViestiAihe.aihe_id"
-                      " JOIN viesti ON ViestiAihe.viesti_id = viesti.id"
+        kysely = text('SELECT ryhma.nimi, aihe.aihe, COUNT("ViestiAihe".viesti_id) AS viestilkm FROM aihe'
+                      ' JOIN "ViestiAihe" ON aihe.id = "ViestiAihe".aihe_id'
+                      ' JOIN viesti ON "ViestiAihe".viesti_id = viesti.id'
                       " JOIN kayttaja ON viesti.kirjoittaja_id = kayttaja.id"
-                      " JOIN KayttajaRyhma ON kayttaja.id = KayttajaRyhma.kayttaja_id"
-                      " JOIN ryhma ON KayttajaRyhma.ryhma_id = ryhma.id"
+                      ' JOIN "KayttajaRyhma" ON kayttaja.id = "KayttajaRyhma".kayttaja_id'
+                      ' JOIN ryhma ON "KayttajaRyhma".ryhma_id = ryhma.id'
                       " GROUP BY ryhma.id, aihe.aihe"
                       " ORDER BY ryhma.nimi ASC, viestilkm DESC"
                       )
