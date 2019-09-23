@@ -1,5 +1,6 @@
 from application import db
 from application import bcrypt
+from sqlalchemy.sql import text
 
 class Kayttaja(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -26,3 +27,20 @@ class Kayttaja(db.Model):
 
     def is_authenticated(self):
         return True
+
+    @staticmethod
+    def eniten_kirjoittaneet():
+        kysely = text("SELECT kayttaja.nimi, COUNT(viesti.kirjoittaja_id) FROM kayttaja"
+                        " LEFT JOIN viesti ON kayttaja.id = viesti.kirjoittaja_id"
+                        " GROUP BY kayttaja.id"
+                        " LIMIT 5")
+
+        vastaus = db.engine.execute(kysely)
+
+        eniten_kirjoittaneet = []
+        for rivi in vastaus:
+            eniten_kirjoittaneet.append({"nimi": rivi[0], "viestien_lkm": rivi[1]})
+            
+            print (rivi)
+
+        return eniten_kirjoittaneet
