@@ -1,7 +1,7 @@
 from application import db
 from sqlalchemy.sql import text
 
-viestiAihe = db.Table("ViestiAihe",
+viesti_aihe = db.Table("viestiaihe",
                       db.Column("viesti_id", db.Integer, db.ForeignKey(
                           "viesti.id"), primary_key=True),
                       db.Column("aihe_id", db.Integer, db.ForeignKey(
@@ -12,7 +12,7 @@ viestiAihe = db.Table("ViestiAihe",
 class Aihe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     aihe = db.Column(db.String(100), nullable=False)
-    viestit = db.relationship("Viesti", secondary=viestiAihe, lazy="subquery",
+    viestit = db.relationship("Viesti", secondary=viesti_aihe, lazy="subquery",
                               backref=db.backref("aiheet", lazy="subquery"))
 
     def __init__(self, aihe):
@@ -20,8 +20,8 @@ class Aihe(db.Model):
 
     @staticmethod
     def suosituimmat():
-        kysely = text('SELECT aihe.aihe, COUNT("ViestiAihe".viesti_id) AS viestilkm FROM aihe'
-                      ' LEFT JOIN "ViestiAihe" ON aihe.id = "ViestiAihe".aihe_id'
+        kysely = text("SELECT aihe.aihe, COUNT(viestiaihe.viesti_id) AS viestilkm FROM aihe"
+                      " LEFT JOIN viestiaihe ON aihe.id = viestiaihe.aihe_id"
                       " GROUP BY aihe.id"
                       " ORDER BY viestilkm DESC"
                       " LIMIT 5")
@@ -37,12 +37,12 @@ class Aihe(db.Model):
 
     @staticmethod
     def ryhmien_aihe_jakaumat():
-        kysely = text('SELECT ryhma.nimi, aihe.aihe, COUNT("ViestiAihe".viesti_id) AS viestilkm FROM aihe'
-                      ' JOIN "ViestiAihe" ON aihe.id = "ViestiAihe".aihe_id'
-                      ' JOIN viesti ON "ViestiAihe".viesti_id = viesti.id'
+        kysely = text("SELECT ryhma.nimi, aihe.aihe, COUNT(viestiaihe.viesti_id) AS viestilkm FROM aihe"
+                      " JOIN Viestiaihe ON aihe.id = Viestiaihe.aihe_id"
+                      " JOIN viesti ON viestiaihe.viesti_id = viesti.id"
                       " JOIN kayttaja ON viesti.kirjoittaja_id = kayttaja.id"
-                      ' JOIN "KayttajaRyhma" ON kayttaja.id = "KayttajaRyhma".kayttaja_id'
-                      ' JOIN ryhma ON "KayttajaRyhma".ryhma_id = ryhma.id'
+                      " JOIN kayttajaryhma ON kayttaja.id = kayttajaryhma.kayttaja_id"
+                      " JOIN ryhma ON kayttajaryhma.ryhma_id = ryhma.id"
                       " GROUP BY ryhma.id, aihe.aihe"
                       " ORDER BY ryhma.nimi ASC, viestilkm DESC"
                       )

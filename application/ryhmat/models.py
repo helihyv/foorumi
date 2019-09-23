@@ -1,7 +1,7 @@
 from application import db
 from sqlalchemy import text
 
-kayttajaRyhma = db.Table("KayttajaRyhma",
+kayttajaRyhma = db.Table("kayttajaryhma",
                          db.Column("kayttaja_id", db.Integer, db.ForeignKey(
                              "kayttaja.id"), primary_key=True),
                          db.Column("ryhma_id", db.Integer, db.ForeignKey(
@@ -21,8 +21,8 @@ class Ryhma(db.Model):
     @staticmethod
     def eniten_kirjoittaneet():
         kysely = text("SELECT ryhma.nimi, COUNT(viesti.kirjoittaja_id) AS viestilkm FROM ryhma"
-                      ' LEFT JOIN "KayttajaRyhma" ON ryhma.id = "KayttajaRyhma".ryhma_id'
-                      ' LEFT JOIN viesti ON "KayttajaRyhma".kayttaja_id = viesti.kirjoittaja_id'
+                      " LEFT JOIN kayttajaryhma ON ryhma.id = kayttajaryhma.ryhma_id"
+                      " LEFT JOIN viesti ON kayttajaryhma.kayttaja_id = viesti.kirjoittaja_id"
                       " GROUP BY ryhma.id"
                       " ORDER BY viestilkm DESC"
                       " LIMIT 5")
