@@ -25,10 +25,6 @@ def kayttajat_luo():
 
 @app.route("/login", methods = ["GET"])
 def login_lomake():
-     print("********PARAMETRIT*******")
-     print(request.args)
-     print(request.args.get("next"))
-  
 
      form = KirjautumisLomake()
      form.seuraava_sivu.data = request.args.get("next", default="/viestit")
@@ -47,9 +43,6 @@ def login():
          return render_template("kayttajat/kirjautumislomake.html", form = form, error = "Salasana tai käyttäjätunnus väärin")
 
     login_user(kayttaja)
-
-    print("****SEURAAVA SIVU*****")
-    print (form.seuraava_sivu.data)
 
     seuraava_sivu = form.seuraava_sivu.data
     if not seuraava_sivu:
