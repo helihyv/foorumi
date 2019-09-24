@@ -11,6 +11,8 @@
           >{{ viesti.kirjoittaja.nimi }}
           {{ viesti.kirjoitusaika.strftime("%d.%m. %Y %H:%M") }}
         </small>
+        {% if viesti.onko_lukenut(current_user) %} LUETTU {% else %} UUSI {%
+        endif %}
       </a>
     </h3>
   </li>

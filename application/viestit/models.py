@@ -25,3 +25,10 @@ class Viesti(db.Model):
         if vastattu_id:
             self.vastattu_id = vastattu_id
 
+    def onko_lukenut(self, kayttaja):
+        if kayttaja in self.lukeneet:
+            return True
+
+        return False
+
+
