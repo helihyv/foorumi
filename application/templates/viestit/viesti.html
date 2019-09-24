@@ -11,16 +11,19 @@
 </p>
 
 <div class="well">{{ viesti.teksti }}</div>
-<p>Aihetunnisteet:</p>
+{% if viesti.aiheet|length() > 0 %}
+<h3>Aihetunnisteet</h3>
 <ul class="list-group">
   {% if aihe is iterable %} {% for aihe in viesti.aiheet %}
   <li class="list-group-item">{{ aihe.aihe }}</li>
   {% endfor %} {% endif %}
 </ul>
+{% endif %}
 <form method="GET" action="{{url_for('viestit_vastaa', viesti_id=viesti.id)}}">
   <input class="btn btn-primary" type="submit" value="Vastaa" />
 </form>
-<p>Vastaukset:</p>
+{% if viesti.vastaukset|length() > 0 %}
+<h3>Vastaukset</h3>
 <ul class="list-group">
   {% for vastaus in viesti.vastaukset %}
   <li class="list-group-item">
@@ -31,11 +34,11 @@
   </li>
   {% endfor %}
 </ul>
-<p>Lukijat:</p>
+{% endif %} {% if viesti.lukeneet|length() > 0 %}
+<h3>Lukeneet</h3>
 <ul class="list-group">
   {% for lukija in viesti.lukeneet %}
   <li class="list-group-item">{{ lukija.nimi }}</li>
   {% endfor %}
 </ul>
-
-{% endblock %}
+{% endif%} {% endblock %}
