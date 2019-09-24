@@ -7,7 +7,10 @@
       <a href="{{ url_for('viesti', viesti_id = viesti.id) }}"
         >{{ viesti.otsikko }}
 
-        <small>{{ viesti.kirjoittaja.nimi }} {{ viesti.kirjoitusaika }} </small>
+        <small
+          >{{ viesti.kirjoittaja.nimi }}
+          {{ viesti.kirjoitusaika.strftime("%d.%m. %Y %H:%M") }}
+        </small>
       </a>
     </h3>
   </li>

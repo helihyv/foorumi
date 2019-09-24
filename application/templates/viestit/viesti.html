@@ -1,7 +1,10 @@
 {% extends "layout.html" %} {% block content %}
 <h1 class="page-header">
   {{ viesti.otsikko }}
-  <small>{{ viesti.kirjoittaja.nimi }} {{ viesti.kirjoitusaika }}</small>
+  <small
+    >{{ viesti.kirjoittaja.nimi }}
+    {{ viesti.kirjoitusaika.strftime("%d.%m. %Y %H:%M") }}</small
+  >
 </h1>
 <p>
   {% if viesti.vastattu %} Vastaus viestiin
@@ -29,7 +32,7 @@
   <li class="list-group-item">
     <a href="{{ url_for('viesti', viesti_id=vastaus.id ) }}">
       {{ vastaus.otsikko }}, {{ vastaus.kirjoittaja.nimi }},
-      {{ vastaus.kirjoitusaika }}
+      {{ vastaus.kirjoitusaika.strftime("%d.%m. %Y %H:%M") }}
     </a>
   </li>
   {% endfor %}
