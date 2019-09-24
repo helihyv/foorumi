@@ -1,0 +1,41 @@
+{% extends "layout.html" %} {% block content %}
+<h1 class="page-header">
+  {{ viesti.otsikko }}
+  <small>{{ viesti.kirjoittaja.nimi }} {{ viesti.kirjoitusaika }}</small>
+</h1>
+<p>
+  {% if viesti.vastattu %} Vastaus viestiin
+  <a href="{{ url_for('viesti', viesti_id=viesti.vastattu.id )}}">
+    {{ viesti.vastattu.otsikko }}</a
+  >. {% endif%}
+</p>
+
+<div class="well">{{ viesti.teksti }}</div>
+<p>Aihetunnisteet:</p>
+<ul class="list-group">
+  {% if aihe is iterable %} {% for aihe in viesti.aiheet %}
+  <li class="list-group-item">{{ aihe.aihe }}</li>
+  {% endfor %} {% endif %}
+</ul>
+<form method="GET" action="{{url_for('viestit_vastaa', viesti_id=viesti.id)}}">
+  <input class="btn btn-primary" type="submit" value="Vastaa" />
+</form>
+<p>Vastaukset:</p>
+<ul class="list-group">
+  {% for vastaus in viesti.vastaukset %}
+  <li class="list-group-item">
+    <a href="{{ url_for('viesti', viesti_id=vastaus.id ) }}">
+      {{ vastaus.otsikko }}, {{ vastaus.kirjoittaja.nimi }},
+      {{ vastaus.kirjoitusaika }}
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+<p>Lukijat:</p>
+<ul class="list-group">
+  {% for lukija in viesti.lukeneet %}
+  <li class="list-group-item">{{ lukija.nimi }}</li>
+  {% endfor %}
+</ul>
+
+{% endblock %}
