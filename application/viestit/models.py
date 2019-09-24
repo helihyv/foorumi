@@ -1,4 +1,5 @@
 from application import db
+from sqlalchemy.sql import text
 from application.kayttajat.models import Kayttaja
 
 luetut = db.Table("luetut",
@@ -32,3 +33,18 @@ class Viesti(db.Model):
         return False
 
 
+    def ovatko_kaikki_lukeneet(self):
+        kysely_kaikki_kayttajat = text("SELECT COUNT(kayttaja.id) FROM kayttaja")
+
+        kaikki_kayttajat = db.engine.execute(kysely_kaikki_kayttajat)
+
+        kysely_lukeneet = text("SELECT COUNT(kayttaja.id) FROM kayttaja"
+                            " JOIN luetut ON kayttaja.id = luetut.lukija_id"
+                            " WHERE luetut.viesti_id = :viesti_id")
+
+        lukeneet = db.engine.execute(kysely_lukeneet, {"viesti_id" : self.id })
+
+        if kaikki_kayttajat.first()[0] - lukeneet.first()[0] == 0:
+            return True
+
+        return False
