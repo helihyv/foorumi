@@ -61,4 +61,6 @@ def viestit_index():
 @login_required
 def viesti(viesti_id):
     viesti = Viesti.query.get_or_404(viesti_id)
+    viesti.lukeneet.append(current_user)
+    db.session.commit()
     return render_template("viestit/viesti.html", viesti=viesti)
