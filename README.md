@@ -5,8 +5,7 @@ Tietokantasovellus -kurssin harjoitustyö.
 [Sovellus toiminnassa herokussa](https://still-everglades-81805.herokuapp.com)
 
 Sovelluksessa on Herokussa valmiina kaksi testikäyttäjää:
-tunnus otso, salasana tsohaotso
-tunnus meri, salasana tsohameri
+tunnus otso salasanalla tsohaotso ja tunnus meri salasanalla tsohameri
 Lisää käyttäjiä voi itse luoda valikon linkistä "Lisää käyttäjä".
 
 [Tietokantakaavio](dokumentaatio/Tietokantakaavio.png)
