@@ -45,7 +45,7 @@ def viestit_luo():
 @app.route("/viestit", methods=["GET"])
 @login_required
 def viestit_index():
-    viestit = Viesti.query.all()
+    viestit = Viesti.query.order_by(Viesti.kirjoitusaika.desc()).all()
     return render_template("viestit/lista.html", viestit=viestit)
 
 
