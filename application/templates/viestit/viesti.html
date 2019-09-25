@@ -62,7 +62,7 @@ Muokattu {{ viesti.muokkausaika.strftime("%d.%m. %Y %H:%M")}}
   <li class="list-group-item">{{ lukija.nimi }}</li>
   {% endfor %}
 </ul>
-
+<p>
 <button
   id="avaa_muokkaus_nappi"
   class="btn btn-primary"
@@ -77,12 +77,30 @@ Muokattu {{ viesti.muokkausaika.strftime("%d.%m. %Y %H:%M")}}
 <div class="collapse" id="muokkauslomake">
   {{ wtf.quick_form(muokkaus_lomake, action=url_for('viestit_muokkaa',viesti_id=viesti.id), button_map={"nappi" : "success"}) }}
 </div>
+</p>
 <p>
-  <form
-    action="{{ url_for('viestit_poista', viesti_id = viesti.id) }}"
-    method="POST"
-  >
-    <input class="btn btn-danger" type="submit" value="Tuhoa viesti" />
-  </form>
+  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#tuhoaviestidialogi">Tuhoa viesti</button>
+  
+  <div class="modal fade" tabindex="-1" role="dialog" id="tuhoaviestidialogi" aria-labelledby="Tuhotaanko viesti varmasti?">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+      <div class="modal-body">
+        Haluatko varmasti poistaa viestin "{{ viesti.otsikko }}"?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Peruuta</button>
+        <form
+        action="{{ url_for('viestit_poista', viesti_id = viesti.id) }}"
+        method="POST"
+      >
+        <input class="btn btn-danger" type="submit" value="Tuhoa viesti" />
+      </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
 </p>
 {% endif%} {% endblock %}
