@@ -37,6 +37,9 @@ def login_lomake():
 def login():
     form = KirjautumisLomake(request.form)
 
+    if not form.validate():
+        return render_template("kayttajat/kirjautumislomake.html", form=form)
+
     kayttaja = Kayttaja.query.filter_by(tunnus = form.tunnus.data).first()
 
     if not kayttaja or not bcrypt.check_password_hash(kayttaja.salasanaHash, form.salasana.data):
