@@ -42,6 +42,11 @@ current_user.is_authenticated %}
           >Lisää käyttäjä</a
         >
       </li>
+      <li>
+        <a class="nav-item nav-bar-link" href="/kayttajat/salasananvaihto"
+          >Vaihda salasana</a
+        >
+      </li>
       {% if current_user.is_authenticated %}
       <li>
         <a href="{{ url_for('logout') }}">Kirjaudu ulos</a>

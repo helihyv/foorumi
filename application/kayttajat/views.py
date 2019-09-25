@@ -1,8 +1,8 @@
 from application import app, db, bcrypt
 from flask import render_template, request, redirect, url_for
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, login_required, current_user
 from application.kayttajat.models import Kayttaja
-from application.kayttajat.forms import KayttajaLomake, KirjautumisLomake
+from application.kayttajat.forms import KayttajaLomake, KirjautumisLomake, SalasananVaihtoLomake
 
 @app.route("/kayttajat/uusi")
 def kayttajat_lomake():
@@ -57,3 +57,24 @@ def login():
 def logout():
      logout_user()
      return redirect(url_for("login"))
+
+@app.route("/kayttajat/salasananvaihto")
+@login_required
+def kayttajat_salasananvaihto():
+
+    form = SalasananVaihtoLomake()
+    return render_template("kayttajat/salasananvaihto.html", form = form)
+
+@app.route("/kayttajat/salasananvaihto", methods=["POST"])
+@login_required
+def kayttajat_vaihda_salasana():
+    form = SalasananVaihtoLomake(request.form)
+
+    if not form.validate():
+        return render_template("kayttajat/salasananvaihto.html", form = form)
+
+    current_user.vaihda_salasana(form.uusi_salasana.data)
+
+    return render_template("/kayttajat/salasananvaihto.html", onnistui=True, form = SalasananVaihtoLomake())
+
+

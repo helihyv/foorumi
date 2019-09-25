@@ -28,3 +28,12 @@ class KirjautumisLomake(FlaskForm):
 
     class Meta:
         csrf = False
+
+class SalasananVaihtoLomake(FlaskForm):
+    vanha_salasana = PasswordField("Vanha salasana", [validators.InputRequired()])
+    uusi_salasana = PasswordField("Uusi salasama", [validators.Length(min=4, max=40, message=pituus_validaatiovirheviesti), validators.equal_to('uusi_salasana_uudestaan', message="Salasanat eivät täsmää")])
+    uusi_salasana_uudestaan = PasswordField("Uusi salasana uudelleen", [validators.Length(min=4, max=40, message=pituus_validaatiovirheviesti)])
+    nappi = SubmitField("Vaihda salasana")
+
+    class Meta:
+        csrf = False

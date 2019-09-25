@@ -49,3 +49,8 @@ class Kayttaja(db.Model):
             print(rivi)
 
         return eniten_kirjoittaneet
+
+    def vaihda_salasana(self, salasana):
+        self.salasanaHash = bcrypt.generate_password_hash(salasana).decode("utf-8")
+        db.session.commit()
+
