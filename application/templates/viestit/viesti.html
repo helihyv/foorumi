@@ -14,6 +14,22 @@
 </p>
 
 <div class="well">{{ viesti.teksti }}</div>
+
+<button
+  id="avaa_vastaus_nappi"
+  class="btn btn-primary"
+  data-toggle="collapse"
+  href="#vastauslomake"
+  aria-expanded="false"
+  aria-controls="vastauslomake"
+  onclick="this.innerHTML = this.innerHTML === 'Sulje vastauslomake' ? 'Vastaa' : 'Sulje vastauslomake'"
+>
+  Vastaa
+</button>
+<div class="collapse" id="vastauslomake">
+  {{ wtf.quick_form(form, action=url_for('viestit_luo'), button_map={"nappi" : "success"}) }}
+</div>
+
 {% if viesti.aiheet|length() > 0 %}
 <h3>Aihetunnisteet</h3>
 <ul class="list-group">
@@ -21,11 +37,7 @@
   <li class="list-group-item">{{ aihe.aihe }}</li>
   {% endfor %} {% endif %}
 </ul>
-{% endif %}
-<form method="GET" action="{{url_for('viestit_vastaa', viesti_id=viesti.id)}}">
-  <input class="btn btn-primary" type="submit" value="Vastaa" />
-</form>
-{% if viesti.vastaukset|length() > 0 %}
+{% endif %} {% if viesti.vastaukset|length() > 0 %}
 <h3>Vastaukset</h3>
 <ul class="list-group">
   {% for vastaus in viesti.vastaukset %}

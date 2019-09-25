@@ -17,15 +17,6 @@ def viestit_lomake():
     form.vastattava_viesti.data = None
     return render_template("viestit/uusi.html", form=form)
 
-
-@app.route("/viestit/uusi/<viesti_id>")
-def viestit_vastaa(viesti_id):
-    form = ViestiLomake()
-    form.aiheet.choices = [(aihe.id, aihe.aihe) for aihe in Aihe.query.all()]
-    form.vastattava_viesti.data = viesti_id
-    return render_template("viestit/uusi.html", form=form)
-
-
 @app.route("/viestit/", methods=["POST"])
 @login_required
 def viestit_luo():
@@ -61,6 +52,12 @@ def viestit_index():
 @login_required
 def viesti(viesti_id):
     viesti = Viesti.query.get_or_404(viesti_id)
+    
     viesti.lukeneet.append(current_user)
     db.session.commit()
-    return render_template("viestit/viesti.html", viesti=viesti)
+    
+    form = ViestiLomake()
+    form.aiheet.choices = [(aihe.id, aihe.aihe) for aihe in Aihe.query.all()]
+    form.vastattava_viesti.data = viesti_id
+    
+    return render_template("viestit/viesti.html", viesti=viesti, form=form)
