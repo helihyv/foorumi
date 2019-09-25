@@ -30,15 +30,27 @@
         saman aiheen uudelleen.
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">
-          Peruuta
-        </button>
-        <form
-          method="POST"
-          action="{{ url_for('aiheet_poista', aihe_id=aihe.id)}}"
-        >
-          <input class="btn btn-danger" type="submit" value="Poista" />
-        </form>
+        <table class="table">
+          <tr>
+            <td>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-dismiss="modal"
+              >
+                Peruuta
+              </button>
+            </td>
+            <td>
+              <form
+                method="POST"
+                action="{{ url_for('aiheet_poista', aihe_id=aihe.id)}}"
+              >
+                <input class="btn btn-danger" type="submit" value="Poista" />
+              </form>
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
   </div>

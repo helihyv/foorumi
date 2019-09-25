@@ -84,23 +84,28 @@ Muokattu {{ viesti.muokkausaika.strftime("%d.%m. %Y %H:%M")}}
   <div class="modal fade" tabindex="-1" role="dialog" id="tuhoaviestidialogi" aria-labelledby="Tuhotaanko viesti varmasti?">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-      <div class="modal-body">
-        Haluatko varmasti poistaa viestin "{{ viesti.otsikko }}"?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Peruuta</button>
-        <form
-        action="{{ url_for('viestit_poista', viesti_id = viesti.id) }}"
-        method="POST"
-      >
-        <input class="btn btn-danger" type="submit" value="Tuhoa viesti" />
-      </form>
-
+          <div class="modal-body">
+            Haluatko varmasti poistaa viestin "{{ viesti.otsikko }}"?
+          </div>
+        <div class="modal-footer">
+          <table class="table">
+            <tr>
+              <td>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Peruuta</button>
+              </td>
+              <td>
+                <form
+                  action="{{ url_for('viestit_poista', viesti_id = viesti.id) }}"
+                  method="POST"
+                >
+                  <input class="btn btn-danger" type="submit" value="Tuhoa viesti" />
+                </form>
+              </td>
+            </tr>
+          </table>
+         </div>
       </div>
     </div>
   </div>
-</div>
-
-
 </p>
 {% endif%} {% endblock %}
