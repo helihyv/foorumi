@@ -2,7 +2,7 @@
 <h1>{{ ryhma.nimi }}</h1>
 <h2>Lisää jäseniä</h2>
 
-{{ wtf.quick_form(form, action=url_for('lisaa_jasenia', ryhma_id=ryhma.id), button_map={"nappi" : "success"}) }}
+{{ wtf.quick_form(lisaa_jasen_lomake, action=url_for('lisaa_jasenia', ryhma_id=ryhma.id), button_map={"nappi" : "success"}) }}
 
 <h2>Jäsenet</h2>
 <ul class="list-group">
@@ -12,6 +12,10 @@
   </li>
   {% endfor %}
 </ul>
+<h2>Muuta ryhmän nimeä</h2>
+
+{{ wtf.quick_form(muokkaa_ryhmaa_lomake, action=url_for('ryhmat_muokkaa',ryhma_id=ryhma.id), button_map={"nappi" : "success"}) }}
+
 <h2>Poista ryhmä</h2>
 <form action="{{ url_for('ryhmat_poista', ryhma_id =ryhma.id) }}" method="POST">
   <input

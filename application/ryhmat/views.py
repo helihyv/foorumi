@@ -1,18 +1,18 @@
 from application import app, db
 from flask import render_template, request, redirect, url_for
 from application.ryhmat.models import Ryhma
-from application.ryhmat.forms import RyhmaLomake, LisaaJasenLomake
+from application.ryhmat.forms import LisaaRyhmaLomake, LisaaJasenLomake, MuutaRyhmanNimeaLomake
 from application.kayttajat.models import Kayttaja
 from flask_login import login_required
 
 @app.route("/ryhmat", methods=["GET"])
 @login_required
 def ryhmat():
-    return render_template("ryhmat/ryhmat.html", ryhmat = Ryhma.query.all(), form = RyhmaLomake())
+    return render_template("ryhmat/ryhmat.html", ryhmat = Ryhma.query.all(), form = LisaaRyhmaLomake())
 
 @app.route("/ryhmat", methods=["POST"])
 def ryhmat_luo():
-    form = RyhmaLomake(request.form)
+    form = LisaaRyhmaLomake(request.form)
 
     if not form.validate():
         return render_template("ryhmat/ryhmat.html", form = form,  ryhmat = Ryhma.query.all())
@@ -27,13 +27,15 @@ def ryhmat_luo():
 def ryhma(ryhma_id):
     ryhma = Ryhma.query.get_or_404(ryhma_id)
 
-    form = LisaaJasenLomake()
-    form.jasenet.choices =[(kayttaja.id, kayttaja.nimi) for kayttaja in Kayttaja.query.all()]
+    lisaa_jasen_lomake = LisaaJasenLomake()
+    lisaa_jasen_lomake.jasenet.choices =[(kayttaja.id, kayttaja.nimi) for kayttaja in Kayttaja.query.all()]
 
+    muokkaa_ryhmaa_lomake = MuutaRyhmanNimeaLomake()
+    muokkaa_ryhmaa_lomake.nimi.data = ryhma.nimi
 
-    return render_template("ryhmat/ryhma.html", ryhma = ryhma, form = form)
+    return render_template("ryhmat/ryhma.html", ryhma = ryhma, lisaa_jasen_lomake = lisaa_jasen_lomake, muokkaa_ryhmaa_lomake = muokkaa_ryhmaa_lomake)
 
-@app.route("/ryhmat/<ryhma_id>/", methods=["POST"])
+@app.route("/ryhmat/<ryhma_id>/jasenet", methods=["POST"])
 def lisaa_jasenia(ryhma_id):
     
     ryhma = Ryhma.query.get_or_404(ryhma_id)
@@ -56,3 +58,21 @@ def ryhmat_poista(ryhma_id):
     db.session.commit()
 
     return redirect(url_for("ryhmat"))
+
+@app.route("/ryhmat/<ryhma_id>/", methods=["POST"])
+def ryhmat_muokkaa(ryhma_id):
+    ryhma = Ryhma.query.get_or_404(ryhma_id)
+
+    form = MuutaRyhmanNimeaLomake(request.form)
+
+    if not form.validate():
+        lisaa_jasen_lomake = LisaaJasenLomake()
+        lisaa_jasen_lomake.jasenet.choices =[(kayttaja.id, kayttaja.nimi) for kayttaja in Kayttaja.query.all()]
+
+        return render_template("ryhmat/ryhma.html", muokkaa_ryhman_nimea_lomake = form, lisaa_jasen_lomake = lisaa_jasen_lomake)
+
+    ryhma.nimi = form.nimi.data
+
+    db.session.commit()
+
+    return redirect(url_for("ryhma", ryhma_id = ryhma.id))
