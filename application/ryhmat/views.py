@@ -8,7 +8,7 @@ from flask_login import login_required
 @app.route("/ryhmat", methods=["GET"])
 @login_required
 def ryhmat():
-    return render_template("ryhmat/ryhmat.html", ryhmat = Ryhma.query.all(), form = LisaaRyhmaLomake())
+    return render_template("ryhmat/ryhmat.html", ryhmat = Ryhma.query.order_by(Ryhma.nimi).all(), form = LisaaRyhmaLomake())
 
 @app.route("/ryhmat", methods=["POST"])
 def ryhmat_luo():

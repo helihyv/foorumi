@@ -7,7 +7,7 @@ from application.aiheet.forms import LisaaAiheLomake, MuokkaaAihettaLomake
 @app.route("/aiheet",methods=["GET"])
 @login_required
 def aiheet():
-    return render_template("aiheet/aiheet.html", aiheet= Aihe.query.all(), form=LisaaAiheLomake())
+    return render_template("aiheet/aiheet.html", aiheet= Aihe.query.order_by(Aihe.aihe).all(), form=LisaaAiheLomake())
 
 @app.route("/aiheet", methods=["POST"])
 @login_required
