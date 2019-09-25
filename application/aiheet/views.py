@@ -37,6 +37,7 @@ def aiheet_muokkaa(aihe_id):
     return redirect(url_for("aiheet"))
 
 @app.route("/aiheet/<aihe_id>", methods=["GET"])
+@login_required
 def aihe(aihe_id):
     aihe = Aihe.query.get_or_404(aihe_id)
 
@@ -45,6 +46,7 @@ def aihe(aihe_id):
     return render_template("aiheet/aihe.html", aihe = aihe, form = form)
 
 @app.route("/aiheet/<aihe_id>/poista", methods=["POST"])
+@login_required
 def aiheet_poista(aihe_id):
     aihe = Aihe.query.get_or_404(aihe_id)
 

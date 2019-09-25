@@ -11,6 +11,7 @@ def ryhmat():
     return render_template("ryhmat/ryhmat.html", ryhmat = Ryhma.query.order_by(Ryhma.nimi).all(), form = LisaaRyhmaLomake())
 
 @app.route("/ryhmat", methods=["POST"])
+@login_required
 def ryhmat_luo():
     form = LisaaRyhmaLomake(request.form)
 
@@ -24,6 +25,7 @@ def ryhmat_luo():
     return redirect(url_for("ryhma", ryhma_id=ryhma.id))
 
 @app.route("/ryhmat/<ryhma_id>/", methods=["GET"])
+@login_required
 def ryhma(ryhma_id):
     ryhma = Ryhma.query.get_or_404(ryhma_id)
 
@@ -36,6 +38,7 @@ def ryhma(ryhma_id):
     return render_template("ryhmat/ryhma.html", ryhma = ryhma, lisaa_jasen_lomake = lisaa_jasen_lomake, muokkaa_ryhmaa_lomake = muokkaa_ryhmaa_lomake)
 
 @app.route("/ryhmat/<ryhma_id>/jasenet", methods=["POST"])
+@login_required
 def lisaa_jasenia(ryhma_id):
     
     ryhma = Ryhma.query.get_or_404(ryhma_id)
@@ -51,6 +54,7 @@ def lisaa_jasenia(ryhma_id):
     return redirect(url_for("ryhma", ryhma_id=ryhma_id))
 
 @app.route("/ryhmat/<ryhma_id>/jasenet/<jasen_id>/poista", methods=["POST"])
+@login_required
 def poista_jasenia(ryhma_id, jasen_id):
 
     ryhma = Ryhma.query.get_or_404(ryhma_id)
@@ -63,6 +67,8 @@ def poista_jasenia(ryhma_id, jasen_id):
     return redirect(url_for("ryhma", ryhma_id = ryhma.id))
 
 @app.route("/ryhmat<ryhma_id>/poista", methods=["POST"])
+@login_required
+
 def ryhmat_poista(ryhma_id):
     ryhma = Ryhma.query.get_or_404(ryhma_id)
 
@@ -72,6 +78,7 @@ def ryhmat_poista(ryhma_id):
     return redirect(url_for("ryhmat"))
 
 @app.route("/ryhmat/<ryhma_id>/", methods=["POST"])
+@login_required
 def ryhmat_muokkaa(ryhma_id):
     ryhma = Ryhma.query.get_or_404(ryhma_id)
 
