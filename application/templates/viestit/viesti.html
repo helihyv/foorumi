@@ -6,6 +6,12 @@
     {{ viesti.kirjoitusaika.strftime("%d.%m. %Y %H:%M") }}</small
   >
 </h1>
+{% if viesti.muokkausaika %}
+<p>
+Muokattu {{ viesti.muokkausaika.strftime("%d.%m. %Y %H:%M")}}
+</p>
+{% endif %}
+
 <p>
   {% if viesti.vastattu %} Vastaus viestiin
   <a href="{{ url_for('viesti', viesti_id=viesti.vastattu.id )}}">
@@ -27,7 +33,7 @@
   Vastaa
 </button>
 <div class="collapse" id="vastauslomake">
-  {{ wtf.quick_form(form, action=url_for('viestit_luo'), button_map={"nappi" : "success"}) }}
+  {{ wtf.quick_form(vastaus_lomake, action=url_for('viestit_luo'), button_map={"nappi" : "success"}) }}
 </div>
 
 {% if viesti.aiheet|length() > 0 %}
@@ -56,4 +62,27 @@
   <li class="list-group-item">{{ lukija.nimi }}</li>
   {% endfor %}
 </ul>
+
+<button
+  id="avaa_muokkaus_nappi"
+  class="btn btn-primary"
+  data-toggle="collapse"
+  href="#muokkauslomake"
+  aria-expanded="false"
+  aria-controls="muokkauslomake"
+  onclick="this.innerHTML = this.innerHTML === 'Sulje muokkauslomake' ? 'Muokkaa viestiä' : 'Sulje muokkauslomake'"
+>
+  Muokkaa viestiä
+</button>
+<div class="collapse" id="muokkauslomake">
+  {{ wtf.quick_form(muokkaus_lomake, action=url_for('viestit_muokkaa',viesti_id=viesti.id), button_map={"nappi" : "success"}) }}
+</div>
+<p>
+  <form
+    action="{{ url_for('viestit_poista', viesti_id = viesti.id) }}"
+    method="POST"
+  >
+    <input class="btn btn-danger" type="submit" value="Tuhoa viesti" />
+  </form>
+</p>
 {% endif%} {% endblock %}

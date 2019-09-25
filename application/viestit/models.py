@@ -10,6 +10,7 @@ db.Column("lukija_id", db.Integer, db.ForeignKey("kayttaja.id"), primary_key=Tru
 class Viesti(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     kirjoitusaika = db.Column(db.DateTime, default=db.func.current_timestamp(), nullable=False)
+    muokkausaika = db.Column(db.DateTime, nullable=True)
     otsikko = db.Column(db.String(100), nullable=False)
     teksti = db.Column(db.String(1000), nullable=False)
     kirjoittaja_id = db.Column(db.Integer, db.ForeignKey('kayttaja.id'), nullable=False)
