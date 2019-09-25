@@ -35,6 +35,7 @@ def viestit_luo():
 
     viesti = Viesti(form.otsikko.data, form.teksti.data, aiheet,
                     form.vastattava_viesti.data, current_user.id)
+    viesti.lukeneet.append(current_user)
     db.session().add(viesti)
     db.session().commit()
 
