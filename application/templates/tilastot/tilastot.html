@@ -2,7 +2,7 @@
 <h1>Tilastot</h1>
 <h2>Eniten viestejä kirjoittaneet käyttäjät</h2>
 
-<table class="table-striped">
+<table class="table table-striped">
   {% for rivi in eniten_kirjoittaneet_kayttajat %}
   <tr>
     <td>{{ rivi.nimi }}</td>
@@ -12,7 +12,7 @@
 </table>
 
 <h2>Eniten viestejä kirjoittaneet ryhmät</h2>
-<table class="table-striped">
+<table class="table table-striped">
   {% for rivi in eniten_kirjoittaneet_ryhmat %}
   <tr>
     <td>
@@ -26,7 +26,7 @@
 </table>
 
 <h2>Suosituimmat aiheet</h2>
-<table class="table-striped">
+<table class="table table-striped">
   {% for rivi in suosituimmat_aiheet %}
   <tr>
     <td>{{ rivi.aihe }}</td>
@@ -36,11 +36,11 @@
 </table>
 
 <h2>Ryhmien kirjoitusten aihejakaumat</h2>
-<table class="table-striped">
+<table class="table table-striped">
   <tr>
-    <td>Ryhmä</td>
-    <td>Aihe</td>
-    <td>Viestejä</td>
+    <th>Ryhmä</th>
+    <th>Aihe</th>
+    <th>Viestejä</th>
   </tr>
   {% for rivi in ryhmien_aihe_jakaumat %}
   <tr>
