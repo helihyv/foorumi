@@ -5,7 +5,42 @@
 {{ wtf.quick_form(form, action=url_for('aiheet_muokkaa', aihe_id=aihe.id), button_map={"nappi" : "success"}) }}
 
 <h2>Poista aihe</h2>
-<form method="POST" action="{{ url_for('aiheet_poista', aihe_id=aihe.id)}}">
-  <input class="btn btn-danger" type="submit" value="Poista" />
-</form>
+<button
+  type="button"
+  class="btn btn-danger"
+  data-toggle="modal"
+  data-target="#poistaaihedialogi"
+>
+  Poista aihe {{ aihe.aihe }}
+</button>
+
+<div
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  id="poistaaihedialogi"
+  aria-labelledby="Tuhotaanko viesti varmasti?"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        Haluatko varmasti poistaa aihetunnisteen "{{ aihe.aihe }}"?
+        <br />
+        Aihe poistuu kaikista viesteistä, eikä palaudu niihin, vaikka loisit
+        saman aiheen uudelleen.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">
+          Peruuta
+        </button>
+        <form
+          method="POST"
+          action="{{ url_for('aiheet_poista', aihe_id=aihe.id)}}"
+        >
+          <input class="btn btn-danger" type="submit" value="Poista" />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
