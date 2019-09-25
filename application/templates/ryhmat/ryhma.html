@@ -5,13 +5,24 @@
 {{ wtf.quick_form(lisaa_jasen_lomake, action=url_for('lisaa_jasenia', ryhma_id=ryhma.id), button_map={"nappi" : "success"}) }}
 
 <h2>Jäsenet</h2>
-<ul class="list-group">
+<table class="table table-striped table-condensed">
   {% for jasen in ryhma.jasenet %}
-  <li class="list-group-item">
-    {{ jasen.nimi }}
-  </li>
+  <tr>
+    <td>
+      {{ jasen.nimi }}
+    </td>
+    <td>
+      <form
+        action="{{ url_for('poista_jasenia', ryhma_id =ryhma.id, jasen_id=jasen.id) }}"
+        method="POST"
+      >
+        <input class="btn btn-danger" type="submit" value="Poista ryhmästä" />
+      </form>
+    </td>
+  </tr>
   {% endfor %}
-</ul>
+</table>
+
 <h2>Muuta ryhmän nimeä</h2>
 
 {{ wtf.quick_form(muokkaa_ryhmaa_lomake, action=url_for('ryhmat_muokkaa',ryhma_id=ryhma.id), button_map={"nappi" : "success"}) }}
@@ -24,4 +35,5 @@
     value="Poista ryhmä {{ ryhma.nimi }}"
   />
 </form>
+
 {% endblock %}

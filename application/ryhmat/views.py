@@ -50,6 +50,18 @@ def lisaa_jasenia(ryhma_id):
     
     return redirect(url_for("ryhma", ryhma_id=ryhma_id))
 
+@app.route("/ryhmat/<ryhma_id>/jasenet/<jasen_id>/poista", methods=["POST"])
+def poista_jasenia(ryhma_id, jasen_id):
+
+    ryhma = Ryhma.query.get_or_404(ryhma_id)
+    jasen = Kayttaja.query.get_or_404(jasen_id)
+
+    if jasen in ryhma.jasenet:
+        ryhma.jasenet.remove(jasen)
+        db.session.commit()
+
+    return redirect(url_for("ryhma", ryhma_id = ryhma.id))
+
 @app.route("/ryhmat<ryhma_id>/poista", methods=["POST"])
 def ryhmat_poista(ryhma_id):
     ryhma = Ryhma.query.get_or_404(ryhma_id)
