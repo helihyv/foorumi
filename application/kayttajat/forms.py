@@ -20,8 +20,8 @@ class KayttajaLomake(FlaskForm):
         csrf = False
 
 class KirjautumisLomake(FlaskForm):
-    tunnus = StringField("Käyttäjätunnus",[validators.InputRequired()])
-    salasana = PasswordField("Salasana",[validators.InputRequired()])
+    tunnus = StringField("Käyttäjätunnus",[validators.Length(min=4, max=100, message=pituus_validaatiovirheviesti)])
+    salasana = PasswordField("Salasana",[validators.Length(min=4, max=40, message=pituus_validaatiovirheviesti)])
     seuraava_sivu = HiddenField()
     nappi = SubmitField("Kirjaudu")
 
