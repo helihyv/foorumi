@@ -12,6 +12,8 @@ Sovelluksessa on Herokussa valmiina testikäyttäjiä:
 
 Tavallisia käyttäjiä voi luoda itse lisää valikon linkistä "Lisää käyttäjä".
 
+[Asennusohje](dokumentaatio/asennusohje.md)
+
 [Käyttöohje](dokumentaatio/ohje.md)
 
 [Tietokantakaavio](dokumentaatio/Tietokantakaavio.png)
