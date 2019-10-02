@@ -1,6 +1,6 @@
-from application import app, db
+from application import app, db, login_manager
 from flask import render_template, request, redirect, url_for
-from flask_login import login_required
+from flask_login import login_required, current_user
 from application.aiheet.models import Aihe
 from application.aiheet.forms import LisaaAiheLomake, MuokkaaAihettaLomake
 
@@ -26,6 +26,10 @@ def aiheet_luo():
 @login_required
 def aiheet_muokkaa(aihe_id):
     aihe = Aihe.query.get_or_404(aihe_id)
+
+    if not current_user.admin:
+        return login_manager.unauthorized()
+
     form = MuokkaaAihettaLomake(request.form)
 
     if not form.validate():
@@ -49,6 +53,9 @@ def aihe(aihe_id):
 @login_required
 def aiheet_poista(aihe_id):
     aihe = Aihe.query.get_or_404(aihe_id)
+
+    if not current_user.admin:
+        return login_manager.unauthorized()
 
     db.session.delete(aihe)
     db.session.commit()
