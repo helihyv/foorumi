@@ -54,3 +54,8 @@ class Kayttaja(db.Model):
         self.salasanaHash = bcrypt.generate_password_hash(salasana).decode("utf-8")
         db.session.commit()
 
+    @staticmethod
+    def onko_adminia():
+        kysely = Kayttaja.query.filter(Kayttaja.admin == True)
+        vastaus = db.session.query(kysely.exists()).first()
+        return vastaus[0]

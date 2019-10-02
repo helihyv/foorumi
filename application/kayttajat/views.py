@@ -8,6 +8,11 @@ from application.kayttajat.forms import KayttajaLomake, KirjautumisLomake, Salas
 def kayttajat_lomake():
     return render_template("kayttajat/uusi.html", form = KayttajaLomake())
 
+     # Jos ylläpitäjää ei vielä ole näytetään ylläpitäjän tunnuksen luomisen ohjeteksti
+    admin = not Kayttaja.onko_adminia()
+
+    return render_template("kayttajat/uusi.html", form=KayttajaLomake(), admin=admin)
+
 @app.route("/kayttajat", methods=["POST"])
 def kayttajat_luo():
 
@@ -16,7 +21,11 @@ def kayttajat_luo():
     if not form.validate():
         return render_template("kayttajat/uusi.html", form = form)
 
-    kayttaja = Kayttaja(form.nimi.data, form.tunnus.data, form.salasana.data, False)
+     # Jos ylläpitäjää ei vielä ole, luodaan ylläpitäjän tunnus - muuten tavallinen tunnus
+    admin = not Kayttaja.onko_adminia()
+
+    kayttaja = Kayttaja(form.nimi.data, form.tunnus.data,
+                        form.salasana.data, admin)
 
     db.session.add(kayttaja)
     db.session.commit()

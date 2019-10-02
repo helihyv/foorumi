@@ -1,7 +1,11 @@
 {% extends "layout.html" %} {% import "bootstrap/wtf.html" as wtf %} {% block
-content %}
-
+content %} {% if admin %}
+<h1>Luo ylläpitotunnus</h1>
+Foorumia käyttöönotettaessa on luotava ylläpitäjän käyttäjätunnus, jolla pääset
+hallinnoimaan ryhmiä ja aihetunnisteita sekä siivoamaan viestejä. Anna
+ylläpiätjän tiedot: {% else %}
 <h1>Luo uusi käyttäjä</h1>
+{% endif %}
 
 {{ wtf.quick_form(form, action=url_for('kayttajat_luo'), button_map={"nappi" : "success"}) }}
 
