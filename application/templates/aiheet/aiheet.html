@@ -8,7 +8,13 @@
 <ul class="list-group">
   {% for aihe in aiheet %}
   <li class="list-group-item">
-      <a href="/aiheet/{{ aihe.id }}">{{ aihe.aihe }}</a>
+      {% if current_user.admin %}
+      <a href="/aiheet/{{ aihe.id }}">
+      {% endif %}  
+        {{ aihe.aihe }}
+      {% if current_user.admin %}
+      </a>
+      {% endif %}
   </li>
   {% endfor %}
 </table>
