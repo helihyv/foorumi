@@ -6,10 +6,9 @@ from application.kayttajat.forms import KayttajaLomake, KirjautumisLomake, Salas
 
 @app.route("/kayttajat/uusi")
 def kayttajat_lomake():
-    return render_template("kayttajat/uusi.html", form = KayttajaLomake())
-
      # Jos ylläpitäjää ei vielä ole näytetään ylläpitäjän tunnuksen luomisen ohjeteksti
     admin = not Kayttaja.onko_adminia()
+
 
     return render_template("kayttajat/uusi.html", form=KayttajaLomake(), admin=admin)
 
