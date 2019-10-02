@@ -50,7 +50,7 @@ Käyttäjä voi vaihtaa oman salasanansa valikon kohdasta "Vaihda salasana". Sal
 
 Ylläpitäjä voi (tavalliselle käyttäjälle saatavilla olevien toimintojen lisäksi) muokata ja poistaa viestejä, muokata ja poistaa aiheita ja hallinnoida ryhmiä.
 
-## Ylläpitäjän tunnuksen luominen
+### Ylläpitäjän tunnuksen luominen
 
 Kun sovellus käynnistetään ensimmäisen kerran, on ennen muuta käyttöä luotava ylläpitäjän käyttäjätunnus (valikon kohta "Lisää käyttäjä"). Ylläpitäjälle on annettava tunnus ja salasana. (Ensimmäisen käyttäjän jälkeen luotavat käyttäjät ovat tavallisia käyttäjiä, joilla ei ole ylläpitäjän oikeuksia.)
 

@@ -30,8 +30,8 @@ Yhdistä kloonaamasi repositorio herokuun komennolla `git remote add heroku http
 
 Lataa sovellus Herokuun komennolla `git push heroku master`
 
-Jos asennat sovelluksen muuhun pilvipalveluun kuin Herokuun, noudata valitsemasi palvelun ohjeita. Aseta ympäristömuuttuja HEROKU, vaikka käyttäisit muuta pilvipalvelua. Aseta tarvittaessa myös ympäristömuuttuja DATABASE_URL osoittamaan käyttämääsi PostgreSQL-tietokantaa. (Heroku asettaa tämän muuttujan automaattisesti.)
+Jos asennat sovelluksen muuhun pilvipalveluun kuin Herokuun, noudata valitsemasi palvelun ohjeita. Aseta ympäristömuuttuja HEROKU, vaikka käyttäisit muuta pilvipalvelua. Aseta tarvittaessa myös ympäristömuuttuja DATABASE_URL osoittamaan käyttämääsi PostgreSQL-tietokantaan. (Heroku asettaa tämän muuttujan automaattisesti.)
 
 ## Ylläpitäjän tunnuksen luominen
 
-Kun sovellus käynnistetään ensimmäisen kerran, on aluksi luotava ylläpitäjän käyttäjätunnus (valikon kohta "Lisää käyttäjä"). Ylläpitäjälle on annettava tunnus ja salasana. Ensimmäisen käyttäjän jälkeen luotavat käyttäjät ovat tavallisia käyttäjiä, joilla ei ole ylläpitäjän oikeuksia.
+Kun sovellus käynnistetään ensimmäisen kerran, on aluksi luotava ylläpitäjän käyttäjätunnus (valikon kohta "Lisää käyttäjä"). Ylläpitäjän tietoina on annettava nimi, tunnus ja salasana. Ensimmäisen käyttäjän jälkeen luotavat käyttäjät ovat tavallisia käyttäjiä, joilla ei ole ylläpitäjän oikeuksia.
