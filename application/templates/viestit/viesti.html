@@ -63,6 +63,8 @@ Muokattu {{ viesti.muokkausaika.strftime("%d.%m. %Y %H:%M")}}
   {% endfor %}
 </ul>
 <p>
+
+{% if current_user.admin %}  
 <button
   id="avaa_muokkaus_nappi"
   class="btn btn-primary"
@@ -108,4 +110,6 @@ Muokattu {{ viesti.muokkausaika.strftime("%d.%m. %Y %H:%M")}}
     </div>
   </div>
 </p>
-{% endif%} {% endblock %}
+{% endif %} 
+{% endif %}
+{% endblock %}
