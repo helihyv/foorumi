@@ -1,9 +1,9 @@
-from application import app, db
+from application import app, db, login_manager
 from flask import render_template, request, redirect, url_for
 from application.ryhmat.models import Ryhma
 from application.ryhmat.forms import LisaaRyhmaLomake, LisaaJasenLomake, MuutaRyhmanNimeaLomake
 from application.kayttajat.models import Kayttaja
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 @app.route("/ryhmat", methods=["GET"])
 @login_required
@@ -14,6 +14,9 @@ def ryhmat():
 @login_required
 def ryhmat_luo():
     form = LisaaRyhmaLomake(request.form)
+
+    if not current_user.admin:
+        return login_manager.unauthorized()
 
     if not form.validate():
         return render_template("ryhmat/ryhmat.html", form = form,  ryhmat = Ryhma.query.all())
@@ -42,6 +45,9 @@ def ryhma(ryhma_id):
 def lisaa_jasenia(ryhma_id):
     
     ryhma = Ryhma.query.get_or_404(ryhma_id)
+
+    if not current_user.admin:
+        return login_manager.unauthorized()
  
     form = LisaaJasenLomake(request.form)
     
@@ -60,6 +66,9 @@ def poista_jasenia(ryhma_id, jasen_id):
     ryhma = Ryhma.query.get_or_404(ryhma_id)
     jasen = Kayttaja.query.get_or_404(jasen_id)
 
+    if not current_user.admin:
+        return login_manager.unauthorized()
+
     if jasen in ryhma.jasenet:
         ryhma.jasenet.remove(jasen)
         db.session.commit()
@@ -72,6 +81,9 @@ def poista_jasenia(ryhma_id, jasen_id):
 def ryhmat_poista(ryhma_id):
     ryhma = Ryhma.query.get_or_404(ryhma_id)
 
+    if not current_user.admin:
+        return login_manager.unauthorized()
+
     db.session.delete(ryhma)
     db.session.commit()
 
@@ -81,6 +93,9 @@ def ryhmat_poista(ryhma_id):
 @login_required
 def ryhmat_muokkaa(ryhma_id):
     ryhma = Ryhma.query.get_or_404(ryhma_id)
+
+    if not current_user.admin:
+        return login_manager.unauthorized()
 
     form = MuutaRyhmanNimeaLomake(request.form)
 
