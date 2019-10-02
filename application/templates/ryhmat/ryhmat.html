@@ -1,11 +1,16 @@
 {% extends "layout.html" %} {% block content %}
 <h1>Käyttäjäryhmät</h1>
+
+{% if current_user.admin %}
 <h2>Luo uusi ryhmä</h2>
 
 {{ wtf.quick_form(form, action=url_for('ryhmat_luo'), button_map={"nappi" : "success"}) }}
 
+<h2>Ryhmät</h2>
+
+{% endif %}
+
 <ul class="list-group">
-  <h2>Ryhmät</h2>
   {% for ryhma in ryhmat %}
   <li class="list-group-item">
     <a href="{{ url_for('ryhma', ryhma_id=ryhma.id) }}"> {{ ryhma.nimi }}</a>

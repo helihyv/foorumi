@@ -1,8 +1,11 @@
 {% extends "layout.html" %} {% block content %}
 <h1>{{ ryhma.nimi }}</h1>
+
+{% if current_user.admin %}
 <h2>Lisää jäseniä</h2>
 
 {{ wtf.quick_form(lisaa_jasen_lomake, action=url_for('lisaa_jasenia', ryhma_id=ryhma.id), button_map={"nappi" : "success"}) }}
+{% endif %}
 
 <h2>Jäsenet</h2>
 <table class="table table-striped table-condensed">
@@ -11,6 +14,7 @@
     <td>
       {{ jasen.nimi }}
     </td>
+    {% if current_user.admin %}
     <td>
       <form
         action="{{ url_for('poista_jasenia', ryhma_id =ryhma.id, jasen_id=jasen.id) }}"
@@ -19,10 +23,12 @@
         <input class="btn btn-danger" type="submit" value="Poista ryhmästä" />
       </form>
     </td>
+    {% endif %}
   </tr>
   {% endfor %}
 </table>
 
+{% if current_user.admin %}
 <h2>Muuta ryhmän nimeä</h2>
 
 {{ wtf.quick_form(muokkaa_ryhmaa_lomake, action=url_for('ryhmat_muokkaa',ryhma_id=ryhma.id), button_map={"nappi" : "success"}) }}
@@ -79,5 +85,4 @@
     </div>
   </div>
 </div>
-
-{% endblock %}
+{% endif %} {% endblock %}
