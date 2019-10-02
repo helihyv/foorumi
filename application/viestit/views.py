@@ -1,4 +1,4 @@
-from application import app, db
+from application import app, db, login_manager
 from flask import render_template, redirect, request, url_for
 from flask_login import login_required, current_user
 from application.viestit.models import Viesti
@@ -70,6 +70,9 @@ def viesti(viesti_id):
 def viestit_poista(viesti_id):
     viesti = Viesti.query.get_or_404(viesti_id)
 
+    if not current_user.admin:
+        return login_manager.unauthorized()
+
     db.session.delete(viesti)
     db.session.commit()
 
@@ -79,6 +82,9 @@ def viestit_poista(viesti_id):
 @login_required
 def viestit_muokkaa(viesti_id):
     viesti = Viesti.query.get_or_404(viesti_id)
+
+    if not current_user.admin:
+        return login_manager.unauthorized()
 
     form = ViestinMuokkausLomake(request.form)
 

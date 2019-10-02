@@ -25,6 +25,18 @@ from flask_bootstrap import Bootstrap
 
 Bootstrap(app)
 
+from flask_login import LoginManager
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login_lomake"
+login_manager.login_message = "Toiminto edellyttää kirjautumista"
+
+from application.kayttajat.models import Kayttaja
+
+@login_manager.user_loader
+def load_user(kayttaja_id):
+    return Kayttaja.query.get(kayttaja_id)
+
 from application import views
 
 from application.viestit import models
@@ -41,17 +53,7 @@ from application.tilastot import views
 from application.kayttajat import models
 from application.kayttajat import views
 
-from flask_login import LoginManager
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = "login_lomake"
-login_manager.login_message = "Toiminto edellyttää kirjautumista"
 
-from application.kayttajat.models import Kayttaja
-
-@login_manager.user_loader
-def load_user(kayttaja_id):
-    return Kayttaja.query.get(kayttaja_id)
 
 try:
     db.create_all()
