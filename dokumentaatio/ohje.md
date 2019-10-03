@@ -4,12 +4,11 @@
 
 ### Rekisteröityminen
 
-Sovellukseen rekisteröidytään valikon kohdasta "Rekisteröidy". Käyttäjälle on annettava käyttäjätunnus ja salasana. Käyttäjätunnus ei voi olla sama kuin jollain aiemmin rekisteröityneellä käyttäjällä.
+Sovellukseen rekisteröidytään valikon kohdasta "Rekisteröidy". Käyttäjälle on annettava nimi, käyttäjätunnus ja salasana. Nimen on oltava 4–100 merkkiä pitkä. Käyttäjätunnuksen ja salasanan on oltava 4–40 merkkiä pitkiä. Kun tiedot on annettu painetaan nappia "Luo käyttäjätunnus". Onnistuneen rekisteröitymisen jälkeen uusi käyttäjä kirjataan sisään sovellukseen. Käyttäjätunnus ei voi olla sama kuin jollain aiemmin rekisteröityneellä käyttäjällä. Jos sovellus ilmoittaa tunnuksen olevan jo varattu, keksi uusi tunnus ja yritä uudelleen.
 
 ### Kirjautuminen
 
-Sovellukseen kirjaudutaan valikon kohdasta "Kirjaudu". Jos käyttäjä pyrkii suoraan kirjautumista vaativalle sivulle,
-sovellus ohjaa automaattisesti kirjautumiseen.
+Sovellukseen kirjaudutaan valikon kohdasta "Kirjaudu". Anna käyttäjätunnus ja salasana ja paina nappia "Kirjaudu". Jos käyttäjä pyrkii suoraan kirjautumista vaativalle sivulle, sovellus ohjaa automaattisesti kirjautumiseen.
 
 ### Viestien katseleminen
 
@@ -21,11 +20,11 @@ Viestien kirjoittaminen edellyttää kirjautumista.
 
 #### Uuden viestiketjun aloittaminen
 
-Uusi viestiketju aloitetaan valikon kohdasta "Lisää viesti". Viestille annetaan otsikko ja teksti eli viestin sisältö. Viestille voidaan myös asettaa aihetunnisteita. Aihetunnisteita voi valita useita painamalla vaihto- tai ctrl-painikkeita aiheita valitessaan. Viestu tallennetaan painamalla nappia "Lisää viesti".
+Uusi viestiketju aloitetaan valikon kohdasta "Lisää viesti". Viestille annetaan otsikko ja teksti eli viestin sisältö. Viestille voidaan myös asettaa aihetunnisteita. Aihetunnisteita voi valita useita painamalla vaihto- tai ctrl-painikkeita aiheita valitessaan. Viesti tallennetaan painamalla nappia "Lisää viesti".
 
 #### Aiempaan viestiin vastaaminen
 
-Aiempaan viestiin voi vastata menemällä kyseisen viestin sivulle (ks. kohta viestien katselemine) ja painamalla "vastaa"-nappia. Tällöin avautuu lomake, johon voi kirjoittaa oman viestinsä samaan tapaan kuin uutta viestiketjua aloitettaessa.
+Aiempaan viestiin voi vastata menemällä kyseisen viestin sivulle (ks. kohta viestien katseleminen) ja painamalla "vastaa"-nappia. Tällöin avautuu lomake, johon voi kirjoittaa oman viestinsä samaan tapaan kuin uutta viestiketjua aloitettaessa.
 
 ### Aiheet
 
@@ -37,7 +36,7 @@ Luettelon käytössä olevista aiheista näkee valikon kohdasta "Aiheet".
 
 #### Aiheiden lisääminen
 
-Viesteille määriteltäviä aihetunnisteita voi lisätä valikon kohdasta "Aiheet". Aihe tarvitsee vain nimen.
+Viesteille määriteltäviä aihetunnisteita voi lisätä valikon kohdasta "Aiheet". Syötä haluamasi aihe ja paina nappia "Lisää aihe". Tämän jälkeen aihe on valittavissa uusia viestejä kirjoitettaessa.
 
 ### Ryhmien tarkastelu
 
@@ -49,7 +48,7 @@ Tilastojen tarkastelu edellyttää kirjautumista. Valikon kohdasta "Tilastot" p�
 
 ### Salasanan vaihtaminen
 
-Kirjautunut käyttäjä voi vaihtaa oman salasanansa valikon kohdasta "Vaihda salasana". Salasanan vaihtaminen edellyttää vanhan salasanan antamista.
+Kirjautunut käyttäjä voi vaihtaa oman salasanansa valikon kohdasta "Vaihda salasana". Salasanan vaihtaminen edellyttää vanhan salasanan antamista. Kirjoita myös uusi salasanasi molempiin sille varattuihin kenttiin täsmälleen samalla tavalla. Paina sitten nappia "Vaihda salasana".
 
 ## Sovelluksen ylläpito
 
@@ -57,7 +56,7 @@ Ylläpitäjä voi (tavalliselle käyttäjälle saatavilla olevien toimintojen li
 
 ### Ylläpitäjän tunnuksen luominen
 
-Kun sovellus käynnistetään ensimmäisen kerran, on ennen muuta käyttöä luotava ylläpitäjän käyttäjätunnus (valikon kohta "Lisää käyttäjä"). Ylläpitäjälle on annettava tunnus ja salasana. (Ensimmäisen käyttäjän jälkeen luotavat käyttäjät ovat tavallisia käyttäjiä, joilla ei ole ylläpitäjän oikeuksia.)
+Kun sovellus käynnistetään ensimmäisen kerran, on ennen muuta käyttöä luotava ylläpitäjän käyttäjätunnus (valikon kohta "Rekisteröidy"). Ylläpitäjälle on annettava nimi, tunnus ja salasana. (Ensimmäisen käyttäjän jälkeen luotavat käyttäjät ovat tavallisia käyttäjiä, joilla ei ole ylläpitäjän oikeuksia.)
 
 ### Viestien muokkaaminen
 
@@ -75,19 +74,19 @@ Ylläpitäjälle aiheet näkyvät "Aiheet"- sivulla linkkeinä, joita painamalla
 
 #### Ryhmien lisääminen
 
-Ylläpitäjä voi lisätä ryhmiä valikon kohdasta "Ryhmät" löytyvällä vain ylläpitäjälle näkyvällä lomakkeella. Ryhmälle riittää määritellä nimi.
+Ylläpitäjä voi lisätä ryhmiä valikon kohdasta "Ryhmät" löytyvällä vain ylläpitäjälle näkyvällä lomakkeella. Ryhmälle riittää määritellä nimi ja painaa nappia "Lisää ryhmä".
 
 #### Ryhmän nimen muokkaaminen
 
-Ylläpitäjälle näkyy ryhmän sivulla lomake ryhmän nimen muuttamiseen.
+Ylläpitäjälle näkyy ryhmän sivulla lomake ryhmän nimen muuttamiseen. Muokkaa ryhmän nimi halamaasi muotoon ja paina nappia "Muokkaa nimeä".
 
 #### Ryhmän poistaminen
 
-Ylläpitäjälle näkyy ryhmän sivulla nappi ryhmän poistamiseen.
+Ylläpitäjälle näkyy ryhmän sivulla nappi "Poista ryhmä ryhmännimi" ryhmän poistamiseen. Kun nappia on painettu, sovellus kysyy vielä haluatko varmasti poistaa ryhmän.
 
 #### Jäsenen lisääminen ryhmään
 
-Ylläpitäjälle näkyy ryhmän sivulla lomake jäsenien lisäämiseksi ryhmään. Jäseniä voi lisätä useampia kerrallaan painamalla vaihto- tai ctrl-näppäintä valitessaan lisättäviä jäseniä.
+Ylläpitäjälle näkyy ryhmän sivulla lomake jäsenien lisäämiseksi ryhmään. Jäseniä voi lisätä useampia kerrallaan painamalla vaihto- tai ctrl-näppäintä valitessaan lisättäviä jäseniä. Valittuasi lisättävät jäsenet, paina nappia "Lisää jäsen".
 
 #### Jäsenen poistaminen ryhmästä
 
