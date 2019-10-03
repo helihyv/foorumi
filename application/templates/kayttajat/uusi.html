@@ -4,7 +4,7 @@ content %} {% if admin %}
 Foorumia käyttöönotettaessa on luotava ylläpitäjän käyttäjätunnus, jolla pääset
 hallinnoimaan ryhmiä ja aihetunnisteita sekä siivoamaan viestejä. Anna
 ylläpitäjän tiedot: {% else %}
-<h1>Luo uusi käyttäjä</h1>
+<h1>Rekisteröidy</h1>
 {% endif %}
 
 {{ wtf.quick_form(form, action=url_for('kayttajat_luo'), button_map={"nappi" : "success"}) }}

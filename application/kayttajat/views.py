@@ -29,6 +29,8 @@ def kayttajat_luo():
     db.session.add(kayttaja)
     db.session.commit()
 
+    login_user(kayttaja)
+
     return redirect(url_for("login_lomake"))
 
 @app.route("/login", methods = ["GET"])

@@ -21,35 +21,56 @@ current_user.is_authenticated %}
 
   <div class="collapse navbar-collapse" id="navBarNavAltMarkup2">
     <ul class="nav navbar-nav">
+      {% if current_user.is_authenticated %}
       <li>
-        <a class="nav-item navbar-link" href="/viestit">Viestit</a>
+        <a class="nav-item navbar-link" href="{{ url_for('viestit_index') }}"
+          >Viestit</a
+        >
       </li>
       <li>
-        <a class="nav-item navbar-link" href="/viestit/uusi">Lisää viesti</a>
+        <a class="nav-item navbar-link" href="{{ url_for('viestit_lomake') }}"
+          >Lisää viesti</a
+        >
       </li>
       <li>
-        <a class="nav-item navbar-link" href="/tilastot">Tilastot</a>
+        <a class="nav-item navbar-link" href="{{ url_for('tilastot') }}"
+          >Tilastot</a
+        >
       </li>
       <li>
-        <a class="nav-item navbar-link" href="/aiheet">Aiheet</a>
+        <a class="nav-item navbar-link" href="{{ url_for('aiheet') }}"
+          >Aiheet</a
+        >
       </li>
 
       <li>
-        <a class="nav-item navbar-link" href="/ryhmat">Ryhmät</a>
-      </li>
-      <li>
-        <a class="nav-item navbar-link" href="/kayttajat/uusi"
-          >Lisää käyttäjä</a
+        <a class="nav-item navbar-link" href="{{ url_for('ryhmat') }}"
+          >Ryhmät</a
         >
       </li>
+
       <li>
-        <a class="nav-item nav-bar-link" href="/kayttajat/salasananvaihto"
+        <a
+          class="nav-item navbar-link"
+          href=" {{ url_for('kayttajat_salasananvaihto') }}"
           >Vaihda salasana</a
         >
       </li>
-      {% if current_user.is_authenticated %}
       <li>
-        <a href="{{ url_for('logout') }}">Kirjaudu ulos</a>
+        <a class="nav-item navbar-link" href="{{ url_for('logout') }}"
+          >Kirjaudu ulos</a
+        >
+      </li>
+      {% else %}
+      <li>
+        <a class="nav-item navbar-link" href="{{ url_for('login_lomake') }}"
+          >Kirjaudu</a
+        >
+      </li>
+      <li>
+        <a class="nav-item navbar-link" href="{{ url_for('kayttajat_lomake') }}"
+          >Rekisteröidy</a
+        >
       </li>
       {% endif %}
     </ul>
