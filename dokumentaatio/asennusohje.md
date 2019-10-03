@@ -34,4 +34,4 @@ Jos asennat sovelluksen muuhun pilvipalveluun kuin Herokuun, noudata valitsemasi
 
 ## Ylläpitäjän tunnuksen luominen
 
-Kun sovellus käynnistetään ensimmäisen kerran, on aluksi luotava ylläpitäjän käyttäjätunnus (valikon kohta "Lisää käyttäjä"). Ylläpitäjän tietoina on annettava nimi, tunnus ja salasana. Ensimmäisen käyttäjän jälkeen luotavat käyttäjät ovat tavallisia käyttäjiä, joilla ei ole ylläpitäjän oikeuksia.
+Kun sovellus käynnistetään ensimmäisen kerran, on aluksi luotava ylläpitäjän käyttäjätunnus (valikon kohta "Rekisteröidy"). Ylläpitäjän tietoina on annettava nimi, tunnus ja salasana. Ensimmäisen käyttäjän jälkeen luotavat käyttäjät ovat tavallisia käyttäjiä, joilla ei ole ylläpitäjän oikeuksia.

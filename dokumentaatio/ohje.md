@@ -4,17 +4,20 @@
 
 ### Rekisteröityminen
 
-Sovellukseen rekisteröidytään valikon kohdasta "Lisää käyttäjä". Käyttäjälle on annettava käyttäjätunnus ja salasana. Käyttäjätunnus ei voi olla sama kuin jollain aiemmin rekisteröityneellä käyttäjällä.
+Sovellukseen rekisteröidytään valikon kohdasta "Rekisteröidy". Käyttäjälle on annettava käyttäjätunnus ja salasana. Käyttäjätunnus ei voi olla sama kuin jollain aiemmin rekisteröityneellä käyttäjällä.
 
 ### Kirjautuminen
 
-Sovellus ohjaa automaattisesti kirjautumiseen, kun käyttäjä pyrkii kirjautumista vaativalle sivulle.
+Sovellukseen kirjaudutaan valikon kohdasta "Kirjaudu". Jos käyttäjä pyrkii suoraan kirjautumista vaativalle sivulle,
+sovellus ohjaa automaattisesti kirjautumiseen.
 
 ### Viestien katseleminen
 
 Viestien katseleminen edellyttää kirjautumista. Viestejä pääsee katsomaan valikon kohdasta "Viestit", jonne on listattu viestien otsikot. Klikkaamalla listassa olevaa otsikkoa pääsee tarkastelemaan koko viestiä.
 
 ### Viestien kirjoittaminen
+
+Viestien kirjoittaminen edellyttää kirjautumista.
 
 #### Uuden viestiketjun aloittaminen
 
@@ -26,6 +29,8 @@ Aiempaan viestiin voi vastata menemällä kyseisen viestin sivulle (ks. kohta vi
 
 ### Aiheet
 
+Aiheiden tarkastelu ja uusien aiheiden lisääminen edellyttävät kirjautumista.
+
 #### Aiheiden tarkastelu
 
 Luettelon käytössä olevista aiheista näkee valikon kohdasta "Aiheet".
@@ -36,15 +41,15 @@ Viesteille määriteltäviä aihetunnisteita voi lisätä valikon kohdasta "Aihe
 
 ### Ryhmien tarkastelu
 
-Valikon kohdasta "Ryhmät" pääsee tarkastelemaan foorumille määriteltyjä käyttäjäryhmiä. Klikkaamalla ryhmää pääsee katsomaan keitä sen jäseninä on.
+Ryhmien tarkastelu edellyttää kirjautumista. Valikon kohdasta "Ryhmät" pääsee tarkastelemaan foorumille määriteltyjä käyttäjäryhmiä. Klikkaamalla ryhmää pääsee katsomaan keitä sen jäseninä on.
 
 ### Tilastojen tarkastelu
 
-Valikon kohdasta "Tilastot" pääsee tarkastelemaan foorumin tilastoja. Näkyvillä ovat viisi eniten viestejä kirjoittanutta käyttäjää, viisi eniten viestejä kirjoittanutta käyttäjäryhmää, viisi suosituinta aihetta ja käyttäjäryhmien kirjoitusten aihejakaumat. Ryhmän jäsenten kirjoittamiksi katsotaan kaikki ryhmän jäseninä tarkasteluhetkellä olevien kirjoittamat viestit (ja vain ne) riippumatta siitä ovatko he olleet ryhmän jäseniä kirjoittaessaan viestin.
+Tilastojen tarkastelu edellyttää kirjautumista. Valikon kohdasta "Tilastot" pääsee tarkastelemaan foorumin tilastoja. Näkyvillä ovat viisi eniten viestejä kirjoittanutta käyttäjää, viisi eniten viestejä kirjoittanutta käyttäjäryhmää, viisi suosituinta aihetta ja käyttäjäryhmien kirjoitusten aihejakaumat. Ryhmän jäsenten kirjoittamiksi katsotaan kaikki ryhmän jäseninä tarkasteluhetkellä olevien kirjoittamat viestit (ja vain ne) riippumatta siitä ovatko he olleet ryhmän jäseniä kirjoittaessaan viestin.
 
 ### Salasanan vaihtaminen
 
-Käyttäjä voi vaihtaa oman salasanansa valikon kohdasta "Vaihda salasana". Salasanan vaihtaminen edellyttää vanhan salasanan antamista.
+Kirjautunut käyttäjä voi vaihtaa oman salasanansa valikon kohdasta "Vaihda salasana". Salasanan vaihtaminen edellyttää vanhan salasanan antamista.
 
 ## Sovelluksen ylläpito
 
