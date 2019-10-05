@@ -16,3 +16,10 @@ class ViestiLomake(ViestiPohjaLomake):
 
 class ViestinMuokkausLomake(ViestiPohjaLomake):
     nappi = SubmitField("Muokkaa viestiä")
+
+class ViestinHakuLomake(FlaskForm):
+    nimi = StringField("Kirjoittaja")
+    nappi = SubmitField("Hae")
+
+    class Meta:
+        csrf = False

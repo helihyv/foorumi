@@ -2,7 +2,7 @@ from application import app, db, login_manager
 from flask import render_template, redirect, request, url_for
 from flask_login import login_required, current_user
 from application.viestit.models import Viesti
-from application.viestit.forms import ViestiLomake, ViestinMuokkausLomake
+from application.viestit.forms import ViestiLomake, ViestinMuokkausLomake, ViestinHakuLomake
 from application.aiheet.models import Aihe
 from application.kayttajat.models import Kayttaja
 
@@ -43,8 +43,18 @@ def viestit_luo():
 @app.route("/viestit", methods=["GET"])
 @login_required
 def viestit_index():
-    viestit = Viesti.query.order_by(Viesti.kirjoitusaika.desc()).all()
-    return render_template("viestit/lista.html", viestit=viestit)
+
+    form = ViestinHakuLomake()
+
+    kysely = Viesti.query
+
+    nimi = request.args.get("nimi")
+
+    if nimi:
+        kysely = kysely.join(Viesti.kirjoittaja).filter(Kayttaja.nimi == nimi)
+    
+    viestit = kysely.order_by(Viesti.kirjoitusaika.desc()).all()
+    return render_template("viestit/lista.html", viestit=viestit, form=form)
 
 
 @app.route("/viestit/<viesti_id>")

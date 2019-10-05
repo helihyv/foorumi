@@ -1,6 +1,9 @@
 {% extends "layout.html" %} {% block content %}
 
 <h1>Viestit</h1>
+
+{{ wtf.quick_form(form, method="get", form_type="horizontal", button_map={"nappi" : "primary" })}}
+
 <ul class="list-group">
   {% for viesti in viestit %}
   <li class="list-group-item">
