@@ -18,6 +18,7 @@ class ViestinMuokkausLomake(ViestiPohjaLomake):
     nappi = SubmitField("Muokkaa viestiä")
 
 class ViestinHakuLomake(FlaskForm):
+    aihe = StringField("Aihe")
     nimi = StringField("Kirjoittaja")
     nappi = SubmitField("Hae")
 

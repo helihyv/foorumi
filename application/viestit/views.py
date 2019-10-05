@@ -44,16 +44,23 @@ def viestit_luo():
 @login_required
 def viestit_index():
 
-    form = ViestinHakuLomake()
-
     kysely = Viesti.query
+
+    aihe = request.args.get("aihe")
+
+    if aihe:
+        kysely = kysely.join(Viesti.aiheet).filter(Aihe.aihe == aihe)
 
     nimi = request.args.get("nimi")
 
     if nimi:
         kysely = kysely.join(Viesti.kirjoittaja).filter(Kayttaja.nimi == nimi)
-    
+
+       
     viestit = kysely.order_by(Viesti.kirjoitusaika.desc()).all()
+
+    form = ViestinHakuLomake()
+
     return render_template("viestit/lista.html", viestit=viestit, form=form)
 
 
