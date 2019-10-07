@@ -80,7 +80,7 @@ def viestit_index():
 
     loppupvm = request.args.get("loppupvm")
     if loppupvm:
-        kysely = kysely.filter(Viesti.kirjoitusaika <= loppupvm + str(time(23,59,59,999))) 
+        kysely = kysely.filter(Viesti.kirjoitusaika <= loppupvm + " " +  str(time(23,59,59,999999))) 
         hakuparametrit = hakuparametrit + "loppupvm=" + loppupvm
 
     sivuteksti = request.args.get("sivu", 1)
