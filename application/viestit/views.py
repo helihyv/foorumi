@@ -5,6 +5,7 @@ from application.viestit.models import Viesti
 from application.viestit.forms import ViestiLomake, ViestinMuokkausLomake, ViestinHakuLomake
 from application.aiheet.models import Aihe
 from application.kayttajat.models import Kayttaja
+from application.ryhmat.models import Ryhma
 
 
 @app.route("/viestit/uusi")
@@ -53,10 +54,18 @@ def viestit_index():
 
     nimi = request.args.get("nimi")
 
-    if nimi:
-        kysely = kysely.join(Viesti.kirjoittaja).filter(Kayttaja.nimi == nimi)
+    ryhma = request.args.get("ryhma")
 
-       
+    if nimi or ryhma:
+        kysely = kysely.join(Viesti.kirjoittaja)
+
+    if nimi:
+        kysely = kysely.filter(Kayttaja.nimi == nimi)
+
+    if ryhma:
+        kysely = kysely.join(Kayttaja.kayttajat).filter(Ryhma.nimi == ryhma)
+
+    
     viestit = kysely.order_by(Viesti.kirjoitusaika.desc()).all()
 
     form = ViestinHakuLomake()

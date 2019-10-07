@@ -20,6 +20,7 @@ class ViestinMuokkausLomake(ViestiPohjaLomake):
 class ViestinHakuLomake(FlaskForm):
     aihe = StringField("Aihe")
     nimi = StringField("Kirjoittaja")
+    ryhma = StringField("Ryhmältä")
     nappi = SubmitField("Hae")
 
     class Meta:
