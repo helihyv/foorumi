@@ -49,8 +49,12 @@ def viestit_index():
 
     aihe = request.args.get("aihe")
 
+    hakuparametrit = "&"
+
     if aihe:
         kysely = kysely.join(Viesti.aiheet).filter(Aihe.aihe == aihe)
+        hakuparametrit = hakuparametrit + "aihe=" + aihe + "&"
+
 
     nimi = request.args.get("nimi")
 
@@ -61,16 +65,24 @@ def viestit_index():
 
     if nimi:
         kysely = kysely.filter(Kayttaja.nimi == nimi)
+        hakuparametrit = hakuparametrit + "nimi=" + nimi + "&"
 
     if ryhma:
         kysely = kysely.join(Kayttaja.kayttajat).filter(Ryhma.nimi == ryhma)
+        hakuparametrit = hakuparametrit + "ryhma=" + ryhma + "&"
+
+    sivuteksti = request.args.get("sivu", 1)
+    try:
+        sivu = int(sivuteksti)
+    except:
+        sivu = 1
 
     
-    viestit = kysely.order_by(Viesti.kirjoitusaika.desc()).all()
+    viestit = kysely.order_by(Viesti.kirjoitusaika.desc()).paginate(sivu)
 
     form = ViestinHakuLomake()
 
-    return render_template("viestit/lista.html", viestit=viestit, form=form)
+    return render_template("viestit/lista.html", viestit=viestit, form=form, haettu_aihe=aihe, haettu_kirjoittaja=nimi, haettu_ryhma = ryhma, hakuparametrit=hakuparametrit)
 
 
 @app.route("/viestit/<viesti_id>")

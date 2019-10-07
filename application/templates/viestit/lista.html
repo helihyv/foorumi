@@ -4,8 +4,43 @@
 
 {{ wtf.quick_form(form, method="get", form_type="horizontal", button_map={"nappi" : "primary" })}}
 
+{% if haettu_aihe or haettu_kirjoittaja or haettu_ryhma %}
+{% if viestit.items|length > 0 %}
+Näytetään viestit
+{% else %}
+Ei löytynyt viestejä
+{% endif %}
+{% endif %}
+
+{% if haettu_aihe %}
+aiheesta {{ haettu_aihe }}
+{% endif %}
+
+{% if haettu_kirjoittaja%}
+kirjoittajalta {{haettu_kirjoittaja}}
+{% endif %}
+
+{% if haettu_ryhma %}
+ryhmän {{ haettu_ryhma }} jäseniltä
+{% endif %}
+
+
+
+<div aria-label="Viestien listauksen sivut">
+    <ul class="pagination">
+        </li>
+        {% for sivu in range(1, viestit.pages + 1) %}
+        <li {% if sivu == viestit.page %} class="active" {% endif %} >
+            <a href="{{ url_for('viestit_index') }}?sivu={{ sivu }}{{ hakuparametrit }}">       
+              {{ (sivu -1) * 20 + 1 }}–{{20 * sivu}}
+             </a>
+        </li>
+        {% endfor %}
+    </ul>
+  </div>
+
 <ul class="list-group">
-  {% for viesti in viestit %}
+  {% for viesti in viestit.items %}
   <li class="list-group-item">
     <h3>
       <a href="{{ url_for('viesti', viesti_id = viesti.id) }}"
