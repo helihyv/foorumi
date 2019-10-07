@@ -8,7 +8,14 @@ from flask_login import login_required, current_user
 @app.route("/ryhmat", methods=["GET"])
 @login_required
 def ryhmat():
-    return render_template("ryhmat/ryhmat.html", ryhmat = Ryhma.query.order_by(Ryhma.nimi).all(), form = LisaaRyhmaLomake())
+
+    sivuteksti = request.args.get("sivu", 1)
+    try:
+        sivu = int(sivuteksti)
+    except:
+        sivu = 1
+
+    return render_template("ryhmat/ryhmat.html", ryhmat = Ryhma.query.order_by(Ryhma.nimi).paginate(sivu), form = LisaaRyhmaLomake())
 
 @app.route("/ryhmat", methods=["POST"])
 @login_required
