@@ -1,7 +1,7 @@
 from application import app, db, login_manager
 from flask import render_template, redirect, request, url_for
 from flask_login import login_required, current_user
-from datetime import time
+from datetime import time, datetime
 from application.viestit.models import Viesti
 from application.viestit.forms import ViestiLomake, ViestinMuokkausLomake, ViestinHakuLomake
 from application.aiheet.models import Aihe
@@ -68,6 +68,7 @@ def viestit_index():
         kysely = kysely.filter(Kayttaja.nimi == nimi)
         hakuparametrit = hakuparametrit + "nimi=" + nimi + "&"
 
+
     if ryhma:
         kysely = kysely.join(Kayttaja.kayttajat).filter(Ryhma.nimi == ryhma)
         hakuparametrit = hakuparametrit + "ryhma=" + ryhma + "&"
@@ -77,11 +78,14 @@ def viestit_index():
     if alkupvm:
         kysely = kysely.filter(Viesti.kirjoitusaika >= alkupvm)
         hakuparametrit = hakuparametrit + "alkupvm=" + alkupvm + "&"
+        alkupvm = datetime.strptime(alkupvm, "%Y-%m-%d")
+        
 
     loppupvm = request.args.get("loppupvm")
     if loppupvm:
         kysely = kysely.filter(Viesti.kirjoitusaika <= loppupvm + " " +  str(time(23,59,59,999999))) 
         hakuparametrit = hakuparametrit + "loppupvm=" + loppupvm
+        loppupvm = datetime.strptime(loppupvm,"%Y-%m-%d")
 
     sivuteksti = request.args.get("sivu", 1)
     try:

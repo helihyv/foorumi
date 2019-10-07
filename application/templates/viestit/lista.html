@@ -52,11 +52,11 @@ onclick="this.innerHTML = this.innerHTML ==='Sulje hakulomake' ? 'Hae viestejä'
       {% endif %}
 
       {% if haettu_aika_alku %}
-      {{ haettu_aika_alku}} alkaen 
+      {{ haettu_aika_alku.strftime("%d.%m.%Y")}} alkaen 
       {% endif %}
 
       {% if haettu_aika_loppu %}
-      {{ haettu_aika_loppu }} asti
+      {{ haettu_aika_loppu.strftime("%d.%m.%Y") }} asti
       {% endif %}
       </p>
 
