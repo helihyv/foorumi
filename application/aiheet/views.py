@@ -7,7 +7,14 @@ from application.aiheet.forms import LisaaAiheLomake, MuokkaaAihettaLomake
 @app.route("/aiheet",methods=["GET"])
 @login_required
 def aiheet():
-    return render_template("aiheet/aiheet.html", aiheet= Aihe.query.order_by(Aihe.aihe).all(), form=LisaaAiheLomake())
+    sivuteksti = request.args.get("sivu", 1)
+
+    try:
+        sivu = int(sivuteksti)
+    except:
+        sivu = 1
+
+    return render_template("aiheet/aiheet.html", aiheet= Aihe.query.order_by(Aihe.aihe).paginate(sivu), form=LisaaAiheLomake())
 
 @app.route("/aiheet", methods=["POST"])
 @login_required

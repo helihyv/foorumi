@@ -5,8 +5,22 @@
 {{ wtf.quick_form(form, action=url_for('aiheet_luo'), button_map={"nappi" : "success"}) }}
 
 <h2>Aiheet</h2>
+
+<div aria-label="Aiheiden sivut">
+  <ul class="pagination">
+      </li>
+      {% for sivu in range(1, aiheet.pages + 1) %}
+      <li {% if sivu == aiheet.page %} class="active" {% endif %} >
+          <a href="{{ url_for('aiheet') }}?sivu={{ sivu }}">       
+            {{ (sivu -1) * 20 + 1 }}–{{20 * sivu}}
+           </a>
+      </li>
+      {% endfor %}
+  </ul>
+</div>
+
 <ul class="list-group">
-  {% for aihe in aiheet %}
+  {% for aihe in aiheet.items %}
   <li class="list-group-item">
       {% if current_user.admin %}
       <a href="/aiheet/{{ aihe.id }}">
