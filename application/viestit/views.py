@@ -14,7 +14,7 @@ def viestit_lomake():
 
     form = ViestiLomake()
 
-    form.aiheet.choices = [(aihe.id, aihe.aihe) for aihe in Aihe.query.all()]
+    form.aiheet.choices = [(aihe.id, aihe.aihe) for aihe in Aihe.query.order_by(Aihe.aihe).all()]
     form.vastattava_viesti.data = None
     return render_template("viestit/uusi.html", form=form)
 
@@ -77,19 +77,21 @@ def viestit_index():
 @login_required
 def viesti(viesti_id):
     viesti = Viesti.query.get_or_404(viesti_id)
-    
+
     viesti.lukeneet.append(current_user)
     db.session.commit()
-    
+
     vastaus_lomake = ViestiLomake()
-    vastaus_lomake.aiheet.choices = [(aihe.id, aihe.aihe) for aihe in Aihe.query.all()]
+    vastaus_lomake.aiheet.choices = [
+        (aihe.id, aihe.aihe) for aihe in Aihe.query.order_by(Aihe.aihe).all()]
     vastaus_lomake.vastattava_viesti.data = viesti_id
 
     muokkaus_lomake = ViestinMuokkausLomake()
     muokkaus_lomake.otsikko.data = viesti.otsikko
-    muokkaus_lomake.teksti.data = viesti.teksti 
+    muokkaus_lomake.teksti.data = viesti.teksti
 
     return render_template("viestit/viesti.html", viesti=viesti, vastaus_lomake=vastaus_lomake, muokkaus_lomake=muokkaus_lomake)
+
 
 @app.route("/viestit/<viesti_id>/poista", methods=["POST"])
 @login_required
@@ -103,6 +105,7 @@ def viestit_poista(viesti_id):
     db.session.commit()
 
     return redirect(url_for("viestit_index"))
+
 
 @app.route("/viestit/<viesti_id>", methods=["POST"])
 @login_required
