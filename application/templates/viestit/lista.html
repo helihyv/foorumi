@@ -69,7 +69,7 @@ onclick="this.innerHTML = this.innerHTML ==='Sulje hakulomake' ? 'Hae viestejä'
 
         <small
           >{{ viesti.kirjoittaja.nimi }}
-          {{ viesti.kirjoitusaika.strftime("%d.%m. %Y %H:%M") }}
+          {{ viesti.kirjoitusaika.strftime("%d.%m.%Y %H:%M") }}
 
           {% if viesti.ovatko_kaikki_lukeneet() %} KAIKKI LUKENEET {% elif
           viesti.onko_lukenut(current_user) %} LUETTU {% else %} UUSI {% endif

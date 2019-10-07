@@ -3,7 +3,7 @@
   {{ viesti.otsikko }}
   <small
     >{{ viesti.kirjoittaja.nimi }}
-    {{ viesti.kirjoitusaika.strftime("%d.%m. %Y %H:%M") }}</small
+    {{ viesti.kirjoitusaika.strftime("%d.%m.%Y %H:%M") }}</small
   >
 </h1>
 {% if viesti.muokkausaika %}
@@ -17,7 +17,7 @@ Muokattu {{ viesti.muokkausaika.strftime("%d.%m. %Y %H:%M")}}
   <a href="{{ url_for('viesti', viesti_id=viesti.vastattu.id )}}">
       
     {{ viesti.vastattu.otsikko }}, {{ viesti.vastattu.kirjoittaja.nimi }},
-    {{ viesti.vastattu.kirjoitusaika.strftime("%d.%m. %Y %H:%M") }}
+    {{ viesti.vastattu.kirjoitusaika.strftime("%d.%m.%Y %H:%M") }}
 
     {% if viesti.vastattu.ovatko_kaikki_lukeneet() %} KAIKKI LUKENEET {% elif
       viesti.vastattu.onko_lukenut(current_user) %} LUETTU {% else %} UUSI {% endif
@@ -57,7 +57,7 @@ Muokattu {{ viesti.muokkausaika.strftime("%d.%m. %Y %H:%M")}}
   <li class="list-group-item">
     <a href="{{ url_for('viesti', viesti_id=vastaus.id ) }}">
       {{ vastaus.otsikko }}, {{ vastaus.kirjoittaja.nimi }},
-      {{ vastaus.kirjoitusaika.strftime("%d.%m. %Y %H:%M") }}
+      {{ vastaus.kirjoitusaika.strftime("%d.%m.%Y %H:%M") }}
       {% if vastaus.ovatko_kaikki_lukeneet() %} KAIKKI LUKENEET {% elif
         vastaus.onko_lukenut(current_user) %} LUETTU {% else %} UUSI {% endif
         %}
