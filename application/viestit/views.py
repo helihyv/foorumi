@@ -1,6 +1,7 @@
 from application import app, db, login_manager
 from flask import render_template, redirect, request, url_for
 from flask_login import login_required, current_user
+from datetime import time
 from application.viestit.models import Viesti
 from application.viestit.forms import ViestiLomake, ViestinMuokkausLomake, ViestinHakuLomake
 from application.aiheet.models import Aihe
@@ -71,6 +72,17 @@ def viestit_index():
         kysely = kysely.join(Kayttaja.kayttajat).filter(Ryhma.nimi == ryhma)
         hakuparametrit = hakuparametrit + "ryhma=" + ryhma + "&"
 
+    alkupvm = request.args.get("alkupvm")
+
+    if alkupvm:
+        kysely = kysely.filter(Viesti.kirjoitusaika >= alkupvm)
+        hakuparametrit = hakuparametrit + "alkupvm=" + alkupvm + "&"
+
+    loppupvm = request.args.get("loppupvm")
+    if loppupvm:
+        kysely = kysely.filter(Viesti.kirjoitusaika <= loppupvm + str(time(23,59,59,999))) 
+        hakuparametrit = hakuparametrit + "loppupvm=" + loppupvm
+
     sivuteksti = request.args.get("sivu", 1)
     try:
         sivu = int(sivuteksti)
@@ -82,7 +94,7 @@ def viestit_index():
 
     form = ViestinHakuLomake()
 
-    return render_template("viestit/lista.html", viestit=viestit, form=form, haettu_aihe=aihe, haettu_kirjoittaja=nimi, haettu_ryhma = ryhma, hakuparametrit=hakuparametrit)
+    return render_template("viestit/lista.html", viestit=viestit, form=form, haettu_aihe=aihe, haettu_kirjoittaja=nimi, haettu_ryhma = ryhma, haettu_aika_alku = alkupvm, haettu_aika_loppu = loppupvm, hakuparametrit=hakuparametrit)
 
 
 @app.route("/viestit/<viesti_id>")
