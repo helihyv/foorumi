@@ -2,29 +2,20 @@
 
 <h1>Viestit</h1>
 
-{{ wtf.quick_form(form, method="get", form_type="horizontal", button_map={"nappi" : "primary" })}}
-
-{% if haettu_aihe or haettu_kirjoittaja or haettu_ryhma %}
-{% if viestit.items|length > 0 %}
-Näytetään viestit
-{% else %}
-Ei löytynyt viestejä
-{% endif %}
-{% endif %}
-
-{% if haettu_aihe %}
-aiheesta {{ haettu_aihe }}
-{% endif %}
-
-{% if haettu_kirjoittaja%}
-kirjoittajalta {{haettu_kirjoittaja}}
-{% endif %}
-
-{% if haettu_ryhma %}
-ryhmän {{ haettu_ryhma }} jäseniltä
-{% endif %}
-
-
+<button
+id="avaa_haku_nappi"
+class="btn btn-primary"
+data-toggle="collapse"
+href="#hakulomake"
+aria-expanded="false"
+aria-controls="hakulomake"
+onclick="this.innerHTML = this.innerHTML ==='Sulje hakulomake' ? 'Hae viestejä'"
+>
+  Hae viestejä
+</button>
+<div class="collapse" id="hakulomake">
+  {{ wtf.quick_form(form, method="get", form_type="horizontal", button_map={"nappi" : "primary" })}}
+</div>
 
 <div aria-label="Viestien listauksen sivut">
     <ul class="pagination">
@@ -38,6 +29,28 @@ ryhmän {{ haettu_ryhma }} jäseniltä
         {% endfor %}
     </ul>
   </div>
+
+  <p>
+      {% if haettu_aihe or haettu_kirjoittaja or haettu_ryhma %}
+      {% if viestit.items|length > 0 %}
+      Näytetään viestit
+      {% else %}
+      Ei löytynyt viestejä
+      {% endif %}
+      {% endif %}
+      
+      {% if haettu_aihe %}
+      aiheesta {{ haettu_aihe }}
+      {% endif %}
+      
+      {% if haettu_kirjoittaja%}
+      kirjoittajalta {{haettu_kirjoittaja}}
+      {% endif %}
+      
+      {% if haettu_ryhma %}
+      ryhmän {{ haettu_ryhma }} jäseniltä
+      {% endif %}
+      </p>
 
 <ul class="list-group">
   {% for viesti in viestit.items %}
