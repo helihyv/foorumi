@@ -15,8 +15,15 @@ Muokattu {{ viesti.muokkausaika.strftime("%d.%m. %Y %H:%M")}}
 <p>
   {% if viesti.vastattu %} Vastaus viestiin
   <a href="{{ url_for('viesti', viesti_id=viesti.vastattu.id )}}">
-    {{ viesti.vastattu.otsikko }}</a
-  >. {% endif%}
+      
+    {{ viesti.vastattu.otsikko }}, {{ viesti.vastattu.kirjoittaja.nimi }},
+    {{ viesti.vastattu.kirjoitusaika.strftime("%d.%m. %Y %H:%M") }}
+
+    {% if viesti.vastattu.ovatko_kaikki_lukeneet() %} KAIKKI LUKENEET {% elif
+      viesti.vastattu.onko_lukenut(current_user) %} LUETTU {% else %} UUSI {% endif
+      %}  
+  </a>. 
+    {% endif%}
 </p>
 
 <div class="well">{{ viesti.teksti }}</div>
@@ -51,6 +58,9 @@ Muokattu {{ viesti.muokkausaika.strftime("%d.%m. %Y %H:%M")}}
     <a href="{{ url_for('viesti', viesti_id=vastaus.id ) }}">
       {{ vastaus.otsikko }}, {{ vastaus.kirjoittaja.nimi }},
       {{ vastaus.kirjoitusaika.strftime("%d.%m. %Y %H:%M") }}
+      {% if vastaus.ovatko_kaikki_lukeneet() %} KAIKKI LUKENEET {% elif
+        vastaus.onko_lukenut(current_user) %} LUETTU {% else %} UUSI {% endif
+        %}
     </a>
   </li>
   {% endfor %}
