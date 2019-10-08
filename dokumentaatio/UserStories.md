@@ -26,14 +26,15 @@
 - nähdä mitä ryhmiä foorumissa on
 - nähdä, keitä ryhmiin kuuluu
 - nähdä tilastoja foorumin käytöstä
-  - kaikkien kirjoitusten jakautuminen eri aiheiden kesken
+  - suosituimmat aiheet
   - eri ryhmien jäsenten kirjoitusten jakautuminen aiheittain
-  - aktiivisimmin kirjoittavat käyttäjät
-  - aktiivisimmin kirjoittavat ryhmät
+  - eniten viestejä kirjoittaneet käyttäjät
+  - eniten viestejä kirjoittaneet ryhmät
 
 ## Foorumin ylläpitäjänä haluan lisäksi...
 
-- poistaa tai muokata asiattomia viestejä
+- poistaa viestejä, jotta asiattomat viestit saadaan poistetuksi foorumista
+- muokata viestejä, jotta voin poistaa viesteistää asiatonta sisältöä
 - hallita käyttäjien jäsenyyksiä ryhmissä
   - luoda ryhmiä
   - liittää käyttäjän ryhmään

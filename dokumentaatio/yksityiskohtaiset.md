@@ -2,9 +2,9 @@
 
 Automaattisesti generoitavat SQL-kyselyt on tässä esitetty siinä muodossa kuin ne toteutetaan SQLite-tietokantaan. Käsin tehdyt kyselyt ovat siinä muodossa kuin ne ovat koodissa.
 
-## Foorumin käyttäjänä (yhteisön jäsenenä) haluan...
+## Foorumin käyttäjänä (yhteisön jäsenenä)
 
-### lukea viestejä
+### Haluan lukea viestejä
 
 Viestin sisällön ja kaikki viestiin liittyvät tiedot ovat nähtävissä viestin omalla sivulla /viestit/<viesti_id>
 
@@ -65,7 +65,7 @@ viesti.vastattu_id AS viesti_vastattu_id
 
 Lisäksi haetaan jokaista viestiä kohden erikseen tieto siitä, onko käyttäjä lukenut viestin ja ovatko kaikki käyttäjät lukeneet viestin. Tähän tarvittavat kyselyt on eritelty käyttötapausten "haluan nähdä olenko jo lukenut viestin" ja "haluan nähdä ovatko kaikki käyttäjät lukeneet viestin" alla.
 
-### haluan hakea tiettyä aihetta käsitteleviä viestejä, jotta voin lukea niitä
+### Haluan hakea tiettyä aihetta käsitteleviä viestejä, jotta voin lukea niitä
 
 Viestejä listaavalla sivulla avautuu hakulomake, jolla viestejä voi hakea mm. aiheen perusteella. Hakutuloksia näytetään 20 viestin erissä kirjoitusajan mukaan järjestettyinä uusin ensin.
 
@@ -87,7 +87,7 @@ LIMIT ? OFFSET ?
 
 Tämän lisäksi tehdään vielä jokaista näytettävää viestiä kohden kyselyt, joilla selvitetään ovat kaikki käyttäjät lukeneet viestin. Nämä kyselyt on eritelty kohdassa "haluan nähdä ovatko kaikki käyttäjät lukeneet viestin".
 
-### hakea tietyn ryhmän jäsenten jättämiä viestejä, jotta voin lukea niitä
+### Haluan hakea tietyn ryhmän jäsenten jättämiä viestejä, jotta voin lukea niitä
 
 Viestejä listaavalla sivulla avautuu hakulomake, jolla viestejä voi hakea mm. kirjoittajan ryhmän perusteella. Hakutuloksia näytetään 20 viestin erissä kirjoitusajan mukaan järjestettyinä uusin ensin.
 
@@ -111,7 +111,7 @@ LIMIT ? OFFSET ?
 
 Tämän lisäksi tehdään vielä jokaista näytettävää viestiä kohden kyselyt, joilla selvitetään ovat kaikki käyttäjät lukeneet viestin. Nämä kyselyt on eritelty kohdassa "haluan nähdä ovatko kaikki käyttäjät lukeneet viestin".
 
-### hakea tietyn käyttäjän kirjoittamia viestejä, jotta voin lukea niitä
+### Haluam hakea tietyn käyttäjän kirjoittamia viestejä, jotta voin lukea niitä
 
 Viestejä listaavalla sivulla avautuu hakulomake, jolla viestejä voi hakea mm. kirjoittajan nimen perusteella. Hakutuloksia näytetään 20 viestin erissä kirjoitusajan mukaan järjestettyinä uusin ensin.
 
@@ -133,7 +133,7 @@ LIMIT ? OFFSET ?
 
 Tämän lisäksi tehdään vielä jokaista näytettävää viestiä kohden kyselyt, joilla selvitetään ovat kaikki käyttäjät lukeneet viestin. Nämä kyselyt on eritelty kohdassa "haluan nähdä ovatko kaikki käyttäjät lukeneet viestin".
 
-### hakea tietyllä aikavälillä kirjoitettuja viestejä, jotta voin lukea niitä
+### Haluan hakea tietyllä aikavälillä kirjoitettuja viestejä, jotta voin lukea niitä
 
 Viestejä listaavalla sivulla avautuu hakulomake, jolla viestejä voi hakea mm. aikavälin perusteella. Haussa voi määritellä päivän, jona kirjoitetuista alkaen viestejä haetaan ja/tai päivän jona kirjoitettuihin asti haetaan. Hakutuloksia näytetään 20 viestin erissä kirjoitusajan mukaan järjestettyinä uusin ensin.
 
@@ -155,7 +155,7 @@ LIMIT ? OFFSET ?
 
 Tämän lisäksi tehdään vielä jokaista näytettävää viestiä kohden kyselyt, joilla selvitetään ovat kaikki käyttäjät lukeneet viestin. Nämä kyselyt on eritelty kohdassa "haluan nähdä ovatko kaikki käyttäjät lukeneet viestin".
 
-### haluan yhdistelllä erilaisia hakuja
+### Haluan yhdistelllä erilaisia hakuja
 
 Viestejä listaavalla sivulla avautuu hakulomake, jolla viestejä voi hakea aiheen, kirjoittajan nimen, kirjoittajan ryhmän ja aikavälin (alkamisajankohdan ja loppumisajankohdan) perusteella. Näitä kyselyitä voi vapaasti yhdistellä, kuitenkin niin, että kullakin hakutyypillä on vain yksi hakuarvo. Hakutuloksia näytetään 20 viestin erissä kirjoitusajan mukaan järjestettyinä uusin ensin.
 
@@ -183,17 +183,31 @@ LIMIT ? OFFSET ?
 
 Tämän lisäksi tehdään vielä jokaista näytettävää viestiä kohden kyselyt, joilla selvitetään ovat kaikki käyttäjät lukeneet viestin. Nämä kyselyt on eritelty kohdassa "haluan nähdä ovatko kaikki käyttäjät lukeneet viestin".
 
-### haluan nähdä olenko jo lukenut viestin
+### Haluan nähdä olenko jo lukenut viestin
 
 Viestien listauksessa ja yksittäisen viestin sivulla vastatun viestin ja viestiin kirjoitettujen vastausten kohdalla näytetään, onko kirjautunut käyttäjä lukenut viestin. Tämä tieto haetaan seuraavilla SQL-kyselyillä:
 
-### haluan nähdä ovatko kaikki muut jo lukeneet viestin
+### Haluan nähdä ovatko kaikki muut jo lukeneet viestin
 
-Viestien listauksessa ja yksittäisen viestin sivulla itse viestin,vastatun viestin ja viestiin kirjoitettujen vastausten kohdalla näytetään, ovatko kaikki käyttäjät lukeneet viestin. Tämä tieto haetaan seuraavilla SQL-kyselyillä:
+Viestien listauksessa ja yksittäisen viestin sivulla itse viestin,vastatun viestin ja viestiin kirjoitettujen vastausten kohdalla näytetään, ovatko kaikki käyttäjät lukeneet viestin. Tämä tieto haetaan kahdella SQL-kyselyllä:
 
-Haetaan käyttäjien kokonaismäärä:
+Ensin haetaan käyttäjien kokonaismäärä:
 
-### nähdä ketkä ovat lukeneet viestin
+```sql
+SELECT COUNT(kayttaja.id) FROM kayttaja
+```
+
+Sitten haetaan viestin lukeneiden käyttäjien määrä:
+
+```sql
+SELECT COUNT(kayttaja.id) FROM kayttaja
+JOIN luetut ON kayttaja.id = luetut.lukija_id
+WHERE luetut.viesti_id = :viesti_id
+```
+
+Jos viestin lukeneiden käyttäjien määrä on sama kuin kaikkien käyttäjien yhteismäärä, kaikki ovat lukeneet viestin.
+
+### Haluan nähdä ketkä ovat lukeneet viestin
 
 Yksittäisen viestin sivulla näytetään niiden käyttäjien nimet, jotka ovat jo lukeneet viestin. Nämä haetaan seuravalla SQL-kyselyllä:
 
@@ -204,7 +218,7 @@ FROM kayttaja, luetut
 WHERE ? = luetut.viesti_id AND kayttaja.id = luetut.lukija_id
 ```
 
-### nähdä viestiin kirjoitetut vastaukset, jotta voin seurata viestiketjua
+### Haluan nähdä viestiin kirjoitetut vastaukset, jotta voin seurata viestiketjua
 
 Yksittäisen viestin sivulla listataan viestille kirjoitettujen vastausten otsaketiedot linkkeinä, joista pääsee kyseisen viestin sivulle. Tiedot haetaan seuraavalla SQL-kyselyllä:
 
@@ -220,13 +234,13 @@ LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
 WHERE ? = viesti.vastattu_id
 ```
 
-### nähdä mihin viestiin viesti on vastannut, jotta voin seurata viestiketjua taaksepäin
+### Haluan nähdä mihin viestiin viesti on vastannut, jotta voin seurata viestiketjua taaksepäin
 
 ```sql
 
 ```
 
-### kirjoittaa viestin, jotta muut voivat lukea sen
+### Haluan kirjoittaa viestin, jotta muut voivat lukea sen
 
 Aluksi haetaan luettelo kaikista valittavissa olevista aihetunnisteista seuraavalla SQL-kyselyllä:
 
@@ -241,7 +255,7 @@ Tämä tehdään sekä luotaessa lomaketta, johon vastaus kirjoitetaan, että (s
 
 ```
 
-### vastata toisen käyttäjän viestiin, jotta toinen käyttäjä ja muut voivat lukea sen
+### Haluan vastata toisen käyttäjän viestiin, jotta toinen käyttäjä ja muut voivat lukea sen
 
 Yksittäisen viestin näkymässä avautuu lomake, johon vastausviesti kirjoitetaan.
 
@@ -253,13 +267,13 @@ Vastauksen tallentaminen tietokantaan tapahtuu seuraavalla SQL-kyselyllä:
 
 ```
 
-### kirjautua sisään foorumiin, jotta kirjoittamani viestit tunnistuvat minun (ja ryhmäni jäsenen) kirjoittamikseni ja näen mitkä viestit olen jo lukenut
+### Haluan kirjautua sisään foorumiin, jotta kirjoittamani viestit tunnistuvat minun (ja ryhmäni jäsenen) kirjoittamikseni ja näen mitkä viestit olen jo lukenut
 
 ```sql
 
 ```
 
-### nähdä olenko kirjautuneena
+### Haluan nähdä olenko kirjautuneena
 
 Kirjautuneen käyttäjän nimi on esillä kaikilla sivuilla (navigaatiopalkissa), silloin kun käyttäjä on kirjautuneena.
 
@@ -272,135 +286,170 @@ FROM kayttaja
 WHERE kayttaja.id = ?
 ```
 
-### luoda itselleni käyttäjätunnuksen, jotta voin käyttää foorumia
+### Haluan luoda itselleni käyttäjätunnuksen, jotta voin käyttää foorumia
 
 ```sql
 
 ```
 
-### vaihtaa salasanani
+### Haluan vaihtaa salasanani
 
 ```sql
 
 ```
 
-### merkitä viestini aihetunnisteilla, jotta niistä kiinnostuneet löytävät ne helpommin
+### Haluan merkitä viestini aihetunnisteilla, jotta niistä kiinnostuneet löytävät ne helpommin
 
 ```sql
 
 ```
 
-### nähdä mitä aihetunnisteita foorumissa on jo käytössä
+### Haluan nähdä mitä aihetunnisteita foorumissa on jo käytössä
 
 ```sql
 
 ```
 
-### luoda uusia aihetunnisteita, jotta voin liittää viestiini sopivan aihetunnisteen
+### Haluan luoda uusia aihetunnisteita, jotta voin liittää viestiini sopivan aihetunnisteen
 
 ```sql
 
 ```
 
-### nähdä mitä ryhmiä foorumissa on
+### Haluan nähdä mitä ryhmiä foorumissa on
 
 ```sql
 
 ```
 
-### nähdä, keitä ryhmiin kuuluu
+### Haluan nähdä, keitä ryhmiin kuuluu
 
 ```sql
 
 ```
 
-### nähdä tilastoja foorumin käytöstä
+### Haluan nähdä tilastoja foorumin käytöstä
 
-#### kaikkien kirjoitusten jakautuminen eri aiheiden kesken
+Tilastot näytetään tilastosivulla /tilastot
+
+#### Haluan nähdä suosituimmat aiheet
+
+Näytetään 5 suosituinta aihetta suosituimmuusjärkjestyksessä ja niillä merkittyjen viestien määrät. Käytetään SQL-kyselyä
+
+```sql
+SELECT aihe.aihe, COUNT(viestiaihe.viesti_id) AS viestilkm FROM aihe
+LEFT JOIN viestiaihe ON aihe.id = viestiaihe.aihe_id
+GROUP BY aihe.id
+ORDER BY viestilkm DESC
+LIMIT 5
+
+```
+
+#### Haluan nähdä eri ryhmien jäsenten kirjoitusten jakautuminen aiheittain
+
+Näytetään taulukkona eri ryhmien eri aihetunnisteilla merkitsemien kirjoitusten määrät.
+
+Käytetään SQL-kyselyä
+
+```sql
+SELECT ryhma.nimi, aihe.aihe, COUNT(viestiaihe.viesti_id) AS viestilkm FROM aihe
+JOIN Viestiaihe ON aihe.id = Viestiaihe.aihe_id
+JOIN viesti ON viestiaihe.viesti_id = viesti.id
+JOIN kayttaja ON viesti.kirjoittaja_id = kayttaja.id
+JOIN kayttajaryhma ON kayttaja.id = kayttajaryhma.kayttaja_id
+JOIN ryhma ON kayttajaryhma.ryhma_id = ryhma.id
+GROUP BY ryhma.id, aihe.aihe
+ORDER BY ryhma.nimi ASC, viestilkm DESC
+```
+
+#### Haluan nähdä eniten viestejä kirjoittaneet käyttäjät
+
+Näytetään viisi eniten viestejä kirjoittanutta käyttäjää ja heidän kirjoittamiensa viestien määrät. Käytetään SQL-kyselyä
+
+```sql
+SELECT kayttaja.nimi, COUNT(viesti.kirjoittaja_id) AS viestilkm FROM kayttaja
+LEFT JOIN viesti ON kayttaja.id = viesti.kirjoittaja_id
+GROUP BY kayttaja.id
+ORDER BY viestilkm DESC
+LIMIT 5
+```
+
+#### Haluan nähdä eniten viestejä kirjoittaneet ryhmät
+
+Näytetään viisi eniten viestejä kirjoittanutta ryhmää ja näiden ryhmien kirjoittamien viestien määärät.
+
+```sql
+SELECT ryhma.nimi, COUNT(viesti.kirjoittaja_id) AS viestilkm FROM ryhma
+LEFT JOIN kayttajaryhma ON ryhma.id = kayttajaryhma.ryhma_id
+LEFT JOIN viesti ON kayttajaryhma.kayttaja_id = viesti.kirjoittaja_id
+GROUP BY ryhma.id
+ORDER BY viestilkm DESC
+LIMIT 5
+```
+
+## Foorumin ylläpitäjänä
+
+Haluan tehdä myös kaiken, minkä tavallinen käyttäjäkin haluaa tehdä.
+
+### Haluan poistaa viestejä, jotta asiattomat viestit saadaan poistetuksi foorumista
 
 ```sql
 
 ```
 
-#### eri ryhmien jäsenten kirjoitusten jakautuminen aiheittain
+### Haluan muokata viestejä, jotta voin poistaa viesteistää asiatonta sisältöä
 
 ```sql
 
 ```
 
-#### aktiivisimmin kirjoittavat käyttäjät
+### Haluan hallita käyttäjien jäsenyyksiä ryhmissä
+
+#### Haluan luoda ryhmiä
 
 ```sql
 
 ```
 
-#### aktiivisimmin kirjoittavat ryhmät
+#### Haluan liittää käyttäjän ryhmään
 
 ```sql
 
 ```
 
-## Foorumin ylläpitäjänä haluan lisäksi...
-
-### poistaa asiattomia viestejä
+#### Haluan poistaa käyttäjän ryhmästä
 
 ```sql
 
 ```
 
-### muokata asiattomia viestejä
+#### Haluan muokata ryhmän nimeä
 
 ```sql
 
 ```
 
-### hallita käyttäjien jäsenyyksiä ryhmissä
-
-#### luoda ryhmiä
+#### Haluan poistaa ryhmiä
 
 ```sql
 
 ```
 
-#### liittää käyttäjän ryhmään
+### Haluan hallita aihetunnisteita
+
+#### Haluan muokata aihetunnisteita
 
 ```sql
 
 ```
 
-#### poistaa käyttäjän ryhmästä
+#### Haluan poistaa aihetunnisteita
 
 ```sql
 
 ```
 
-#### muokata ryhmän nimeä
-
-```sql
-
-```
-
-#### poistaa ryhmiä
-
-```sql
-
-```
-
-### hallita aihetunnisteita
-
-#### muokata aihetunnisteita
-
-```sql
-
-```
-
-#### poistaa aihetunnisteita
-
-```sql
-
-```
-
-### luoda itselleni ylläpitäjän tunnuksen foorumia käyttöönotettaessa
+### Haluan luoda itselleni ylläpitäjän tunnuksen foorumia käyttöönotettaessa
 
 ```sql
 
