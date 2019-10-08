@@ -31,7 +31,7 @@ def kayttajat_luo():
 
     login_user(kayttaja)
 
-    return redirect(url_for("login_lomake"))
+    return redirect(url_for("viestit_index"))
 
 @app.route("/login", methods = ["GET"])
 def login_lomake():
