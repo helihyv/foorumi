@@ -1,17 +1,19 @@
 {% extends "bootstrap/base.html" %} {% import "bootstrap/wtf.html" as wtf %} {%
-block title %}Foorumi{% endblock %} {% block navbar %} {% if
-current_user.is_authenticated %}
-<p>Tervetuloa {{ current_user.nimi }}!</p>
-{% endif %}
-<nav class="navbar navbar-default" role="navigation">
+block title %}Foorumi{% endblock %} {% block navbar %}
+<nav
+  class="navbar navbar-default"
+  role="navigation"
+  style="background-color: lightcyan"
+>
   <div class="navbar-header">
     <button
       class="navbar-toggle"
       type="button"
       data-toggle="collapse"
-      data-target="#navBarNavAltMarkup2"
+      data-target="#valikko"
+      aria-expanded="false"
     >
-      <span class="sr-only">Toggle navigation</span>
+      <span class="sr-only">Avaa ja sulje valikko</span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
@@ -19,9 +21,12 @@ current_user.is_authenticated %}
   </div>
   <a class="navbar-brand" href="#">Foorumi</a>
 
-  <div class="collapse navbar-collapse" id="navBarNavAltMarkup2">
+  <div class="collapse navbar-collapse" id="valikko">
     <ul class="nav navbar-nav">
       {% if current_user.is_authenticated %}
+      <li>
+        <p class="navbar-text">Tervetuloa {{ current_user.nimi }}!</p>
+      </li>
       <li>
         <a class="nav-item navbar-link" href="{{ url_for('viestit_index') }}"
           >Viestit</a
