@@ -63,20 +63,20 @@ onclick="this.innerHTML = this.innerHTML ==='Sulje hakulomake' ? 'Hae viestejä'
 <ul class="list-group">
   {% for viesti in viestit.items %}
   <li class="list-group-item">
-    <h3>
-      <a href="{{ url_for('viesti', viesti_id = viesti.id) }}"
+
+      <a href="{{ url_for('viesti', viesti_id = viesti.id) }}" style="font-size:150%;"
         >{{ viesti.otsikko }}
 
-        <small
+        <span style="font-size:80%; color:gray;"
           >{{ viesti.kirjoittaja.nimi }}
           {{ viesti.kirjoitusaika.strftime("%d.%m.%Y %H:%M") }}
 
           {% if viesti.ovatko_kaikki_lukeneet() %} KAIKKI LUKENEET {% elif
           viesti.onko_lukenut(current_user) %} LUETTU {% else %} UUSI {% endif
           %}
-        </small>
+        </span>
       </a>
-    </h3>
+
   </li>
   {% endfor %}
 </ul>
