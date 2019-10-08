@@ -14,7 +14,7 @@ Lisäksi haetaan erillisillä kyselyillä tieto siitä, ovatko kaikki käyttäj�
 
 Itse viesti ja kirjoittajan nimi haetaan SQL-kyselyllä
 
-```
+```sql
 SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika, viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id, kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus, kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
 FROM viesti LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
 WHERE viesti.id = ?
@@ -22,7 +22,7 @@ WHERE viesti.id = ?
 
 Jos kirjautunut käyttäjä ei ole aiemmin lukenut viestiä, hänet lisätään lukijoiden luetteloon SQL-kyselyllä
 
-```
+```sql
 INSERT INTO luetut (viesti_id, lukija_id) VALUES (?, ?)
 ```
 
@@ -32,7 +32,7 @@ Viestien listaus on saatavilla osoitteessa /viestit . Viestit listataan oletukse
 
 Viestit haetaan SQL-kyselyllä
 
-```
+```sql
 SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika, viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id, kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus, kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
 FROM viesti LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id ORDER BY viesti.kirjoitusaika DESC
 LIMIT ? OFFSET ?
@@ -41,7 +41,7 @@ LIMIT ? OFFSET ?
 
 Paginate-oliossa on tieto sivujen kokonaismäärästä, joka selviää SQL-kyselyllä
 
-```
+```sql
 SELECT count(*) AS count_1
 FROM (SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika, viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id
 ```
@@ -54,13 +54,11 @@ Viestejä listaavalla sivulla avautuu hakulomake, jolla viestejä voi hakea mm. 
 
 Kun haetaan pelkän aiheen perusteella, käytetään seuraavaa SQL-kyselyä:
 
-```
-
+```sql
 SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika, viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id, kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus, kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
 FROM viesti JOIN viestiaihe AS viestiaihe_1 ON viesti.id = viestiaihe_1.viesti_id JOIN aihe ON aihe.id = viestiaihe_1.aihe_id LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
 WHERE aihe.aihe = ? ORDER BY viesti.kirjoitusaika DESC
 LIMIT ? OFFSET ?
-
 ```
 
 Tämän lisäksi tehdään vielä jokaista näytettävää viestiä kohden kyselyt, joilla selvitetään ovat kaikki käyttäjät lukeneet viestin. Nämä kyselyt on eritelty kohdassa "haluan nähdä ovatko kaikki käyttäjät lukeneet viestin".
@@ -71,13 +69,11 @@ Viestejä listaavalla sivulla avautuu hakulomake, jolla viestejä voi hakea mm. 
 
 Kun haetaan pelkän kirjoittajan ryhmän perusteella, käytetään seuraavaa SQL-kyselyä:
 
-```
-
+```sql
 SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika, viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id, kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus, kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
 FROM viesti JOIN kayttaja ON kayttaja.id = viesti.kirjoittaja_id JOIN kayttajaryhma AS kayttajaryhma_1 ON kayttaja.id = kayttajaryhma_1.kayttaja_id JOIN ryhma ON ryhma.id = kayttajaryhma_1.ryhma_id LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
 WHERE ryhma.nimi = ? ORDER BY viesti.kirjoitusaika DESC
 LIMIT ? OFFSET ?
-
 ```
 
 Tämän lisäksi tehdään vielä jokaista näytettävää viestiä kohden kyselyt, joilla selvitetään ovat kaikki käyttäjät lukeneet viestin. Nämä kyselyt on eritelty kohdassa "haluan nähdä ovatko kaikki käyttäjät lukeneet viestin".
@@ -88,13 +84,11 @@ Viestejä listaavalla sivulla avautuu hakulomake, jolla viestejä voi hakea mm. 
 
 Kun haetaan pelkän kirjoittajan nimen perusteella, käytetään seuraavaa SQL-kyselyä:
 
-```
-
+```sql
 SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika, viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id, kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus, kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
 FROM viesti JOIN kayttaja ON kayttaja.id = viesti.kirjoittaja_id LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
 WHERE kayttaja.nimi = ? ORDER BY viesti.kirjoitusaika DESC
 LIMIT ? OFFSET ?
-
 ```
 
 Tämän lisäksi tehdään vielä jokaista näytettävää viestiä kohden kyselyt, joilla selvitetään ovat kaikki käyttäjät lukeneet viestin. Nämä kyselyt on eritelty kohdassa "haluan nähdä ovatko kaikki käyttäjät lukeneet viestin".
@@ -105,13 +99,11 @@ Viestejä listaavalla sivulla avautuu hakulomake, jolla viestejä voi hakea mm. 
 
 Kun haetaan tietyltä aikaväliltä eli on määritelty sekä haun alkupäivä että haun viimeinen päivä, käytetään seuraavaa SQL-kyselyä:
 
-```
-
+```sql
 SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika, viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id, kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus, kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
 FROM viesti LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
 WHERE viesti.kirjoitusaika >= ? AND viesti.kirjoitusaika <= ? ORDER BY viesti.kirjoitusaika DESC
 LIMIT ? OFFSET ?
-
 ```
 
 Tämän lisäksi tehdään vielä jokaista näytettävää viestiä kohden kyselyt, joilla selvitetään ovat kaikki käyttäjät lukeneet viestin. Nämä kyselyt on eritelty kohdassa "haluan nähdä ovatko kaikki käyttäjät lukeneet viestin".
@@ -122,13 +114,11 @@ Viestejä listaavalla sivulla avautuu hakulomake, jolla viestejä voi hakea aihe
 
 Kun haetaan kaikilla hakutyypeillä yhtaikaisesti, käytetään seuraavaa SQL-kyselyä:
 
-```
-
+```sql
 SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika, viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id, kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus, kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
 FROM viesti JOIN viestiaihe AS viestiaihe_1 ON viesti.id = viestiaihe_1.viesti_id JOIN aihe ON aihe.id = viestiaihe_1.aihe_id JOIN kayttaja ON kayttaja.id = viesti.kirjoittaja_id JOIN kayttajaryhma AS kayttajaryhma_1 ON kayttaja.id = kayttajaryhma_1.kayttaja_id JOIN ryhma ON ryhma.id = kayttajaryhma_1.ryhma_id LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
 WHERE aihe.aihe = ? AND kayttaja.nimi = ? AND ryhma.nimi = ? AND viesti.kirjoitusaika >= ? AND viesti.kirjoitusaika <= ? ORDER BY viesti.kirjoitusaika DESC
 LIMIT ? OFFSET ?
-
 ```
 
 Tämän lisäksi tehdään vielä jokaista näytettävää viestiä kohden kyselyt, joilla selvitetään ovat kaikki käyttäjät lukeneet viestin. Nämä kyselyt on eritelty kohdassa "haluan nähdä ovatko kaikki käyttäjät lukeneet viestin".
@@ -147,20 +137,17 @@ Haetaan käyttäjien kokonaismäärä:
 
 Yksittäisen viestin sivulla näytetään niiden käyttäjien nimet, jotka ovat jo lukeneet viestin. Nämä haetaan seuravalla SQL-kyselyllä:
 
-```
-
+```sql
 SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
 FROM kayttaja, luetut
 WHERE ? = luetut.viesti_id AND kayttaja.id = luetut.lukija_id
-
 ```
 
 ### nähdä viestiin kirjoitetut vastaukset, jotta voin seurata viestiketjua
 
 Yksittäisen viestin sivulla listataan viestille kirjoitettujen vastausten otsaketiedot linkkeinä, joista pääsee kyseisen viestin sivulle. Tiedot haetaan seuraavalla SQL-kyselyllä:
 
-```
-
+```sql
 2019-10-08 12:30:56,269 INFO sqlalchemy.engine.base.Engine (2,)
 2019-10-08 12:30:56,272 INFO sqlalchemy.engine.base.Engine SELECT aihe.id AS aihe_id, aihe.aihe AS aihe_aihe
 FROM aihe, viestiaihe
@@ -169,12 +156,11 @@ WHERE ? = viestiaihe.viesti_id AND aihe.id = viestiaihe.aihe_id
 2019-10-08 12:30:56,275 INFO sqlalchemy.engine.base.Engine SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika, viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id, kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus, kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
 FROM viesti LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
 WHERE ? = viesti.vastattu_id
-
 ```
 
 ### nähdä mihin viestiin viesti on vastannut, jotta voin seurata viestiketjua taaksepäin
 
-```
+```sql
 
 ```
 
@@ -182,16 +168,14 @@ WHERE ? = viesti.vastattu_id
 
 Aluksi haetaan luettelo kaikista valittavissa olevista aihetunnisteista seuraavalla SQL-kyselyllä:
 
-```
-
+```sql
 SELECT aihe.id AS aihe_id, aihe.aihe AS aihe_aihe
 FROM aihe ORDER BY aihe.aihe
-
 ```
 
 Tämä tehdään sekä luotaessa lomaketta, johon vastaus kirjoitetaan, että (syötteen validointia varten) otettaessa uutta viestiä vastaan.
 
-```
+```sql
 
 ```
 
@@ -203,13 +187,13 @@ ALuksi haetaan luettelo kaikista valittavissa olevista aihetunnisteista seuraava
 
 Vastauksen tallentaminen tietokantaan tapahtuu seuraavalla SQL-kyselyllä:
 
-```
+```sql
 
 ```
 
 ### kirjautua sisään foorumiin, jotta kirjoittamani viestit tunnistuvat minun (ja ryhmäni jäsenen) kirjoittamikseni ja näen mitkä viestit olen jo lukenut
 
-```
+```sql
 
 ```
 
@@ -219,83 +203,142 @@ Kirjautuneen käyttäjän nimi on esillä kaikilla sivuilla (navigaatiopalkissa)
 
 Nimi haetaan SQL-kyselyllä
 
-```
-
+```sql
 SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
 FROM kayttaja
 WHERE kayttaja.id = ?
-
 ```
 
 ### luoda itselleni käyttäjätunnuksen, jotta voin käyttää foorumia
 
-```
+```sql
 
 ```
 
 ### vaihtaa salasanani
 
-```
+```sql
 
 ```
 
 ### merkitä viestini aihetunnisteilla, jotta niistä kiinnostuneet löytävät ne helpommin
 
-```
+```sql
 
 ```
 
 ### nähdä mitä aihetunnisteita foorumissa on jo käytössä
 
-```
+```sql
 
 ```
 
 ### luoda uusia aihetunnisteita, jotta voin liittää viestiini sopivan aihetunnisteen
 
-```
+```sql
 
 ```
 
 ### nähdä mitä ryhmiä foorumissa on
 
-```
+```sql
 
 ```
 
 ### nähdä, keitä ryhmiin kuuluu
 
-```
+```sql
 
 ```
 
 ### nähdä tilastoja foorumin käytöstä
 
-- kaikkien kirjoitusten jakautuminen eri aiheiden kesken
-- eri ryhmien jäsenten kirjoitusten jakautuminen aiheittain
-- aktiivisimmin kirjoittavat käyttäjät
-- aktiivisimmin kirjoittavat ryhmät
+#### kaikkien kirjoitusten jakautuminen eri aiheiden kesken
+
+```sql
+
+```
+
+#### eri ryhmien jäsenten kirjoitusten jakautuminen aiheittain
+
+```sql
+
+```
+
+#### aktiivisimmin kirjoittavat käyttäjät
+
+```sql
+
+```
+
+#### aktiivisimmin kirjoittavat ryhmät
+
+```sql
+
+```
 
 ## Foorumin ylläpitäjänä haluan lisäksi...
 
-- poistaa tai muokata asiattomia viestejä
-- hallita käyttäjien jäsenyyksiä ryhmissä
-  - luoda ryhmiä
-  - liittää käyttäjän ryhmään
-  - poistaa käyttäjän ryhmästä
-  - muokata ryhmän nimeä
-  - poistaa ryhmiä
-- hallita aihetunnisteita
+### poistaa asiattomia viestejä
 
-  - muokata aihetunnisteita
-  - poistaa aihetunnisteita
-
-- luoda itselleni ylläpitäjän tunnuksen foorumia käyttöönotettaessa
+```sql
 
 ```
 
-```
+### muokata asiattomia viestejä
+
+```sql
 
 ```
+
+### hallita käyttäjien jäsenyyksiä ryhmissä
+
+#### luoda ryhmiä
+
+```sql
+
+```
+
+#### liittää käyttäjän ryhmään
+
+```sql
+
+```
+
+#### poistaa käyttäjän ryhmästä
+
+```sql
+
+```
+
+#### muokata ryhmän nimeä
+
+```sql
+
+```
+
+#### poistaa ryhmiä
+
+```sql
+
+```
+
+### hallita aihetunnisteita
+
+#### muokata aihetunnisteita
+
+```sql
+
+```
+
+#### poistaa aihetunnisteita
+
+```sql
+
+```
+
+### luoda itselleni ylläpitäjän tunnuksen foorumia käyttöönotettaessa
+
+```sql
 
 ```
