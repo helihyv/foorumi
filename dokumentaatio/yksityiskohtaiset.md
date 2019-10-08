@@ -269,8 +269,13 @@ Vastauksen tallentaminen tietokantaan tapahtuu seuraavalla SQL-kyselyllä:
 
 ### Haluan kirjautua sisään foorumiin, jotta kirjoittamani viestit tunnistuvat minun (ja ryhmäni jäsenen) kirjoittamikseni ja näen mitkä viestit olen jo lukenut
 
-```sql
+Kun sovellus saa pyynnön kirjautua sisään, haetaan kirjautumassa olevan käyttäjän tiedot tietokannasta seuraavalla SQL-kyselyllä:
 
+```sql
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+FROM kayttaja
+WHERE kayttaja.tunnus = ?
+LIMIT ? OFFSET ?
 ```
 
 ### Haluan nähdä olenko kirjautuneena
@@ -288,8 +293,23 @@ WHERE kayttaja.id = ?
 
 ### Haluan luoda itselleni käyttäjätunnuksen, jotta voin käyttää foorumia
 
-```sql
+Käyttäjää luotaessa tarkistetaan, onko ylläpitäjän käyttäjätunnus jo luotu, ja tarvittaessa luodaan sellainen. Tarkistukseen liittyvä SQL-kysely on esitelty kohdassa "Haluan luoda itselleni ylläpitäjän käyttäjätunnuksen".
 
+Käyttäjää luotaessa tarkistetaan, ettei käyttäjätunnus ole jo varattu. Tämä selvitetään SQL-kyselyllä
+
+```sql
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi,
+kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash",
+kayttaja.admin AS kayttaja_admin
+FROM kayttaja
+WHERE kayttaja.tunnus = ?
+LIMIT ? OFFSET ?
+```
+
+Käyttäjän tiedot tallennetaan tietokantaan SQL-kyselyllä
+
+```sql
+INSERT INTO kayttaja (nimi, tunnus, "salasanaHash", admin) VALUES (?, ?, ?, ?)
 ```
 
 ### Haluan vaihtaa salasanani
@@ -451,6 +471,13 @@ Haluan tehdä myös kaiken, minkä tavallinen käyttäjäkin haluaa tehdä.
 
 ### Haluan luoda itselleni ylläpitäjän tunnuksen foorumia käyttöönotettaessa
 
-```sql
+Rekisteröitymissivulle mentäessä tarkistetaan, onko ylläpitäjän käyttäjätunnusta jo luotu, ja muokataan käyttäjälle näytettävää tekstiä sen mukaan. Sama tarkistus tehdään, kun saadaan pyyntö luoda uusi käyttäjä. Jos ylläpitäjän käyttäjätunnusta ei vielä ole, luodaan sellainen. Jos ylläpitäjän tunnus on jo olemassa, luodaan tavallinen käyttäjä. Ylläpitäjän tunnuksen olemassaolo tarkistetaan kyselyllä
 
+```sql
+SELECT EXISTS (SELECT 1
+FROM kayttaja
+WHERE kayttaja.admin = 1) AS anon_1
+LIMIT ? OFFSET ?
 ```
+
+Tämän jälkeen tarkistetaan, ettei käyttäjätunnus ole jo varattu, tallennetaan käyttäjän tiedot tietokantaan ja kirjataan käyttäjä sisään. Näihin liittyvät SQL-kyselyt on esitelty kohdissa "Haluan rekisteröityä foorumille" ja "Haluan kirjautua sisään foorumille".
