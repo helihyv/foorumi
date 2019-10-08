@@ -12,8 +12,8 @@ viesti_aihe = db.Table("viestiaihe",
 class Aihe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     aihe = db.Column(db.String(100), nullable=False)
-    viestit = db.relationship("Viesti", secondary=viesti_aihe, lazy="subquery",
-                              backref=db.backref("aiheet", lazy="subquery"))
+    viestit = db.relationship("Viesti", secondary=viesti_aihe, lazy=True,
+                              backref=db.backref("aiheet", lazy=True))
 
     def __init__(self, aihe):
         self.aihe = aihe

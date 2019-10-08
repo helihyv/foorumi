@@ -15,7 +15,7 @@ class Viesti(db.Model):
     teksti = db.Column(db.String(1000), nullable=False)
     kirjoittaja_id = db.Column(db.Integer, db.ForeignKey('kayttaja.id'), nullable=False)
     vastattu_id = db.Column(db.Integer, db.ForeignKey("viesti.id"), nullable=True)
-    vastaukset = db.relationship("Viesti", backref=db.backref("vastattu", remote_side=[id]))
+    vastaukset = db.relationship("Viesti", backref=db.backref("vastattu", remote_side=[id], lazy=True))
     lukeneet = db.relationship(Kayttaja, secondary=luetut, lazy=True,
     backref=db.backref("luetut_viestit", lazy=True))
 
