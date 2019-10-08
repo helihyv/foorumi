@@ -33,6 +33,20 @@ Jos kirjautunut käyttäjä ei ole aiemmin lukenut viestiä, hänet lisätään 
 INSERT INTO luetut (viesti_id, lukija_id) VALUES (?, ?)
 ```
 
+HTML-sivua templatesta luotaessa haetaan vielä erikseen viestin ja sen kirjoittajan tiedot. Kyselyt ovat seuraavanlaiset:
+
+```sql
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+FROM kayttaja
+WHERE kayttaja.id = ?
+```
+
+```sql
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+FROM kayttaja
+WHERE kayttaja.id = ?
+```
+
 ### Haluan nähdä uusimmat viestit tarvitsematta ensin hakea niitä, jotta voin lukea niitä
 
 Viestien listaus on saatavilla osoitteessa /viestit . Viestit listataan oletuksena aikajärjestyksessä uusin ensin. Tietokannasta haetaan ja näytetään 20 viestiä kerrallaan.
@@ -185,7 +199,7 @@ Tämän lisäksi tehdään vielä jokaista näytettävää viestiä kohden kysel
 
 ### Haluan nähdä olenko jo lukenut viestin
 
-Viestien listauksessa ja yksittäisen viestin sivulla vastatun viestin ja viestiin kirjoitettujen vastausten kohdalla näytetään, onko kirjautunut käyttäjä lukenut viestin. Tämä tieto haetaan seuraavilla SQL-kyselyillä:
+Viestien listauksessa ja yksittäisen viestin sivulla vastatun viestin ja viestiin kirjoitettujen vastausten kohdalla näytetään, onko kirjautunut käyttäjä lukenut viestin. Tämä tieto haetaan tarkistamalla onko käyttäjä viestin lukeneiden käyttäjien joukossa. Tämä ei aiheuta erillistä hakua tietokannasta.
 
 ### Haluan nähdä ovatko kaikki muut jo lukeneet viestin
 
@@ -234,13 +248,29 @@ LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
 WHERE ? = viesti.vastattu_id
 ```
 
+Tämän lisäksi haetaan kullekin vastaukselle erikseen tieto siitä, ovatko kaikki käyttäjät jo lukeneet ne. Tähän käytettävä SQL-kysely esitellään kohdassa "Haluan tietää ovatko kaikki käyttäjät lukeneet viestin".
+
 ### Haluan nähdä mihin viestiin viesti on vastannut, jotta voin seurata viestiketjua taaksepäin
 
+Yksittäisen viestin sivulla näytetään linkkinä sen viestin otsaketiedot, johon näytettävä viesti on vastannut, jos sellainen on. Tiedot haetaan SQL-kyselyllä:
+
 ```sql
+SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika,
+viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko,
+viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id,
+viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id,
+kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus,
+kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
+FROM viesti LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
+WHERE viesti.id = ?
 
 ```
 
+Tämän lisäksi haetaan tieto siitä, ovatko kaikki käyttäjät jo lukeneet viestin, johon näytettävä viesti on vastannut. Tähän käytettävä SQL-kysely esitellään kohdassa "Haluan tietää ovatko kaikki käyttäjät lukeneet viestin".
+
 ### Haluan kirjoittaa viestin, jotta muut voivat lukea sen
+
+Uuden viestiketjun aloittavan viestin kirjoittamiseen on oma sivunsa /viestit/uusi .
 
 Aluksi haetaan luettelo kaikista valittavissa olevista aihetunnisteista seuraavalla SQL-kyselyllä:
 
@@ -251,21 +281,31 @@ FROM aihe ORDER BY aihe.aihe
 
 Tämä tehdään sekä luotaessa lomaketta, johon vastaus kirjoitetaan, että (syötteen validointia varten) otettaessa uutta viestiä vastaan.
 
-```sql
+Viestin tallentaminen tietokantaan tapahtuu seuraavalla SQL-kyselyllä:
 
+```sql
+INSERT INTO viesti (kirjoitusaika, muokkausaika, otsikko, teksti, kirjoittaja_id, vastattu_id) VALUES (CURRENT_TIMESTAMP, ?, ?, ?, ?, ?)
+```
+
+Viestin kirjoittaja lisätään viestin lukeneisiin käyttäjiin, jottei itse kirjoitettu viesti näkyisi uutena. Tähän käytetään SQL-kyselyä
+
+```sql
+INSERT INTO luetut (viesti_id, lukija_id) VALUES (?, ?)
+```
+
+Tieto viestiin liittyvistä aihetunnisteista tallennetaan liitostauluun kyselyllä
+
+```sql
+INSERT INTO viestiaihe (viesti_id, aihe_id) VALUES (?, ?)
 ```
 
 ### Haluan vastata toisen käyttäjän viestiin, jotta toinen käyttäjä ja muut voivat lukea sen
 
 Yksittäisen viestin näkymässä avautuu lomake, johon vastausviesti kirjoitetaan.
 
-ALuksi haetaan luettelo kaikista valittavissa olevista aihetunnisteista seuraavalla SQL-kyselyllä, ks. erittely ja syyt yllä.
+ALuksi haetaan luettelo kaikista valittavissa olevista aihetunnisteista seuraavalla SQL-kyselyllä, ks. SQL-kysenlyn esittely ja syyt tähän yllä.
 
-Vastauksen tallentaminen tietokantaan tapahtuu seuraavalla SQL-kyselyllä:
-
-```sql
-
-```
+Vastauksen ja siihen liittyvien aihetunnisteiden tallentaminen tietokantaan ja kirjoittajan merkitseminen viestin lukeneeksi tapahtuu samoin kuin erillistä viestiä tallennettaessa, niihin liittyvät SQL-kyselyt on esitelty yllä.
 
 ### Haluan kirjautua sisään foorumiin, jotta kirjoittamani viestit tunnistuvat minun (ja ryhmäni jäsenen) kirjoittamikseni ja näen mitkä viestit olen jo lukenut
 
@@ -327,12 +367,16 @@ INSERT INTO kayttaja (nimi, tunnus, "salasanaHash", admin) VALUES (?, ?, ?, ?)
 ### Haluan nähdä mitä aihetunnisteita foorumissa on jo käytössä
 
 ```sql
+SELECT aihe.id AS aihe_id, aihe.aihe AS aihe_aihe
+FROM aihe ORDER BY aihe.aihe
+LIMIT ? OFFSET ?
 
 ```
 
 ### Haluan luoda uusia aihetunnisteita, jotta voin liittää viestiini sopivan aihetunnisteen
 
 ```sql
+INSERT INTO aihe (aihe) VALUES (?)
 
 ```
 
