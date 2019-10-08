@@ -91,7 +91,7 @@ Muokattu {{ viesti.muokkausaika.strftime("%d.%m. %Y %H:%M")}}
 </div>
 </p>
 <p>
-  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#tuhoaviestidialogi">Tuhoa viesti</button>
+  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#tuhoaviestidialogi" role="button">Tuhoa viesti</button>
   
   <div class="modal fade" tabindex="-1" role="dialog" id="tuhoaviestidialogi" aria-labelledby="Tuhotaanko viesti varmasti?">
     <div class="modal-dialog" role="document">
@@ -103,14 +103,14 @@ Muokattu {{ viesti.muokkausaika.strftime("%d.%m. %Y %H:%M")}}
           <table class="table">
             <tr>
               <td>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Peruuta</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" role="button">Peruuta</button>
               </td>
               <td>
                 <form
                   action="{{ url_for('viestit_poista', viesti_id = viesti.id) }}"
                   method="POST"
                 >
-                  <input class="btn btn-danger" type="submit" value="Tuhoa viesti" />
+                  <input class="btn btn-danger" type="submit" value="Tuhoa viesti" role="button"/>
                 </form>
               </td>
             </tr>

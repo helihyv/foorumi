@@ -13,6 +13,7 @@
   class="btn btn-danger"
   data-toggle="modal"
   data-target="#poistaaihedialogi"
+  role="button"
 >
   Poista aihe {{ aihe.aihe }}
 </button>
@@ -40,6 +41,7 @@
                 type="button"
                 class="btn btn-primary"
                 data-dismiss="modal"
+                role="button"
               >
                 Peruuta
               </button>
@@ -49,7 +51,12 @@
                 method="POST"
                 action="{{ url_for('aiheet_poista', aihe_id=aihe.id)}}"
               >
-                <input class="btn btn-danger" type="submit" value="Poista" />
+                <input
+                  class="btn btn-danger"
+                  type="submit"
+                  value="Poista"
+                  role="button"
+                />
               </form>
             </td>
           </tr>

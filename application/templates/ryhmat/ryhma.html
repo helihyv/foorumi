@@ -20,7 +20,12 @@
         action="{{ url_for('poista_jasenia', ryhma_id =ryhma.id, jasen_id=jasen.id) }}"
         method="POST"
       >
-        <input class="btn btn-danger" type="submit" value="Poista ryhmästä" />
+        <input
+          class="btn btn-danger"
+          type="submit"
+          value="Poista ryhmästä"
+          role="button"
+        />
       </form>
     </td>
     {% endif %}
@@ -39,6 +44,7 @@
   class="btn btn-danger"
   data-toggle="modal"
   data-target="#poistaryhmadialogi"
+  role="button"
 >
   Poista ryhmä {{ ryhma.nimi }}
 </button>
@@ -71,11 +77,13 @@
               <form
                 action="{{ url_for('ryhmat_poista', ryhma_id =ryhma.id) }}"
                 method="POST"
+                role="button"
               >
                 <input
                   class="btn btn-danger"
                   type="submit"
                   value="Poista ryhmä {{ ryhma.nimi }}"
+                  role="button"
                 />
               </form>
             </td>
