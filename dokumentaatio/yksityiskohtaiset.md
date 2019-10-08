@@ -33,7 +33,7 @@ Jos kirjautunut käyttäjä ei ole aiemmin lukenut viestiä, hänet lisätään 
 INSERT INTO luetut (viesti_id, lukija_id) VALUES (?, ?)
 ```
 
-HTML-sivua templatesta luotaessa haetaan vielä erikseen viestin ja sen kirjoittajan tiedot. Kyselyt ovat seuraavanlaiset:
+Jos käyttäjä on lisätty lukijoihin, haetaan HTML-sivua templatesta luotaessa vielä erikseen viestin ja sen kirjoittajan tiedot, ilmeisesti sen takia, että välissä on kutsuttu commit() -funktiota. Kyselyt ovat seuraavanlaiset:
 
 ```sql
 SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
