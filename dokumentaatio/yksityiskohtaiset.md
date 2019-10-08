@@ -18,10 +18,12 @@ Itse viesti ja kirjoittajan nimi haetaan SQL-kyselyllä
 SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika,
 viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko,
 viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id,
-viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id, kayttaja_1.nimi AS kayttaja_1_nimi,
-kayttaja_1.tunnus AS kayttaja_1_tunnus, kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash",
+viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id,
+kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus,
+kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash",
 kayttaja_1.admin AS kayttaja_1_admin
-FROM viesti LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
+FROM viesti
+LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
 WHERE viesti.id = ?
 ```
 
@@ -39,11 +41,13 @@ Viestit haetaan SQL-kyselyllä
 
 ```sql
 SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika,
-viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti,
-viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id,
-kayttaja_1.id AS kayttaja_1_id, kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus,
+viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko,
+viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id,
+viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id,
+kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus,
 kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
-FROM viesti LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
+FROM viesti
+LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
 ORDER BY viesti.kirjoitusaika DESC
 LIMIT ? OFFSET ?
 
@@ -54,7 +58,9 @@ Paginate-oliossa on tieto sivujen kokonaismäärästä, joka selviää SQL-kysel
 ```sql
 SELECT count(*) AS count_1
 FROM (SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika,
-viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti,  viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id
+viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko,
+viesti.teksti AS viesti_teksti,  viesti.kirjoittaja_id AS viesti_kirjoittaja_id,
+viesti.vastattu_id AS viesti_vastattu_id
 ```
 
 Lisäksi haetaan jokaista viestiä kohden erikseen tieto siitä, onko käyttäjä lukenut viestin ja ovatko kaikki käyttäjät lukeneet viestin. Tähän tarvittavat kyselyt on eritelty käyttötapausten "haluan nähdä olenko jo lukenut viestin" ja "haluan nähdä ovatko kaikki käyttäjät lukeneet viestin" alla.
