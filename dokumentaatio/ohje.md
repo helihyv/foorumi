@@ -1,5 +1,7 @@
 # Käyttöohje
 
+Foorumi on yhteisöjen sisäiseen käyttöön tarkoitettu foorumi- eli keskustelupalstasovellus.
+
 ## Sovelluksen käyttö (tavallinen käyttäjä)
 
 ### Rekisteröityminen
@@ -12,7 +14,12 @@ Sovellukseen kirjaudutaan valikon kohdasta "Kirjaudu". Anna käyttäjätunnus ja
 
 ### Viestien katseleminen
 
-Viestien katseleminen edellyttää kirjautumista. Viestejä pääsee katsomaan valikon kohdasta "Viestit", jonne on listattu viestien otsikot. Klikkaamalla listassa olevaa otsikkoa pääsee tarkastelemaan koko viestiä.
+Viestien katseleminen edellyttää kirjautumista. Viestejä pääsee katsomaan valikon kohdasta "Viestit", jonne on listattu viestien otsikot. Klikkaamalla listassa olevia viestin tietoja (esim. otsikkoa) pääsee tarkastelemaan koko viestiä. Viestejä näytetään enintään 20 kerrallaan. Viestilistan yläpuolella on valikko, josta voi siirtyä muihin 20 viestin nippuihin.
+
+### Viestien hakeminen
+
+Viestien hakeminen edellyttää kirjautumista.
+Hakuun pääsee valikon kohdasta "Viestit" löytävältä sivulta painamalla "Hae viestejä" -nappia, josta aukeaa hakulomake. Viestejä voi hakea aihetunnisteen, kirjoittajan nimen, kirjoittajan ryhmän, ja/tai kirjoitusajankohdan perusteella. Kirjoitusajankohdasta voi määrittää päivämäärät joina viesti aikaisintaan ja/tai viimeistään on kirjoitettu. Hakutuloksia näytetään enintään 20 kerrallaan. Viestilistan yläpuolella näytetään käytössä olevat hakutermit. Niiden yläpuolella on valikko, josta voi siirtyä muihin 20 hakutuloksen nippuihin.
 
 ### Viestien kirjoittaminen
 
