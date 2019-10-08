@@ -18,7 +18,11 @@ Tavallisia käyttäjiä voi luoda itse lisää valikon linkistä "Lisää käytt
 
 [Tietokantakaavio](dokumentaatio/Tietokantakaavio.png)
 
+[Tietokannan rakenne](dokumentaatio/tietokannan_rakenne.md)
+
 [User Stories](dokumentaatio/UserStories.md)
+
+[Yksityiskohtaiset käyttötapaukset](dokumentaatio/yksityiskohtaiset.md)
 
 ## Kuvaus
 
