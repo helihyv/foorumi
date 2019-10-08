@@ -3,7 +3,9 @@
   {{ viesti.otsikko }}
   <small
     >{{ viesti.kirjoittaja.nimi }}
-    {{ viesti.kirjoitusaika.strftime("%d.%m.%Y %H:%M") }}</small
+    {{ viesti.kirjoitusaika.strftime("%d.%m.%Y %H:%M") }}       
+    {% if viesti.ovatko_kaikki_lukeneet() %} KAIKKI LUKENEET {% endif
+      %}</small
   >
 </h1>
 {% if viesti.muokkausaika %}
