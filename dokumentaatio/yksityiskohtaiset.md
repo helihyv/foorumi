@@ -404,13 +404,21 @@ INSERT INTO aihe (aihe) VALUES (?)
 
 ### Haluan nähdä mitä ryhmiä foorumissa on
 
-Ryhmien tarkasteluun on oma sivunsa /ryhmat
+Ryhmien tarkasteluun on oma sivunsa /ryhmat . Ryhmiä näytetään aakkosjärjestyksessä enintään kaksikymmentä kerrallaan. Ryhmien tiedot haetaan SQL-kyselyllä
 
 ```sql
 SELECT ryhma.id AS ryhma_id, ryhma.nimi AS ryhma_nimi
 FROM ryhma ORDER BY ryhma.nimi
  LIMIT ? OFFSET ?
 
+```
+
+Jos ryhmiä on enemmän kuin kaksikymmentä flask-SQLAlchemy hakee sivutusoliolle myös sivujen kokonaismäärää varten ryhmien määrän kyselyllä
+
+```sql
+SELECT count(*) AS count_1
+FROM (SELECT ryhma.id AS ryhma_id, ryhma.nimi AS ryhma_nimi
+FROM ryhma) AS anon_1
 ```
 
 ### Haluan nähdä, keitä ryhmiin kuuluu
