@@ -48,7 +48,8 @@ def viestit_index():
 
     kysely = Viesti.query
 
-
+    # Hakuehdoista aiheen, kirjoittajan ja ryhmän pituutta ei validoida, 
+    # koska satojakaan merkkejä pitkä hakuehto ei tuota ongelmia palvelimelle
 
     aihe = request.args.get("aihe")
 

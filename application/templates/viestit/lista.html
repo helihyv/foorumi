@@ -28,28 +28,20 @@ onclick="this.innerHTML = this.innerHTML ==='Sulje hakulomake' ? 'Hae viestejä'
         </li>
         {% endfor %}
     </ul>
-  </div>
+ </div>
 
-  <p>
-      {% if virheet|length() > 0 %}
 
-      <div class="alert alert-danger">
-      {% for virhe in virheet %}
-      <p>virhe</p>
-    {% endfor %}  
-    </div>
+      {% if haettu_aihe or haettu_kirjoittaja or haettu_ryhma or haettu_aika_alku or haettu_aika_loppu %}
 
-      {% else %}
-      {% if (haettu_aihe or haettu_kirjoittaja or haettu_ryhma or haettu_aika_alku or haettu_aika_loppu)
-        and virheet|length() == 0  %}
-        <div class="alert">
       {% if viestit.items|length > 0 %}
+      <div class="alert alert-success">
       Näytetään viestit
+
       {% else %}
+      <div class="alert alert-warning">
       Ei löytynyt viestejä
       {% endif %}
-      {% endif %}
-      
+
       {% if haettu_aihe %}
       aiheesta {{ haettu_aihe }}
       {% endif %}
@@ -69,10 +61,11 @@ onclick="this.innerHTML = this.innerHTML ==='Sulje hakulomake' ? 'Hae viestejä'
       {% if haettu_aika_loppu %}
       {{ haettu_aika_loppu.strftime("%d.%m.%Y") }} asti
       {% endif %}
-      {% endif %}
-    </div>
-      </p>
+      </div>
 
+      {% endif %}
+      
+ 
 <ul class="list-group">
   {% for viesti in viestit.items %}
   <li class="list-group-item">
