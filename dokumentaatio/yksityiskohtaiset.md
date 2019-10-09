@@ -2,6 +2,15 @@
 
 Automaattisesti generoitavat SQL-kyselyt on tässä esitetty siinä muodossa kuin ne toteutetaan SQLite-tietokantaan. Käsin tehdyt kyselyt ovat siinä muodossa kuin ne ovat koodissa.
 
+Rekisteröitymistä ja kirjautumista lukuunottamatta kaikki sovelluksen toiminnot vaativat käyttäjän olevan kirjautuneena. Kirjautumisen tarkistamisen yhteydessä haetaan käyttäjän tiedot kyselyllä
+
+```sql
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus,
+kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+FROM kayttaja
+WHERE kayttaja.id = ?
+```
+
 ## Foorumin käyttäjänä (yhteisön jäsenenä)
 
 ### Haluan lukea viestejä
@@ -77,6 +86,8 @@ viesti.teksti AS viesti_teksti,  viesti.kirjoittaja_id AS viesti_kirjoittaja_id,
 viesti.vastattu_id AS viesti_vastattu_id
 ```
 
+Tämä kysely tehdään, jos sivuja on enemmän kuin yksi.
+
 Lisäksi haetaan jokaista viestiä kohden erikseen tieto siitä, onko käyttäjä lukenut viestin ja ovatko kaikki käyttäjät lukeneet viestin. Tähän tarvittavat kyselyt on eritelty käyttötapausten "haluan nähdä olenko jo lukenut viestin" ja "haluan nähdä ovatko kaikki käyttäjät lukeneet viestin" alla.
 
 ### Haluan hakea tiettyä aihetta käsitteleviä viestejä, jotta voin lukea niitä
@@ -125,7 +136,7 @@ LIMIT ? OFFSET ?
 
 Tämän lisäksi tehdään vielä jokaista näytettävää viestiä kohden kyselyt, joilla selvitetään ovat kaikki käyttäjät lukeneet viestin. Nämä kyselyt on eritelty kohdassa "haluan nähdä ovatko kaikki käyttäjät lukeneet viestin".
 
-### Haluam hakea tietyn käyttäjän kirjoittamia viestejä, jotta voin lukea niitä
+### Haluan hakea tietyn käyttäjän kirjoittamia viestejä, jotta voin lukea niitä
 
 Viestejä listaavalla sivulla avautuu hakulomake, jolla viestejä voi hakea mm. kirjoittajan nimen perusteella. Hakutuloksia näytetään 20 viestin erissä kirjoitusajan mukaan järjestettyinä uusin ensin.
 
@@ -293,11 +304,7 @@ Viestin kirjoittaja lisätään viestin lukeneisiin käyttäjiin, jottei itse ki
 INSERT INTO luetut (viesti_id, lukija_id) VALUES (?, ?)
 ```
 
-Tieto viestiin liittyvistä aihetunnisteista tallennetaan liitostauluun kyselyllä
-
-```sql
-INSERT INTO viestiaihe (viesti_id, aihe_id) VALUES (?, ?)
-```
+Lisäksi tallennetaan tieto viestiin liittyvistä aihetunnisteista. Tarvittava SQL-kysely on esitelty kohdassa "Haluan liittää viestiini aihetunnisteita".
 
 ### Haluan vastata toisen käyttäjän viestiin, jotta toinen käyttäjä ja muut voivat lukea sen
 
@@ -316,19 +323,6 @@ SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunn
 FROM kayttaja
 WHERE kayttaja.tunnus = ?
 LIMIT ? OFFSET ?
-```
-
-### Haluan nähdä olenko kirjautuneena
-
-Kirjautuneen käyttäjän nimi on esillä kaikilla sivuilla (navigaatiopalkissa), silloin kun käyttäjä on kirjautuneena.
-
-Nimi haetaan SQL-kyselyllä
-
-```sql
-SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus,
-kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
-FROM kayttaja
-WHERE kayttaja.id = ?
 ```
 
 ### Haluan luoda itselleni käyttäjätunnuksen, jotta voin käyttää foorumia
@@ -354,17 +348,27 @@ INSERT INTO kayttaja (nimi, tunnus, "salasanaHash", admin) VALUES (?, ?, ?, ?)
 
 ### Haluan vaihtaa salasanani
 
-```sql
+Salasanan vaihtamiseen on oma sivunsa /kayttajat/salasananvaihto .
 
+Salasana vaihdetaan SQL-kyselyllä
+
+```sql
+UPDATE kayttaja SET "salasanaHash"=? WHERE kayttaja.id = ?
 ```
 
 ### Haluan merkitä viestini aihetunnisteilla, jotta niistä kiinnostuneet löytävät ne helpommin
 
-```sql
+Tieto viestiin liittyvistä aihetunnisteista tallennetaan liitostauluun viestin muiden tietojen tallentamisen jälkeen kyselyllä
 
+```sql
+INSERT INTO viestiaihe (viesti_id, aihe_id) VALUES (?, ?)
 ```
 
 ### Haluan nähdä mitä aihetunnisteita foorumissa on jo käytössä
+
+Aihetunnisteiden tarkasteluun on oma sivunsa /aiheet . Aiheet haetaan aakkosjärjestyksessä enintään 20 aihetta kerrallaan.
+
+Aihetunnisteet haetaan SQL-kyselyllä
 
 ```sql
 SELECT aihe.id AS aihe_id, aihe.aihe AS aihe_aihe
@@ -373,23 +377,41 @@ LIMIT ? OFFSET ?
 
 ```
 
+Jos aiheita on yli 20, hakee SQLAlchemy automaattisesti myös aiheiden määrän sivumäärän selvittämiseksi seuraavalla kyselyllä:
+
+```sql
+SELECT count(*) AS count_1
+FROM (SELECT aihe.id AS aihe_id, aihe.aihe AS aihe_aihe
+FROM aihe) AS anon_1
+```
+
 ### Haluan luoda uusia aihetunnisteita, jotta voin liittää viestiini sopivan aihetunnisteen
+
+Uussia aihetunnisteita voi lisätä aiheiden sivulta. Lisäämiseen käytetään SQL-kyselyä
 
 ```sql
 INSERT INTO aihe (aihe) VALUES (?)
-
 ```
 
 ### Haluan nähdä mitä ryhmiä foorumissa on
 
+Ryhmien tarkasteluun on oma sivunsa /ryhmat
+
 ```sql
+SELECT ryhma.id AS ryhma_id, ryhma.nimi AS ryhma_nimi
+FROM ryhma ORDER BY ryhma.nimi
+ LIMIT ? OFFSET ?
 
 ```
 
 ### Haluan nähdä, keitä ryhmiin kuuluu
 
-```sql
+Ryhmien jäseniä voi tarkastella yksittäisen ryhmän sivulta /ryhmat/<ryhma_id> .
 
+```sql
+SELECT ryhma.id AS ryhma_id, ryhma.nimi AS ryhma_nimi
+FROM ryhma
+WHERE ryhma.id = ?
 ```
 
 ### Haluan nähdä tilastoja foorumin käytöstä
@@ -453,17 +475,83 @@ LIMIT 5
 
 ## Foorumin ylläpitäjänä
 
-Haluan tehdä myös kaiken, minkä tavallinen käyttäjäkin haluaa tehdä.
+Kaikissa ylläpitäjän oikeuksia vaativissa toiminnoissa tarkistetaan onko rekisteröityneellä käyttäjällä ylläpitäjän oikeudet kyselyllä
+
+```sql
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+FROM kayttaja, kayttajaryhma
+WHERE ? = kayttajaryhma.ryhma_id AND kayttaja.id = kayttajaryhma.kayttaja_id
+```
 
 ### Haluan poistaa viestejä, jotta asiattomat viestit saadaan poistetuksi foorumista
 
-```sql
+Aluksi haetaan viesti (ja tarkistetaan samalla, että se on olemassa) kyselyllä
 
+```sql
+SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika, viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id, kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus, kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
+FROM viesti LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
+WHERE viesti.id = ?
+```
+
+SQLAlchemy poistaa automaattisesti tiedot viestin lukeneista ja viestiin liitetyistä aihetunnisteista.
+Aivan ensiksi haetaan tiedot viestiin kirjoitetuista vastauksista, vaikka niitä ei muutetakaan mitenkään.
+
+```sql
+SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika, viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id, kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus, kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
+FROM viesti LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
+WHERE ? = viesti.vastattu_id
+```
+
+Sitten haetaan tiedot viestin lukeneista kyselyllä
+
+```sql
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+FROM kayttaja, luetut
+WHERE ? = luetut.viesti_id AND kayttaja.id = luetut.lukija_id
+```
+
+Sitten haetaan tiedot viestiin liitetyistä aihetunisteista kyselyllä
+
+```sql
+SELECT aihe.id AS aihe_id, aihe.aihe AS aihe_aihe
+FROM aihe, viestiaihe
+WHERE ? = viestiaihe.viesti_id AND aihe.id = viestiaihe.aihe_id
+```
+
+Sitten poistetaan läydetyt tiedot lukijoista kyselyllä
+
+```sql
+DELETE FROM luetut WHERE luetut.viesti_id = ? AND luetut.lukija_id = ?
+```
+
+Viestin ja siihen liitetyn aihetunnisteen yhteydet poistetaan kyselyllä
+
+```sql
+DELETE FROM viestiaihe WHERE viestiaihe.viesti_id = ? AND viestiaihe.aihe_id = ?
+```
+
+Itse viesti poistetaan kyselyllä
+
+```sql
+DELETE FROM viesti WHERE viesti.id = ?
 ```
 
 ### Haluan muokata viestejä, jotta voin poistaa viesteistää asiatonta sisältöä
 
+Ylläpitäjällä on yksittäisen viestin sivulla napista aukeava muokkauslomake.
+
+Muokkauspyynnön tullessa palvelimelle haetaan ensin viesti (samalla tarkistetaan, että se on olemassa) kyselyllä
+
 ```sql
+SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika, viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id, kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus, kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
+FROM viesti LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
+WHERE viesti.id = ?
+```
+
+Itse viestin muokkaaminen tapahtuu kyselyllä
+
+```sql
+UPDATE viesti SET muokkausaika=CURRENT_TIMESTAMP, otsikko=?, teksti=? WHERE viesti.id = ?
 
 ```
 
@@ -471,45 +559,163 @@ Haluan tehdä myös kaiken, minkä tavallinen käyttäjäkin haluaa tehdä.
 
 #### Haluan luoda ryhmiä
 
-```sql
+Ryhmä lisätään tietokantaan kyselyllä
 
+```sql
+INSERT INTO ryhma (nimi) VALUES (?)
+```
+
+Tämän jälkeen haetaan ryhmän tietokannasta saama id ryhmän sivulle uudelleenohjausta varten kyselyllä
+
+```sql
+SELECT ryhma.id AS ryhma_id, ryhma.nimi AS ryhma_nimi
+FROM ryhma
+WHERE ryhma.id = ?
 ```
 
 #### Haluan liittää käyttäjän ryhmään
 
+Aluksi tarkistetaan, että ryhmä, johon yritetään lisätä on olemassa ja haetaan se kyselyllä
+
 ```sql
+SELECT ryhma.id AS ryhma_id, ryhma.nimi AS ryhma_nimi
+FROM ryhma
+WHERE ryhma.id = ?
 
 ```
 
-#### Haluan poistaa käyttäjän ryhmästä
+Sitten haetaan lisättävät käyttäjät yksi kerrallaan
 
 ```sql
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+FROM kayttaja
+```
 
+Tämä kysely tehdään erikseen jokaiselle käyttäjälle.
+
+Varsinainen käyttäjän lisääminen ryhmään tapahtuu SQL-kyselyllä
+
+```sql
+INSERT INTO kayttajaryhma (kayttaja_id, ryhma_id) VALUES (?, ?)
+```
+
+Useamman käyttäjän lisääminen tapahtuu kerralla yhdellä kyselyllä.
+
+#### Haluan poistaa käyttäjän ryhmästä
+
+Ryhmän jäsenten luettelossa on nappi jäsenen poistamiseksi ryhmästä.
+
+Aluksi tarkistetaan että ryhmä on olemassa ja haetaan se käyttäen kerran kyselyä
+
+```sql
+SELECT ryhma.id AS ryhma_id, ryhma.nimi AS ryhma_nimi
+```
+
+Sitten tarkistetaan, että poistettava käyttäjä on ryhmän jäsen ja poistetaan käyttäjä ryhmästä kyselyillä
+
+```sql
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+FROM kayttaja, kayttajaryhma
+WHERE ? = kayttajaryhma.ryhma_id AND kayttaja.id = kayttajaryhma.kayttaja_id
+```
+
+ja
+
+```sql
+DELETE FROM kayttajaryhma WHERE kayttajaryhma.kayttaja_id = ? AND kayttajaryhma.ryhma_id = ?
 ```
 
 #### Haluan muokata ryhmän nimeä
 
-```sql
+Ryhmän nimeä voi muokata yksittäisen ryhmän sivulla.
 
+Ensin haetaan ryhmä ja tarkistetaan että se on olemassa kyselyllä
+
+```sql
+SELECT ryhma.id AS ryhma_id, ryhma.nimi AS ryhma_nimi
+FROM ryhma
+WHERE ryhma.id = ?
+```
+
+Varsinainen nimen muuttaminen tehdään kyselyllä
+
+```sql
+UPDATE ryhma SET nimi=? WHERE ryhma.id = ?
 ```
 
 #### Haluan poistaa ryhmiä
 
-```sql
+Ryhmän voi poistaa yksittäisen ryhmän sivvulta.
 
+Ensin haetaan ryhmä ja tarkistetaan että se on olemassa kyselyllä
+
+```sql
+SELECT ryhma.id AS ryhma_id, ryhma.nimi AS ryhma_nimi
+```
+
+SQLAlchemy poistaa automaattisesti kaikki käyttäjät poistettavasta ryhmästä kyselyllä
+
+```sql
+DELETE FROM kayttajaryhma WHERE kayttajaryhma.kayttaja_id = ? AND kayttajaryhma.ryhma_id = ?
+```
+
+Lopuksi poistetana itse ryhmä kyselyllä
+
+```sql
+DELETE FROM ryhma WHERE ryhma.id = ?
 ```
 
 ### Haluan hallita aihetunnisteita
 
 #### Haluan muokata aihetunnisteita
 
-```sql
+Aihetunnistetta voi muokata yksittäisen aihetunnisteen sivulta /aiheet/<aihe_id>
 
+Aluksi haetaan muokattava aihe (tarkistaen samalla, etää se on olemassa) kyselyllä
+
+```sql
+SELECT aihe.id AS aihe_id, aihe.aihe AS aihe_aihe
+FROM aihe
+WHERE aihe.id = ?
+```
+
+Itse aiheen muokkaaminen tapahtuu kyselyllä
+
+```sql
+UPDATE aihe SET aihe=? WHERE aihe.id = ?
 ```
 
 #### Haluan poistaa aihetunnisteita
 
+Aluksi haetaan aihe (ja tarkistetaan samalla että se on olemassa)
+
 ```sql
+SELECT aihe.id AS aihe_id, aihe.aihe AS aihe_aihe
+FROM aihe
+WHERE aihe.id = ?
+
+```
+
+SQLAlchemy poistaa automaattisesti aiheen kaikista viesteistä aiheen poistamisen yhteydessä. Aluksi haetaan aiheeseen liittyvät viestit kyselyllä
+
+```sql
+SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika, viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id, kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus, kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
+FROM viestiaihe, viesti LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
+WHERE ? = viestiaihe.aihe_id AND viesti.id = viestiaihe.viesti_id
+
+```
+
+Seuraavaksi poistetaan aihe näistä viesteistä kerralla kyselyllä
+
+```sql
+DELETE FROM viestiaihe WHERE viestiaihe.viesti_id = ? AND viestiaihe.aihe_id = ?
+
+```
+
+Lopuksi poistetaan itse aihe kyselyllä
+
+```sql
+DELETE FROM aihe WHERE aihe.id = ?
 
 ```
 
