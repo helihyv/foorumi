@@ -30,8 +30,10 @@ class Ryhma(db.Model):
         vastaus = db.engine.execute(kysely)
 
         eniten_kirjoittaneet = []
+
         for rivi in vastaus:
             eniten_kirjoittaneet.append(
                 {"nimi": rivi[0], "viestien_lkm": rivi[1]})
-            print(rivi)
+
+
         return eniten_kirjoittaneet
