@@ -61,8 +61,6 @@ def lisaa_jasenia(ryhma_id):
     ryhma.jasenet = ryhma.jasenet + [Kayttaja.query.get(jasen_id) for jasen_id in form.jasenet.data ]
     
     db.session().commit()
-
-    print(ryhma.jasenet)
     
     return redirect(url_for("ryhma", ryhma_id=ryhma_id))
 
