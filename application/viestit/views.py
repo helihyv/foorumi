@@ -155,4 +155,4 @@ def viestit_muokkaa(viesti_id):
     viesti.muokkausaika = db.func.current_timestamp()
     db.session.commit()
 
-    return redirect(url_for("viesti", viesti_id = viesti.id))
+    return redirect(url_for("viesti", viesti_id = viesti_id))
