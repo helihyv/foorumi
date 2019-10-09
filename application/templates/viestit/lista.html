@@ -31,7 +31,18 @@ onclick="this.innerHTML = this.innerHTML ==='Sulje hakulomake' ? 'Hae viestejä'
   </div>
 
   <p>
-      {% if haettu_aihe or haettu_kirjoittaja or haettu_ryhma or haettu_aika_alku or haettu_aika_loppu %}
+      {% if virheet|length() > 0 %}
+
+      <div class="alert alert-danger">
+      {% for virhe in virheet %}
+      <p>virhe</p>
+    {% endfor %}  
+    </div>
+
+      {% else %}
+      {% if (haettu_aihe or haettu_kirjoittaja or haettu_ryhma or haettu_aika_alku or haettu_aika_loppu)
+        and virheet|length() == 0  %}
+        <div class="alert">
       {% if viestit.items|length > 0 %}
       Näytetään viestit
       {% else %}
@@ -58,6 +69,8 @@ onclick="this.innerHTML = this.innerHTML ==='Sulje hakulomake' ? 'Hae viestejä'
       {% if haettu_aika_loppu %}
       {{ haettu_aika_loppu.strftime("%d.%m.%Y") }} asti
       {% endif %}
+      {% endif %}
+    </div>
       </p>
 
 <ul class="list-group">

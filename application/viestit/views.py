@@ -48,10 +48,13 @@ def viestit_index():
 
     kysely = Viesti.query
 
+
+
     aihe = request.args.get("aihe")
 
     hakuparametrit = "&"
 
+    virheet = []
     if aihe:
         kysely = kysely.join(Viesti.aiheet).filter(Aihe.aihe == aihe)
         hakuparametrit = hakuparametrit + "aihe=" + aihe + "&"
@@ -74,31 +77,51 @@ def viestit_index():
         hakuparametrit = hakuparametrit + "ryhma=" + ryhma + "&"
 
     alkupvm = request.args.get("alkupvm")
-
-    if alkupvm:
-        kysely = kysely.filter(Viesti.kirjoitusaika >= alkupvm)
-        hakuparametrit = hakuparametrit + "alkupvm=" + alkupvm + "&"
+    
+    #Varmistetaan, että syöte on validi päivämäärä
+    #Päivämäärä validoidaan jo asiakkaan puolella, ei tarvetta virheilmoitukselle
+    try:
         alkupvm = datetime.strptime(alkupvm, "%Y-%m-%d")
-        
+    except:
+        alkupvm = None
+
+    else:
+        kysely = kysely.filter(Viesti.kirjoitusaika >= alkupvm)
+        hakuparametrit = hakuparametrit + "alkupvm=" + str(alkupvm) + "&"            
 
     loppupvm = request.args.get("loppupvm")
-    if loppupvm:
-        kysely = kysely.filter(Viesti.kirjoitusaika <= loppupvm + " " +  str(time(23,59,59,999999))) 
-        hakuparametrit = hakuparametrit + "loppupvm=" + loppupvm
+    
+    #Varmistetaan, että syöte on validi päivämäärä
+    #Päivämäärä validoidaan jo asiakkaan puolella, ei tarvetta virheilmoitukselle
+    try:
         loppupvm = datetime.strptime(loppupvm,"%Y-%m-%d")
+    except:
+        loppupvm=None
+    else:
+        kysely = kysely.filter(Viesti.kirjoitusaika <= str(loppupvm) + " " +  str(time(23,59,59,999999))) 
+        hakuparametrit = hakuparametrit + "loppupvm=" + str(loppupvm)
 
     sivuteksti = request.args.get("sivu", 1)
     try:
         sivu = int(sivuteksti)
     except:
         sivu = 1
-
     
     viestit = kysely.order_by(Viesti.kirjoitusaika.desc()).paginate(sivu)
 
     form = ViestinHakuLomake()
 
-    return render_template("viestit/lista.html", viestit=viestit, form=form, haettu_aihe=aihe, haettu_kirjoittaja=nimi, haettu_ryhma = ryhma, haettu_aika_alku = alkupvm, haettu_aika_loppu = loppupvm, hakuparametrit=hakuparametrit)
+    return render_template(
+        "viestit/lista.html", 
+        viestit=viestit, 
+        form=form, haettu_aihe=aihe, 
+        haettu_kirjoittaja=nimi, 
+        haettu_ryhma = ryhma, 
+        haettu_aika_alku = alkupvm, 
+        haettu_aika_loppu = loppupvm, 
+        hakuparametrit=hakuparametrit, 
+        virheet = virheet
+        )
 
 
 @app.route("/viestit/<viesti_id>")

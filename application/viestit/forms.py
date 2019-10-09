@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectMultipleField, TextAreaField, HiddenField, validators, SubmitField
-from wtforms.fields.html5 import DateField
+from wtforms_components import DateField, DateRange
+from datetime import date
 from application.suomennokset import pituus_validaatiovirheviesti
 
 class ViestiPohjaLomake(FlaskForm):
@@ -22,8 +23,8 @@ class ViestinHakuLomake(FlaskForm):
     aihe = StringField("Aihe")
     nimi = StringField("Kirjoittaja")
     ryhma = StringField("Ryhmältä")
-    alkupvm = DateField("Alkaen")
-    loppupvm = DateField("Asti")
+    alkupvm = DateField("Alkaen",[DateRange(min=date(2000,1,1), max=date(3000,1,1) )])
+    loppupvm = DateField("Asti",[DateRange(min=date(2000,1,1), max=date(3000,1,1))])
     nappi = SubmitField("Hae")
 
     class Meta:
