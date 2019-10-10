@@ -281,7 +281,8 @@ viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id,
 viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id,
 kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus,
 kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
-FROM viesti LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
+FROM viesti
+LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
 WHERE viesti.id = ?
 
 ```
@@ -304,7 +305,8 @@ Tämä tehdään sekä luotaessa lomaketta, johon vastaus kirjoitetaan, että (s
 Viestin tallentaminen tietokantaan tapahtuu seuraavalla SQL-kyselyllä:
 
 ```sql
-INSERT INTO viesti (kirjoitusaika, muokkausaika, otsikko, teksti, kirjoittaja_id, vastattu_id) VALUES (CURRENT_TIMESTAMP, ?, ?, ?, ?, ?)
+INSERT INTO viesti (kirjoitusaika, muokkausaika, otsikko, teksti, kirjoittaja_id, vastattu_id)
+VALUES (CURRENT_TIMESTAMP, ?, ?, ?, ?, ?)
 ```
 
 Viestin kirjoittaja lisätään viestin lukeneisiin käyttäjiin, jottei itse kirjoitettu viesti näkyisi uutena. Tähän käytetään SQL-kyselyä
@@ -340,7 +342,8 @@ Sovelluksessa on oma osoite uloskirjautumiseen: /logout .
 Uloskirjaamiseen käytettävä flask-login:in logout_user -funktio hakee uloskirjattavan käyttäjän tiedot kyselyllä
 
 ```sql
-SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus,
+kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
 FROM kayttaja
 WHERE kayttaja.id = ?
 ```
@@ -394,7 +397,6 @@ Aihetunnisteet haetaan SQL-kyselyllä
 SELECT aihe.id AS aihe_id, aihe.aihe AS aihe_aihe
 FROM aihe ORDER BY aihe.aihe
 LIMIT ? OFFSET ?
-
 ```
 
 Jos aiheita on yli 20, hakee SQLAlchemy automaattisesti myös aiheiden määrän sivumäärän selvittämiseksi seuraavalla kyselyllä:
@@ -420,8 +422,7 @@ Ryhmien tarkasteluun on oma sivunsa /ryhmat . Ryhmiä näytetään aakkosjärjes
 ```sql
 SELECT ryhma.id AS ryhma_id, ryhma.nimi AS ryhma_nimi
 FROM ryhma ORDER BY ryhma.nimi
- LIMIT ? OFFSET ?
-
+LIMIT ? OFFSET ?
 ```
 
 Jos ryhmiä on enemmän kuin kaksikymmentä flask-SQLAlchemy hakee sivutusoliolle myös sivujen kokonaismäärää varten ryhmien määrän kyselyllä
@@ -516,8 +517,14 @@ WHERE ? = kayttajaryhma.ryhma_id AND kayttaja.id = kayttajaryhma.kayttaja_id
 Aluksi haetaan viesti (ja tarkistetaan samalla, että se on olemassa) kyselyllä
 
 ```sql
-SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika, viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id, kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus, kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
-FROM viesti LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
+SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika,
+viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko,
+viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id,
+viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id,
+kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus,
+kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
+FROM viesti
+LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
 WHERE viesti.id = ?
 ```
 
@@ -525,8 +532,14 @@ SQLAlchemy poistaa automaattisesti tiedot viestin lukeneista ja viestiin liitety
 Aivan ensiksi haetaan tiedot viestiin kirjoitetuista vastauksista, vaikka niitä ei muutetakaan mitenkään.
 
 ```sql
-SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika, viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id, kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus, kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
-FROM viesti LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
+SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika,
+viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko,
+viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id,
+viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id,
+kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus,
+kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
+FROM viesti
+LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
 WHERE ? = viesti.vastattu_id
 ```
 
@@ -572,7 +585,8 @@ Muokkauspyynnön tullessa palvelimelle haetaan ensin viesti (samalla tarkistetaa
 
 ```sql
 SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika, viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id, kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus, kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
-FROM viesti LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
+FROM viesti
+LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
 WHERE viesti.id = ?
 ```
 
@@ -735,7 +749,8 @@ viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id,
 viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id,
 kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus,
 kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
-FROM viestiaihe, viesti LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
+FROM viestiaihe, viesti
+LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
 WHERE ? = viestiaihe.aihe_id AND viesti.id = viestiaihe.viesti_id
 
 ```
