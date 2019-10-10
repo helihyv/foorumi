@@ -10,7 +10,7 @@ Viestin, jolla on uusi aihetunniste, kirjoittaminen on nyt kömpelöä, koska on
 
 Vaihtoehtoisesti voitaisiin palata alkuperäiseen suunnitelmaan tehdä aiheiden lisääminen mahdolliseksi vain ylläpitäjälle, jotta aiheilla voidaan ohjata keskustelua yhteisön kannalta relevantteihin aiheisiin.
 
-# Aiheiden suosion näyttäminen aihesivulla tai aihelistauksessa
+## Aiheiden suosion näyttäminen aihesivulla tai aihelistauksessa
 
 Aiheen yhteydessä voisi näyttää kuinka monessa viestissä sitä on käytetty
 
@@ -23,8 +23,6 @@ Nyt vain ylläpitäjä voi lisätä käyttäjän ryhmään, ja käyttäjä ei vo
 Käyttäjä näkee nyt kuuluuko ryhmään vain silmäilemällä ryhmään kuuluvien käyttäjien listausta, mikä on turhan kömpelöä varsinkin jos jäseniä on paljon ja nimi on aakkosten loppupäästä. Jos samannimisiä käyttäjiä on kaksi, ei erotu kummasta on kyse.
 
 Sivulla voitaisiin kertoa heti alussa kuuluuko käyttäjä itse ryhmään vai ei.
-
-## Ryhmään jo kuuluvien jäsenten rajaaminen pois ryhmään liitettävien valinnasta
 
 ## Viestien näkyvyyden rajaaminen tietylle ryhmälle
 

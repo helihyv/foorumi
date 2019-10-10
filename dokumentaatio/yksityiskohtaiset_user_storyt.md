@@ -442,10 +442,19 @@ FROM ryhma) AS anon_1
 
 Ryhmien jäseniä voi tarkastella yksittäisen ryhmän sivulta /ryhmat/<ryhma_id> .
 
+Ryhmän nimi haetaan kyselyllä
+
 ```sql
 SELECT ryhma.id AS ryhma_id, ryhma.nimi AS ryhma_nimi
 FROM ryhma
 WHERE ryhma.id = ?
+```
+
+Lisäksi jokaisen ryhmän jäsenen tiedot haetaan erikseen kyselyllä
+
+```sql
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+FROM kayttaja
 ```
 
 ### Haluan nähdä tilastoja foorumin käytöstä

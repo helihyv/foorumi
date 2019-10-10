@@ -1,5 +1,6 @@
 from application import app, db, login_manager
 from flask import render_template, request, redirect, url_for
+from sqlalchemy import or_
 from application.ryhmat.models import Ryhma
 from application.ryhmat.forms import LisaaRyhmaLomake, LisaaJasenLomake, MuutaRyhmanNimeaLomake
 from application.kayttajat.models import Kayttaja
@@ -40,7 +41,8 @@ def ryhma(ryhma_id):
     ryhma = Ryhma.query.get_or_404(ryhma_id)
 
     lisaa_jasen_lomake = LisaaJasenLomake()
-    lisaa_jasen_lomake.jasenet.choices =[(kayttaja.id, kayttaja.nimi) for kayttaja in Kayttaja.query.all()]
+    
+    lisaa_jasen_lomake.jasenet.choices =[(kayttaja.id, kayttaja.nimi) for kayttaja in Kayttaja.query.all() if kayttaja not in ryhma.jasenet]
 
     muokkaa_ryhmaa_lomake = MuutaRyhmanNimeaLomake()
     muokkaa_ryhmaa_lomake.nimi.data = ryhma.nimi
