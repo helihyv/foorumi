@@ -35,7 +35,8 @@ WHERE viesti.id = ?
 Jos kirjautunut käyttäjä ei ole aiemmin lukenut viestiä, hänet lisätään lukijoiden luetteloon. aluksi tarkastetaan, onko käyttäjä jo lukenut viestin käyttäen SQL-kyselyä
 
 ```sql
-SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus,
+kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
 FROM kayttaja, luetut
 WHERE ? = luetut.viesti_id AND kayttaja.id = luetut.lukija_id
 ```
@@ -46,18 +47,22 @@ Itse viestin lukeneiden luetteloon lisääminen tapahtuu SQL-kyselyllä
 INSERT INTO luetut (viesti_id, lukija_id) VALUES (?, ?)
 ```
 
-Jos käyttäjä on lisätty lukijoihin, haetaan templatea varten vielä erikseen viestin lukeneen käyttäjän, viestin ja viestin kirjoittajan tiedot, ilmeisesti sen takia, että välissä on kutsuttu commit() -funktiota. Lukijan ja kirjoittajan tiedot haetaan kahdella seuraavanlaisella kyselyllä
+Jos käyttäjä on lisätty lukijoihin, haetaan templatea varten vielä erikseen viestin lukeneen käyttäjän, viestin ja viestin kirjoittajan tiedot, ilmeisesti sen takia, että välissä on kutsuttu commit() -funktiota. Lukijan ja kirjoittajan tiedot haetaan kahdella seuraavanlaisella kyselyllä:
 
 ```sql
-SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus,
+kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
 FROM kayttaja
 WHERE kayttaja.id = ?
 ```
 
-Viestin tiedot haetaan seuraavanlaisella kyselyllä
+Viestin tiedot haetaan kyselyllä
 
 ```sql
-SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika, viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id
+SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika,
+viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko,
+viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id,
+viesti.vastattu_id AS viesti_vastattu_id
 FROM viesti
 WHERE viesti.id = ?
 
