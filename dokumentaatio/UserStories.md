@@ -17,6 +17,7 @@
 - kirjoittaa viestin, jotta muut voivat lukea sen
 - vastata toisen käyttäjän viestiin, jotta toinen käyttäjä ja muut voivat lukea sen
 - kirjautua sisään foorumiin, jotta kirjoittamani viestit tunnistuvat minun (ja ryhmäni jäsenen) kirjoittamikseni ja näen mitkä viestit olen jo lukenut
+- kirjautua ulos foorumista, jotta muut eivät pääse käyttämään tunnustani
 - luoda itselleni käyttäjätunnuksen, jotta voin käyttää foorumia
 - nähdä olenko kirjautuneena
 - vaihtaa salasanani

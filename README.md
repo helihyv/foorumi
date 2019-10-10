@@ -22,7 +22,7 @@ Tavallisia käyttäjiä voi luoda itse lisää valikon linkistä "Lisää käytt
 
 [User Stories](dokumentaatio/UserStories.md)
 
-[Yksityiskohtaiset käyttötapaukset](dokumentaatio/yksityiskohtaiset.md)
+[Yksityiskohtaiset User Storyt](dokumentaatio/yksityiskohtaiset_user_storyt.md) (Sisältää käytetyt SQL-kyselyt)
 
 ## Kuvaus
 

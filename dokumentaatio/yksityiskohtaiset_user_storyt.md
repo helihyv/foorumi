@@ -1,4 +1,4 @@
-# Yksityiskohtaiset käyttötapaukset
+# Yksityiskohtaiset User Storyt
 
 Automaattisesti generoitavat SQL-kyselyt on tässä esitetty siinä muodossa kuin ne toteutetaan SQLite-tietokantaan. Käsin tehdyt kyselyt ovat siinä muodossa kuin ne ovat koodissa.
 
@@ -332,6 +332,17 @@ SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunn
 FROM kayttaja
 WHERE kayttaja.tunnus = ?
 LIMIT ? OFFSET ?
+```
+
+### Haluan kirjautua ulos foorumista, jotta muut eivät pääse käyttämään tunnustani
+
+Sovelluksessa on oma osoite uloskirjautumiseen: /logout .
+Uloskirjaamiseen käytettävä flask-login:in logout_user -funktio hakee uloskirjattavan käyttäjän tiedot kyselyllä
+
+```sql
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+FROM kayttaja
+WHERE kayttaja.id = ?
 ```
 
 ### Haluan luoda itselleni käyttäjätunnuksen, jotta voin käyttää foorumia
