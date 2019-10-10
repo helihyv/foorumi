@@ -18,11 +18,13 @@ Tavallisia käyttäjiä voi luoda itse lisää valikon linkistä "Lisää käytt
 
 [Tietokantakaavio](dokumentaatio/Tietokantakaavio.png)
 
-[Tietokannan rakenne](dokumentaatio/tietokannan_rakenne.md)
+[Tietokannan rakenne](dokumentaatio/tietokannan_rakenne.md) (Sisältää CREATE TABLE -lauseet.)
 
 [User Stories](dokumentaatio/UserStories.md)
 
-[Yksityiskohtaiset User Storyt](dokumentaatio/yksityiskohtaiset_user_storyt.md) (Sisältää käytetyt SQL-kyselyt)
+[Yksityiskohtaiset User Storyt](dokumentaatio/yksityiskohtaiset_user_storyt.md) (Sisältää käytetyt SQL-kyselyt.)
+
+[Jatkokehitysideoita](dokumentaatio/jatkokehitysideoita.md)
 
 ## Kuvaus
 
