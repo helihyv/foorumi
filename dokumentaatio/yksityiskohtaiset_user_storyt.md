@@ -615,7 +615,8 @@ WHERE ryhma.id = ?
 Sitten haetaan lisättävät käyttäjät yksi kerrallaan
 
 ```sql
-SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus,
+kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
 FROM kayttaja
 ```
 
@@ -639,15 +640,16 @@ Aluksi tarkistetaan että ryhmä on olemassa ja haetaan se käyttäen kerran kys
 SELECT ryhma.id AS ryhma_id, ryhma.nimi AS ryhma_nimi
 ```
 
-Sitten tarkistetaan, että poistettava käyttäjä on ryhmän jäsen ja poistetaan käyttäjä ryhmästä kyselyillä
+Sitten tarkistetaan, että poistettava käyttäjä on ryhmän jäsen kyselyllä
 
 ```sql
-SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus,
+kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
 FROM kayttaja, kayttajaryhma
 WHERE ? = kayttajaryhma.ryhma_id AND kayttaja.id = kayttajaryhma.kayttaja_id
 ```
 
-ja
+Lopuksi poistetaan käyttäjä ryhmästä kyselyllä
 
 ```sql
 DELETE FROM kayttajaryhma WHERE kayttajaryhma.kayttaja_id = ? AND kayttajaryhma.ryhma_id = ?
@@ -687,7 +689,7 @@ SQLAlchemy poistaa automaattisesti kaikki käyttäjät poistettavasta ryhmästä
 DELETE FROM kayttajaryhma WHERE kayttajaryhma.kayttaja_id = ? AND kayttajaryhma.ryhma_id = ?
 ```
 
-Lopuksi poistetana itse ryhmä kyselyllä
+Lopuksi poistetaan itse ryhmä kyselyllä
 
 ```sql
 DELETE FROM ryhma WHERE ryhma.id = ?
@@ -727,7 +729,12 @@ WHERE aihe.id = ?
 SQLAlchemy poistaa automaattisesti aiheen kaikista viesteistä aiheen poistamisen yhteydessä. Aluksi haetaan aiheeseen liittyvät viestit kyselyllä
 
 ```sql
-SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika, viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id, kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus, kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
+SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika,
+viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko,
+viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id,
+viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id,
+kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus,
+kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
 FROM viestiaihe, viesti LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
 WHERE ? = viestiaihe.aihe_id AND viesti.id = viestiaihe.viesti_id
 
