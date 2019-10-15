@@ -14,14 +14,24 @@ def aiheet():
     except:
         sivu = 1
 
-    return render_template("aiheet/aiheet.html", aiheet= Aihe.query.order_by(Aihe.aihe).paginate(sivu), form=LisaaAiheLomake())
+    form=LisaaAiheLomake()
+    form.palattava_sivu.data = sivu
+    return render_template("aiheet/aiheet.html", aiheet= Aihe.query.order_by(Aihe.aihe).paginate(sivu), form=form)
 
 @app.route("/aiheet", methods=["POST"])
 @login_required
 def aiheet_luo():
     form = LisaaAiheLomake(request.form)
+
+    sivuteksti = form.palattava_sivu.data
+
+    try:
+        sivu = int(sivuteksti)
+    except:
+        sivu = 1
+    
     if not form.validate():
-        return render_template("aiheet/aiheet.html", aiheet= Aihe.query.all(), form = form)
+        return render_template("aiheet/aiheet.html", aiheet= Aihe.query.order_by(Aihe.aihe).paginate(sivu), form = form)
 
     aihe = Aihe(form.aihe.data)
     db.session.add(aihe)
