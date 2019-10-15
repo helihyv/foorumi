@@ -37,7 +37,7 @@ def aiheet_luo():
     db.session.add(aihe)
     db.session.commit()
 
-    return redirect(url_for("aiheet"))
+    return redirect(url_for("aiheet") + "?sivu="+ str(sivu))
 
 @app.route("/aiheet/<aihe_id>/", methods=["POST"])
 @login_required
