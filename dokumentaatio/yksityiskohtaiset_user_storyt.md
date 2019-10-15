@@ -330,6 +330,91 @@ ALuksi haetaan luettelo kaikista valittavissa olevista aihetunnisteista seuraava
 
 Vastauksen ja siihen liittyvien aihetunnisteiden tallentaminen tietokantaan ja kirjoittajan merkitseminen viestin lukeneeksi tapahtuu samoin kuin erillistä viestiä tallennettaessa, niihin liittyvät SQL-kyselyt on esitelty yllä.
 
+### Haluan muokata itse kirjoittamieni viestejä
+
+Muokkauspyynnön tullessa palvelimelle haetaan ensin viesti (samalla tarkistetaan, että se on olemassa) kyselyllä
+
+```sql
+SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika, viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id, kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus, kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
+FROM viesti
+LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
+WHERE viesti.id = ?
+```
+
+Itse viestin muokkaaminen tapahtuu kyselyllä
+
+```sql
+UPDATE viesti SET muokkausaika=CURRENT_TIMESTAMP, otsikko=?, teksti=? WHERE viesti.id = ?
+
+```
+
+### Haluan poistaa itse kirjoittamiani viestejä
+
+Yksittäisen viestin sivulla on viestin kirjoittajalle näkyvissä nappi, josta voi poistaa kyseisen viestin.
+
+Aluksi haetaan viesti (ja tarkistetaan samalla, että se on olemassa) kyselyllä
+
+```sql
+SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika,
+viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko,
+viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id,
+viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id,
+kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus,
+kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
+FROM viesti
+LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
+WHERE viesti.id = ?
+```
+
+SQLAlchemy poistaa automaattisesti tiedot viestin lukeneista ja viestiin liitetyistä aihetunnisteista.
+Aluksi haetaan tiedot viestiin kirjoitetuista vastauksista, vaikka niitä ei muutetakaan mitenkään:
+
+```sql
+SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika,
+viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko,
+viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id,
+viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id,
+kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus,
+kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
+FROM viesti
+LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
+WHERE ? = viesti.vastattu_id
+```
+
+Tiedot viestin lukeneista haetaan kyselyllä
+
+```sql
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+FROM kayttaja, luetut
+WHERE ? = luetut.viesti_id AND kayttaja.id = luetut.lukija_id
+```
+
+Tiedot viestiin liitetyistä aihetunisteista haetaan kyselyllä
+
+```sql
+SELECT aihe.id AS aihe_id, aihe.aihe AS aihe_aihe
+FROM aihe, viestiaihe
+WHERE ? = viestiaihe.viesti_id AND aihe.id = viestiaihe.aihe_id
+```
+
+Sitten poistetaan läydetyt tiedot lukijoista kyselyllä
+
+```sql
+DELETE FROM luetut WHERE luetut.viesti_id = ? AND luetut.lukija_id = ?
+```
+
+Viestin ja siihen liitetyn aihetunnisteen yhteydet poistetaan kyselyllä
+
+```sql
+DELETE FROM viestiaihe WHERE viestiaihe.viesti_id = ? AND viestiaihe.aihe_id = ?
+```
+
+Itse viesti poistetaan kyselyllä
+
+```sql
+DELETE FROM viesti WHERE viesti.id = ?
+```
+
 ### Haluan kirjautua sisään foorumiin, jotta kirjoittamani viestit tunnistuvat minun (ja ryhmäni jäsenen) kirjoittamikseni ja näen mitkä viestit olen jo lukenut
 
 Kun sovellus saa pyynnön kirjautua sisään, haetaan kirjautumassa olevan käyttäjän tiedot tietokannasta seuraavalla SQL-kyselyllä:
@@ -526,90 +611,13 @@ FROM kayttaja, kayttajaryhma
 WHERE ? = kayttajaryhma.ryhma_id AND kayttaja.id = kayttajaryhma.kayttaja_id
 ```
 
-### Haluan poistaa viestejä, jotta asiattomat viestit saadaan poistetuksi foorumista
+### Haluan poistaa muiden kirjoittamia viestejä, jotta asiattomat viestit saadaan poistetuksi foorumista
 
-Aluksi haetaan viesti (ja tarkistetaan samalla, että se on olemassa) kyselyllä
+Ylläpitäjälle näkyy jokaisen yksittäisen viestin sivulla nappi, josta kyseisen viestin voi poistaa. Tarvittavat SQL-kyselyt on esitelty kohdassa "Haluan poistaa itse kirjoittamiani viestejä".
 
-```sql
-SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika,
-viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko,
-viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id,
-viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id,
-kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus,
-kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
-FROM viesti
-LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
-WHERE viesti.id = ?
-```
+### Haluan muokata muiden kirjoittamia viestejä, jotta voin poistaa viesteistää asiatonta sisältöä
 
-SQLAlchemy poistaa automaattisesti tiedot viestin lukeneista ja viestiin liitetyistä aihetunnisteista.
-Aivan ensiksi haetaan tiedot viestiin kirjoitetuista vastauksista, vaikka niitä ei muutetakaan mitenkään.
-
-```sql
-SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika,
-viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko,
-viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id,
-viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id,
-kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus,
-kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
-FROM viesti
-LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
-WHERE ? = viesti.vastattu_id
-```
-
-Sitten haetaan tiedot viestin lukeneista kyselyllä
-
-```sql
-SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
-FROM kayttaja, luetut
-WHERE ? = luetut.viesti_id AND kayttaja.id = luetut.lukija_id
-```
-
-Sitten haetaan tiedot viestiin liitetyistä aihetunisteista kyselyllä
-
-```sql
-SELECT aihe.id AS aihe_id, aihe.aihe AS aihe_aihe
-FROM aihe, viestiaihe
-WHERE ? = viestiaihe.viesti_id AND aihe.id = viestiaihe.aihe_id
-```
-
-Sitten poistetaan läydetyt tiedot lukijoista kyselyllä
-
-```sql
-DELETE FROM luetut WHERE luetut.viesti_id = ? AND luetut.lukija_id = ?
-```
-
-Viestin ja siihen liitetyn aihetunnisteen yhteydet poistetaan kyselyllä
-
-```sql
-DELETE FROM viestiaihe WHERE viestiaihe.viesti_id = ? AND viestiaihe.aihe_id = ?
-```
-
-Itse viesti poistetaan kyselyllä
-
-```sql
-DELETE FROM viesti WHERE viesti.id = ?
-```
-
-### Haluan muokata viestejä, jotta voin poistaa viesteistää asiatonta sisältöä
-
-Ylläpitäjällä on yksittäisen viestin sivulla napista aukeava muokkauslomake.
-
-Muokkauspyynnön tullessa palvelimelle haetaan ensin viesti (samalla tarkistetaan, että se on olemassa) kyselyllä
-
-```sql
-SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika, viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id, kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus, kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
-FROM viesti
-LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
-WHERE viesti.id = ?
-```
-
-Itse viestin muokkaaminen tapahtuu kyselyllä
-
-```sql
-UPDATE viesti SET muokkausaika=CURRENT_TIMESTAMP, otsikko=?, teksti=? WHERE viesti.id = ?
-
-```
+Ylläpitäjällä on jokaisen yksittäisen viestin sivulla napista aukeava muokkauslomake. Tarvittavat SQL-kyselyt on esitelty kohdassa "Haluan muokata itse kirjoittamiani viestejä"
 
 ### Haluan hallita käyttäjien jäsenyyksiä ryhmissä
 

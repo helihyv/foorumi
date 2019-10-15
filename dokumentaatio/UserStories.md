@@ -16,6 +16,8 @@
 - nähdä mihin viestiin viesti on vastannut, jotta voin seurata viestiketjua taaksepäin
 - kirjoittaa viestin, jotta muut voivat lukea sen
 - vastata toisen käyttäjän viestiin, jotta toinen käyttäjä ja muut voivat lukea sen
+- muokata itse kirjoittamaani viestiä
+- poistaa itse kirjoittamani viestin
 - kirjautua sisään foorumiin, jotta kirjoittamani viestit tunnistuvat minun (ja ryhmäni jäsenen) kirjoittamikseni ja näen mitkä viestit olen jo lukenut
 - kirjautua ulos foorumista, jotta muut eivät pääse käyttämään tunnustani
 - luoda itselleni käyttäjätunnuksen, jotta voin käyttää foorumia
@@ -34,8 +36,8 @@
 
 ## Foorumin ylläpitäjänä haluan lisäksi...
 
-- poistaa viestejä, jotta asiattomat viestit saadaan poistetuksi foorumista
-- muokata viestejä, jotta voin poistaa viesteistää asiatonta sisältöä
+- poistaa muiden kirjoittamia viestejä, jotta asiattomat viestit saadaan poistetuksi foorumista
+- muokata muiden kirjoittamia viestejä, jotta voin poistaa viesteistää asiatonta sisältöä
 - hallita käyttäjien jäsenyyksiä ryhmissä
   - luoda ryhmiä
   - liittää käyttäjän ryhmään

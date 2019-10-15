@@ -33,6 +33,14 @@ Uusi viestiketju aloitetaan valikon kohdasta "Lisää viesti". Viestille annetaa
 
 Aiempaan viestiin voi vastata menemällä kyseisen viestin sivulle (ks. kohta viestien katseleminen) ja painamalla "vastaa"-nappia. Tällöin avautuu lomake, johon voi kirjoittaa oman viestinsä samaan tapaan kuin uutta viestiketjua aloitettaessa.
 
+### Omien viestien muokkaaminen
+
+Yksittäistä itse kirjoitettua viestiä tarkasteltaessa näkyy "Muokkaa viestiä"-nappi, josta aukeaa lomake, jossa viestin otsikkoa ja tekstiä voidaan muokata. Muokkauksen pohjana ovat käytössä viestin aiempi otsikko ja teksti. Muokattu viesti tallennetaan painamalla nappia "Muokkaa viestiä". Muokatun viestin yhteydessä näytetään aika, jona sitä on muokattu.
+
+### Omien viestien poistaminen
+
+Yksittäistä itse kirjoitettua viestiä tarkasteltaessa "Tuhoa viesti" -nappi. Napin painamisen jälkeen kysytään vielä haluaako käyttäjä varmasti tuhota viestin.
+
 ### Aiheet
 
 Aiheiden tarkastelu ja uusien aiheiden lisääminen edellyttävät kirjautumista.
@@ -65,13 +73,13 @@ Ylläpitäjä voi (tavalliselle käyttäjälle saatavilla olevien toimintojen li
 
 Kun sovellus käynnistetään ensimmäisen kerran, on ennen muuta käyttöä luotava ylläpitäjän käyttäjätunnus (valikon kohta "Rekisteröidy"). Ylläpitäjälle on annettava nimi, tunnus ja salasana. (Ensimmäisen käyttäjän jälkeen luotavat käyttäjät ovat tavallisia käyttäjiä, joilla ei ole ylläpitäjän oikeuksia.)
 
-### Viestien muokkaaminen
+### Muiden kirjoittaminen viestien muokkaaminen
 
-Tämä ominaisuus on tarkoitettu asiattoman sisällön poistamiseen viesteistä. Ylläpitäjälle näkyy yksittäistä viestiä tarkasteltaessa "Muokkaa viestiä"-nappi, josta aukeaa lomake, jossa viestin otsikkoa ja tekstiä voidaan muokata. Muokkauksen pohjana ovat käytössä viestin aiempi otsikko ja teksti. Muokattu viesti tallennetaan painamalla nappia "Muokkaa viestiä". Muokatun viestin yhteudessä näytetään aika, jona sitä on muokattu.
+Tämä ominaisuus on tarkoitettu asiattoman sisällön poistamiseen viesteistä. Ylläpitäjälle näkyy kenen tahansa kirjoittamaa yksittäistä viestiä tarkasteltaessa "Muokkaa viestiä"-nappi, josta aukeaa lomake, jossa viestin otsikkoa ja tekstiä voidaan muokata. Muokkauksen pohjana ovat käytössä viestin aiempi otsikko ja teksti. Muokattu viesti tallennetaan painamalla nappia "Muokkaa viestiä". Muokatun viestin yhteudessä näytetään aika, jona sitä on muokattu.
 
-### Viestien poistaminen
+### Muiden kirjoittamien viestien poistaminen
 
-Tämä ominaisuus on tarkoitettu asiattomien viestien poistamiseen. Ylläpitäjälle näkyy yksittäistä viestiä tarkasteltaessa "Tuhoa viesti" -nappi. Napin painamisen jälkeen ylläpitäjältä kysytään vielä haluaako hän varmasti tuhota viestin.
+Tämä ominaisuus on tarkoitettu asiattomien viestien poistamiseen. Ylläpitäjälle näkyy kenen tahansa kirjoittamaa yksittäistä viestiä tarkasteltaessa "Tuhoa viesti" -nappi. Napin painamisen jälkeen ylläpitäjältä kysytään vielä haluaako hän varmasti tuhota viestin.
 
 ### Aiheiden muokkaaminen ja poisto
 
