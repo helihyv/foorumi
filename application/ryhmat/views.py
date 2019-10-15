@@ -16,7 +16,14 @@ def ryhmat():
     except:
         sivu = 1
 
-    return render_template("ryhmat/ryhmat.html", ryhmat = Ryhma.query.order_by(Ryhma.nimi).paginate(sivu), form = LisaaRyhmaLomake())
+    form = LisaaRyhmaLomake()
+    form.palattava_sivu.data = sivu
+
+    return render_template(
+        "ryhmat/ryhmat.html", 
+        ryhmat = Ryhma.query.order_by(Ryhma.nimi).paginate(sivu), 
+        form = form
+    )
 
 @app.route("/ryhmat", methods=["POST"])
 @login_required
@@ -27,7 +34,18 @@ def ryhmat_luo():
         return login_manager.unauthorized()
 
     if not form.validate():
-        return render_template("ryhmat/ryhmat.html", form = form,  ryhmat = Ryhma.query.all())
+
+        sivuteksti = form.palattava_sivu.data
+        try:
+            sivu = int(sivuteksti)
+        except:
+            sivu = 1
+
+        return render_template(
+            "ryhmat/ryhmat.html", 
+            form = form,  
+            ryhmat = Ryhma.query.order_by(Ryhma.nimi).paginate(sivu)
+        )
 
     ryhma = Ryhma(form.nimi.data)
     db.session().add(ryhma)
@@ -42,12 +60,17 @@ def ryhma(ryhma_id):
 
     lisaa_jasen_lomake = LisaaJasenLomake()
     
-    lisaa_jasen_lomake.jasenet.choices =[(kayttaja.id, kayttaja.nimi) for kayttaja in Kayttaja.query.all() if kayttaja not in ryhma.jasenet]
+    lisaa_jasen_lomake.jasenet.choices = [(kayttaja.id, kayttaja.nimi) for kayttaja in Kayttaja.query.all() if kayttaja not in ryhma.jasenet]
 
     muokkaa_ryhmaa_lomake = MuutaRyhmanNimeaLomake()
     muokkaa_ryhmaa_lomake.nimi.data = ryhma.nimi
 
-    return render_template("ryhmat/ryhma.html", ryhma = ryhma, lisaa_jasen_lomake = lisaa_jasen_lomake, muokkaa_ryhmaa_lomake = muokkaa_ryhmaa_lomake)
+    return render_template(
+        "ryhmat/ryhma.html", 
+        ryhma = ryhma, 
+        lisaa_jasen_lomake = lisaa_jasen_lomake, 
+        muokkaa_ryhmaa_lomake = muokkaa_ryhmaa_lomake
+    )
 
 @app.route("/ryhmat/<ryhma_id>/jasenet", methods=["POST"])
 @login_required
@@ -110,7 +133,11 @@ def ryhmat_muokkaa(ryhma_id):
         lisaa_jasen_lomake = LisaaJasenLomake()
         lisaa_jasen_lomake.jasenet.choices =[(kayttaja.id, kayttaja.nimi) for kayttaja in Kayttaja.query.all()]
 
-        return render_template("ryhmat/ryhma.html", muokkaa_ryhman_nimea_lomake = form, lisaa_jasen_lomake = lisaa_jasen_lomake)
+        return render_template(
+            "ryhmat/ryhma.html", 
+            muokkaa_ryhman_nimea_lomake = form, 
+            lisaa_jasen_lomake = lisaa_jasen_lomake
+        )
 
     ryhma.nimi = form.nimi.data
 

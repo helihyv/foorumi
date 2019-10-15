@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectMultipleField, validators, SubmitField
+from wtforms import StringField, SelectMultipleField, validators, SubmitField, HiddenField
 from application.suomennokset import pituus_validaatiovirheviesti
 
 class RyhmaPohjaLomake(FlaskForm):
@@ -9,7 +9,8 @@ class RyhmaPohjaLomake(FlaskForm):
         csrf = False
 
 class LisaaRyhmaLomake(RyhmaPohjaLomake):
- 
+
+    palattava_sivu = HiddenField()
     nappi = SubmitField("Lisää ryhmä")
 
 class MuutaRyhmanNimeaLomake(RyhmaPohjaLomake):
