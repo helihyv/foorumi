@@ -149,7 +149,7 @@ def viesti(viesti_id):
 def viestit_poista(viesti_id):
     viesti = Viesti.query.get_or_404(viesti_id)
 
-    if not current_user.admin:
+    if not (current_user.admin or current_user == viesti.kirjoittaja):
         return login_manager.unauthorized()
 
     db.session.delete(viesti)
@@ -163,7 +163,7 @@ def viestit_poista(viesti_id):
 def viestit_muokkaa(viesti_id):
     viesti = Viesti.query.get_or_404(viesti_id)
 
-    if not current_user.admin:
+    if not (current_user.admin or current_user == viesti.kirjoittaja):
         return login_manager.unauthorized()
 
     form = ViestinMuokkausLomake(request.form)

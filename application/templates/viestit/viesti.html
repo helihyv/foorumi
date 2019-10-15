@@ -76,7 +76,7 @@ Muokattu {{ viesti.muokkausaika.strftime("%d.%m. %Y %H:%M")}}
 </ul>
 <p>
 
-{% if current_user.admin %}  
+{% if current_user.admin or current_user == viesti.kirjoittaja %}  
 <button
   id="avaa_muokkaus_nappi"
   class="btn btn-primary"
