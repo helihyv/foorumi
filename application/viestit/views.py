@@ -74,7 +74,7 @@ def viestit_index():
 
 
     if ryhma:
-        kysely = kysely.join(Kayttaja.kayttajat).filter(Ryhma.nimi == ryhma)
+        kysely = kysely.join(Kayttaja.ryhmat).filter(Ryhma.nimi == ryhma)
         hakuparametrit = hakuparametrit + "ryhma=" + ryhma + "&"
 
     alkupvm = request.args.get("alkupvm")
