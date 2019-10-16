@@ -4,9 +4,9 @@
 
 - lukea viestejä
 - nähdä uusimmat viestit tarvitsematta ensin hakea niitä, jotta voin lukea niitä
-- hakea tiettyä aihetta käsitteleviä viestejä, jotta voin lukea niitä
-- hakea tietyn ryhmän jäsenten jättämiä viestejä, jotta voin lukea niitä
-- hakea tietyn käyttäjän kirjoittamia viestejä, jotta voin lukea niitä
+- hakea viestejä aiheen perusteella, jotta voin lukea minua kiinnostavia viestejä
+- hakea viestejä niiden kirjoittajan ryhmään kuulumisen perusteella, jotta voin lukea minua kiinostavia viestejä
+- hakea viestejä niiden kirjoittajan perusteella, jotta voin lukea minua kiinnostavia viestejä
 - hakea tietyllä aikavälillä kirjoitettuja viestejä, jotta voin lukea niitä
 - yhdistellä erilaisia hakuja
 - nähdä olenko jo lukenut viestin

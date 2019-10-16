@@ -104,7 +104,7 @@ Tämä kysely tehdään, jos sivuja on enemmän kuin yksi.
 
 Lisäksi haetaan jokaista viestiä kohden erikseen tieto siitä, onko käyttäjä lukenut viestin ja ovatko kaikki käyttäjät lukeneet viestin. Tähän tarvittavat kyselyt on eritelty käyttötapausten "haluan nähdä olenko jo lukenut viestin" ja "haluan nähdä ovatko kaikki käyttäjät lukeneet viestin" alla.
 
-### Haluan hakea tiettyä aihetta käsitteleviä viestejä, jotta voin lukea niitä
+### Haluan hakea viestejä aiheen perusteella, jotta voin lukea minua kiinnostavia viestejä
 
 Viestejä listaavalla sivulla avautuu hakulomake, jolla viestejä voi hakea mm. aiheen perusteella. Hakutermi voi olla myös aiheen osa eikä kirjainkokoa huomioida. Hakutuloksia näytetään 20 viestin erissä kirjoitusajan mukaan järjestettyinä uusin ensin.
 
@@ -130,7 +130,7 @@ LIMIT ? OFFSET ?
 Jos hakutuloksia on enemmän kuin 20, haetaan myös hakutulosten kokonaismäärä.
 Tämä kysely on esitelty edellisessä kohdassa. Tämän lisäksi tehdään vielä jokaista näytettävää viestiä kohden kyselyt, joilla selvitetään ovat kaikki käyttäjät lukeneet viestin. Nämä kyselyt on eritelty kohdassa "haluan nähdä ovatko kaikki käyttäjät lukeneet viestin".
 
-### Haluan hakea tietyn ryhmän jäsenten jättämiä viestejä, jotta voin lukea niitä
+### Haluan hakea viestejä niiden kirjoittajan ryhmään kuulumisen perusteella, jotta voin lukea minua kiinostavia viestejä
 
 Viestejä listaavalla sivulla avautuu hakulomake, jolla viestejä voi hakea mm. kirjoittajan ryhmän perusteella. Hakutermi voi olla myös ryhmän nimen osa eikä kirjainkokoa huomioida. Hakutuloksia näytetään 20 viestin erissä kirjoitusajan mukaan järjestettyinä uusin ensin.
 
@@ -157,7 +157,7 @@ LIMIT ? OFFSET ?
 Jos hakutuloksia on enemmän kuin 20, haetaan myös hakutulosten kokonaismäärä.
 Tämä kysely on esitelty kohdassa "Haluan nähdä uusimmat viestit tarvitsematta hakea niitä ensin". Tämän lisäksi tehdään vielä jokaista näytettävää viestiä kohden kyselyt, joilla selvitetään ovat kaikki käyttäjät lukeneet viestin. Nämä kyselyt on eritelty kohdassa "haluan nähdä ovatko kaikki käyttäjät lukeneet viestin".
 
-### Haluan hakea tietyn käyttäjän kirjoittamia viestejä, jotta voin lukea niitä
+### hakea viestejä niiden kirjoittajan perusteella, jotta voin lukea minua kiinnostavia viestejä
 
 Viestejä listaavalla sivulla avautuu hakulomake, jolla viestejä voi hakea mm. kirjoittajan nimen perusteella. Hakutermi voi olla myös kirjoittajan nimen osa eikä kirjainkokoa huomioida.Hakutuloksia näytetään 20 viestin erissä kirjoitusajan mukaan järjestettyinä uusin ensin.
 
