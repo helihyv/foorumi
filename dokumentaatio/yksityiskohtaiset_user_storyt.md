@@ -186,7 +186,7 @@ Tämä kysely on esitelty kohdassa "Haluan nähdä uusimmat viestit tarvitsematt
 
 Viestejä listaavalla sivulla avautuu hakulomake, jolla viestejä voi hakea mm. aikavälin perusteella. Haussa voi määritellä päivän, jona kirjoitetuista alkaen viestejä haetaan ja/tai päivän jona kirjoitettuihin asti haetaan. Hakutuloksia näytetään 20 viestin erissä kirjoitusajan mukaan järjestettyinä uusin ensin.
 
-Kun haetaan tietyltä aikaväliltä eli on määritelty sekä haun alkupäivä että haun viimeinen päivä, käytetään seuraavaa SQL-kyselyä:
+Kun haetaan tietyltä aikaväliltä eli on määritelty sekä haun alkupäivä että haun viimeinen päivä, käytetään seuraavaa SQL-kyselyä. Ensimmäisenä parametrina on käyttäjän syöttämä alkaen-päivämäärä datetime-muodossa kellonaikana vuorokauden alku. Toisena parametrina on käyttäjän syöttämä asti-päivämäärä datetime-muodossa ja kellonaika säädettynä millisekuntia vaille keskiyöhön.
 
 ```sql
 SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika,
