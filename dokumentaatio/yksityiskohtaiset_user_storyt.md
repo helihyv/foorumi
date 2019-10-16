@@ -656,15 +656,13 @@ WHERE ryhma.id = ?
 
 ```
 
-Sitten haetaan lisättävät käyttäjät yksi kerrallaan
+Sitten haetaan kaikki lisättävät käyttäjät kerralla kyselyllä
 
 ```sql
-SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus,
-kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
 FROM kayttaja
+WHERE kayttaja.id IN (?, ?)
 ```
-
-Tämä kysely tehdään erikseen jokaiselle käyttäjälle.
 
 Varsinainen käyttäjän lisääminen ryhmään tapahtuu SQL-kyselyllä
 

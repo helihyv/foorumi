@@ -83,7 +83,7 @@ def lisaa_jasenia(ryhma_id):
  
     form = LisaaJasenLomake(request.form)
     
-    ryhma.jasenet = ryhma.jasenet + [Kayttaja.query.get(jasen_id) for jasen_id in form.jasenet.data ]
+    ryhma.jasenet = ryhma.jasenet + Kayttaja.query.filter(Kayttaja.id.in_(form.jasenet.data)).all(); 
     
     db.session().commit()
     
