@@ -60,7 +60,10 @@ def ryhma(ryhma_id):
 
     lisaa_jasen_lomake = LisaaJasenLomake()
     
-    lisaa_jasen_lomake.jasenet.choices = [(kayttaja.id, kayttaja.nimi) for kayttaja in Kayttaja.query.all() if kayttaja not in ryhma.jasenet]
+    lisaa_jasen_lomake.jasenet.choices = [(kayttaja.id, kayttaja.nimi) 
+        for kayttaja in Kayttaja.query.filter(Kayttaja.id.notin_([(kayttaja.id) 
+        for kayttaja in ryhma.jasenet 
+        ])).all()]
 
     muokkaa_ryhmaa_lomake = MuutaRyhmanNimeaLomake()
     muokkaa_ryhmaa_lomake.nimi.data = ryhma.nimi

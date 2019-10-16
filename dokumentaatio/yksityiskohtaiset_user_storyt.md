@@ -647,13 +647,20 @@ WHERE ryhma.id = ?
 
 #### Haluan liittää käyttäjän ryhmään
 
-Aluksi tarkistetaan, että ryhmä, johon yritetään lisätä on olemassa ja haetaan se kyselyllä
+Yksittäisen ryhmän näkymässä on ylläpitäjällä lomake käyttäjän lisäämiseen. Lomaketta varten haetaan tieto niistä käyttäjistä, jotka eivät vielä kuulu ryhmään kyselyllä
+
+```sql
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+FROM kayttaja
+WHERE kayttaja.id NOT IN (?, ?)
+```
+
+Käyttäjän ryhmään lisäämispyyntöä käsiteltäessä haetaan ryhmä, johon käyttäjää ollaan liittämässä. Samalla tarkistetaan onko ryhmää olemassa. Kyselynä on
 
 ```sql
 SELECT ryhma.id AS ryhma_id, ryhma.nimi AS ryhma_nimi
 FROM ryhma
 WHERE ryhma.id = ?
-
 ```
 
 Sitten haetaan kaikki lisättävät käyttäjät kerralla kyselyllä
