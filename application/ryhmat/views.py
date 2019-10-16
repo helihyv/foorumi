@@ -138,7 +138,8 @@ def ryhmat_muokkaa(ryhma_id):
 
         return render_template(
             "ryhmat/ryhma.html", 
-            muokkaa_ryhman_nimea_lomake = form, 
+            ryhma = ryhma,
+            muokkaa_ryhmaa_lomake = form, 
             lisaa_jasen_lomake = lisaa_jasen_lomake
         )
 
