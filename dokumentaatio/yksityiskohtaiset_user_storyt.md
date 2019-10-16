@@ -471,6 +471,14 @@ UPDATE kayttaja SET "salasanaHash"=? WHERE kayttaja.id = ?
 
 ### Haluan merkitä viestini aihetunnisteilla, jotta niistä kiinnostuneet löytävät ne helpommin
 
+Lisättävät aihetunnisteet haetaan ensin kerralla tietokannasta viestiolioon liitettäviksi kyselyllä
+
+```sql
+SELECT aihe.id AS aihe_id, aihe.aihe AS aihe_aihe
+FROM aihe
+WHERE aihe.id IN (?, ?, ?, ?, ?)
+```
+
 Tieto viestiin liittyvistä aihetunnisteista tallennetaan liitostauluun viestin muiden tietojen tallentamisen jälkeen kyselyllä
 
 ```sql

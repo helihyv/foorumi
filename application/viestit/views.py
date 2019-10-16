@@ -31,7 +31,7 @@ def viestit_luo():
     if not form.validate():
         return render_template("viestit/uusi.html", form=form)
 
-    aiheet = [Aihe.query.get(aihe_id) for aihe_id in form.aiheet.data]
+    aiheet = Aihe.query.filter(Aihe.id.in_(form.aiheet.data)).all()
 
     viesti = Viesti(form.otsikko.data, form.teksti.data, aiheet,
                     form.vastattava_viesti.data, current_user.id)
