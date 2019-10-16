@@ -57,7 +57,7 @@ def viestit_index():
 
     virheet = []
     if aihe:
-        kysely = kysely.join(Viesti.aiheet).filter(Aihe.aihe == aihe)
+        kysely = kysely.join(Viesti.aiheet).filter(Aihe.aihe.ilike("%" + aihe + "%"))
         hakuparametrit = hakuparametrit + "aihe=" + aihe + "&"
 
 
@@ -69,12 +69,12 @@ def viestit_index():
         kysely = kysely.join(Viesti.kirjoittaja)
 
     if nimi:
-        kysely = kysely.filter(Kayttaja.nimi == nimi)
+        kysely = kysely.filter(Kayttaja.nimi.ilike("%" + nimi + "%"))
         hakuparametrit = hakuparametrit + "nimi=" + nimi + "&"
 
 
     if ryhma:
-        kysely = kysely.join(Kayttaja.ryhmat).filter(Ryhma.nimi == ryhma)
+        kysely = kysely.join(Kayttaja.ryhmat).filter(Ryhma.nimi.ilike("%" + ryhma +"%"))
         hakuparametrit = hakuparametrit + "ryhma=" + ryhma + "&"
 
     alkupvm = request.args.get("alkupvm")
