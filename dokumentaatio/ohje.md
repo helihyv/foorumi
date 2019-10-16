@@ -19,7 +19,7 @@ Viestien katseleminen edellyttää kirjautumista. Viestejä pääsee katsomaan v
 ### Viestien hakeminen
 
 Viestien hakeminen edellyttää kirjautumista.
-Hakuun pääsee valikon kohdasta "Viestit" löytävältä sivulta painamalla "Hae viestejä" -nappia, josta aukeaa hakulomake. Viestejä voi hakea aihetunnisteen, kirjoittajan nimen, kirjoittajan ryhmän, ja/tai kirjoitusajankohdan perusteella. Kirjoitusajankohdasta voi määrittää päivämäärät joina viesti aikaisintaan ja/tai viimeistään on kirjoitettu. Hakutuloksia näytetään enintään 20 kerrallaan. Viestilistan yläpuolella näytetään käytössä olevat hakutermit. Niiden yläpuolella on valikko, josta voi siirtyä muihin 20 hakutuloksen nippuihin.
+Hakuun pääsee valikon kohdasta "Viestit" löytävältä sivulta painamalla "Hae viestejä" -nappia, josta aukeaa hakulomake. Viestejä voi hakea aihetunnisteen, kirjoittajan nimen, kirjoittajan ryhmän, ja/tai kirjoitusajankohdan perusteella. Kirjoitusajankohdasta voi määrittää päivämäärät joina viesti aikaisintaan ja/tai viimeistään on kirjoitettu. Aiheen, kirjoittajan nimen tai kirjoittajan ryhmän perusteella haettaessa voidaan hakea myös etsittävän sanan osalla. Haku ei erottele pieniä ja isoja kirjaimia. Hakutuloksia näytetään enintään 20 kerrallaan. Viestilistan yläpuolella näytetään käytössä olevat hakutermit. Niiden yläpuolella on valikko, josta voi siirtyä muihin 20 hakutuloksen nippuihin.
 
 ### Viestien kirjoittaminen
 
