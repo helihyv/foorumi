@@ -507,7 +507,18 @@ FROM aihe) AS anon_1
 
 ### Haluan luoda uusia aihetunnisteita, jotta voin liittää viestiini sopivan aihetunnisteen
 
-Uussia aihetunnisteita voi lisätä aiheiden sivulta. Lisäämiseen käytetään SQL-kyselyä
+Uusia aihetunnisteita voi lisätä aiheiden sivulta.
+
+Syötettä validoitaessa tarkastetaan, onko samannimistä aihetta jo tietokannassa kyselyllä
+
+```sql
+SELECT aihe.id AS aihe_id, aihe.aihe AS aihe_aihe
+FROM aihe
+WHERE aihe.aihe = ?
+ LIMIT ? OFFSET ?
+```
+
+Itse aiheen lisäämiseen käytetään SQL-kyselyä
 
 ```sql
 INSERT INTO aihe (aihe) VALUES (?)
@@ -630,6 +641,17 @@ Ylläpitäjällä on jokaisen yksittäisen viestin sivulla napista aukeava muokk
 ### Haluan hallita käyttäjien jäsenyyksiä ryhmissä
 
 #### Haluan luoda ryhmiä
+
+Ylläpitäjälle mäkyy ryhmien listauksessa lomake, jolla voidaan lisätä ryhmiä.
+
+Lomakkeen syötettä verifioitaessa tarkastetaan onko samannimistä ryhmää jo olemassa kyselyllä
+
+```sql
+SELECT ryhma.id AS ryhma_id, ryhma.nimi AS ryhma_nimi
+FROM ryhma
+WHERE ryhma.nimi = ?
+ LIMIT ? OFFSET ?
+```
 
 Ryhmä lisätään tietokantaan kyselyllä
 
