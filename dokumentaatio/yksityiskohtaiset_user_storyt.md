@@ -32,7 +32,7 @@ LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
 WHERE viesti.id = ?
 ```
 
-Jos kirjautunut käyttäjä ei ole aiemmin lukenut viestiä, hänet lisätään lukijoiden luetteloon. aluksi tarkastetaan, onko käyttäjä jo lukenut viestin käyttäen SQL-kyselyä
+Jos kirjautunut käyttäjä ei ole aiemmin lukenut viestiä, hänet lisätään lukijoiden luetteloon. Aluksi tarkastetaan, onko käyttäjä jo lukenut viestin käyttäen SQL-kyselyä
 
 ```sql
 SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus,
@@ -68,7 +68,7 @@ WHERE viesti.id = ?
 
 ```
 
-Lisäksi haetaan erillisillä kyselyillä tieto siitä, ovatko kaikki käyttäjät lukeneet viestin, viestistä, johon näytettävä viesti on vastaus (jos viesti on vastaus), samat tiedot kuin viestien listassa näytetään, ja näytettävään viestiin kirjoitetuista vastauksista samat tiedot kuin viestien listauksessa näytetään. Näihin tarvittavat kyselyt on esitelty kohdissa "Haluan nähdä ovatko kaikki käyttäjät lukeneet viestin", "Haluan nähdä mihin viestiin viesti on vastaus" ja "Haluan nähdä viestiin kirjoitetut vastaukset".
+Lisäksi haetaan erillisillä kyselyillä tieto siitä, ovatko kaikki käyttäjät lukeneet viestin, viestistä, johon näytettävä viesti on vastaus (jos viesti on vastaus) samat tiedot kuin viestien listassa näytetään, ja näytettävään viestiin kirjoitetuista vastauksista samat tiedot kuin viestien listauksessa näytetään. Näihin tarvittavat kyselyt on esitelty kohdissa "Haluan nähdä ovatko kaikki käyttäjät lukeneet viestin", "Haluan nähdä mihin viestiin viesti on vastaus" ja "Haluan nähdä viestiin kirjoitetut vastaukset".
 
 ### Haluan nähdä uusimmat viestit tarvitsematta ensin hakea niitä, jotta voin lukea niitä
 
@@ -116,8 +116,8 @@ viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko,
 viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id,
 viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id,
 kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus,
-kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS
-kayttaja_1_admin
+kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", 
+kayttaja_1.admin AS kayttaja_1_admin
 FROM viesti
 JOIN viestiaihe AS viestiaihe_1 ON viesti.id = viestiaihe_1.viesti_id
 JOIN aihe ON aihe.id = viestiaihe_1.aihe_id
@@ -127,14 +127,13 @@ ORDER BY viesti.kirjoitusaika DESC
 LIMIT ? OFFSET ?
 ```
 
-Jos hakutuloksia on enemmän kuin 20, haetaan myös hakutulosten kokonaismäärä.
-Tämä kysely on esitelty edellisessä kohdassa. Tämän lisäksi tehdään vielä jokaista näytettävää viestiä kohden kyselyt, joilla selvitetään ovat kaikki käyttäjät lukeneet viestin. Nämä kyselyt on eritelty kohdassa "haluan nähdä ovatko kaikki käyttäjät lukeneet viestin".
+Jos hakutuloksia on enemmän kuin 20, haetaan myös hakutulosten kokonaismäärä. Tämä kysely on esitelty edellisessä kohdassa. Tämän lisäksi tehdään vielä jokaista näytettävää viestiä kohden kyselyt, joilla selvitetään ovatko kaikki käyttäjät lukeneet viestin. Nämä kyselyt on eritelty kohdassa "Haluan nähdä ovatko kaikki käyttäjät lukeneet viestin".
 
 ### Haluan hakea viestejä niiden kirjoittajan ryhmään kuulumisen perusteella, jotta voin lukea minua kiinostavia viestejä
 
 Viestejä listaavalla sivulla avautuu hakulomake, jolla viestejä voi hakea mm. kirjoittajan ryhmän perusteella. Hakutermi voi olla myös ryhmän nimen osa eikä kirjainkokoa huomioida. Hakutuloksia näytetään 20 viestin erissä kirjoitusajan mukaan järjestettyinä uusin ensin.
 
-Kun haetaan pelkän kirjoittajan ryhmän perusteella, käytetään seuraavaa SQL-kyselyäsiten, että ensimmäinen parametri (ryhmän nimi tai sen osa) on käyttäjän antama hakutermi ympäröitynä %-merkeillä (esim "%kalastajat%").
+Kun haetaan pelkän kirjoittajan ryhmän perusteella, käytetään seuraavaa SQL-kyselyä siten, että ensimmäinen parametri (ryhmän nimi tai sen osa) on käyttäjän antama hakutermi ympäröitynä %-merkeillä (esim. "%kalastajat%").
 
 ```sql
 SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika,
@@ -155,13 +154,13 @@ LIMIT ? OFFSET ?
 ```
 
 Jos hakutuloksia on enemmän kuin 20, haetaan myös hakutulosten kokonaismäärä.
-Tämä kysely on esitelty kohdassa "Haluan nähdä uusimmat viestit tarvitsematta hakea niitä ensin". Tämän lisäksi tehdään vielä jokaista näytettävää viestiä kohden kyselyt, joilla selvitetään ovat kaikki käyttäjät lukeneet viestin. Nämä kyselyt on eritelty kohdassa "haluan nähdä ovatko kaikki käyttäjät lukeneet viestin".
+Tämä kysely on esitelty kohdassa "Haluan nähdä uusimmat viestit tarvitsematta hakea niitä ensin". Tämän lisäksi tehdään vielä jokaista näytettävää viestiä kohden kyselyt, joilla selvitetään ovat kaikki käyttäjät lukeneet viestin. Nämä kyselyt on eritelty kohdassa "Haluan nähdä ovatko kaikki käyttäjät lukeneet viestin".
 
-### hakea viestejä niiden kirjoittajan perusteella, jotta voin lukea minua kiinnostavia viestejä
+### Haluan hakea viestejä niiden kirjoittajan perusteella, jotta voin lukea minua kiinnostavia viestejä
 
-Viestejä listaavalla sivulla avautuu hakulomake, jolla viestejä voi hakea mm. kirjoittajan nimen perusteella. Hakutermi voi olla myös kirjoittajan nimen osa eikä kirjainkokoa huomioida.Hakutuloksia näytetään 20 viestin erissä kirjoitusajan mukaan järjestettyinä uusin ensin.
+Viestejä listaavalla sivulla avautuu hakulomake, jolla viestejä voi hakea mm. kirjoittajan nimen perusteella. Hakutermi voi olla myös kirjoittajan nimen osa eikä kirjainkokoa huomioida. Hakutuloksia näytetään 20 viestin erissä kirjoitusajan mukaan järjestettyinä uusin ensin.
 
-Kun haetaan pelkän kirjoittajan nimen perusteella, käytetään seuraavaa SQL-kyselyäsiten, että ensimmäinen parametri (kirjoittajan nimi tai sen osa) on käyttäjän antama hakutermi ympäröitynä %-merkeillä (esim "%Otso Kontio%").
+Kun haetaan pelkän kirjoittajan nimen perusteella, käytetään seuraavaa SQL-kyselyä siten, että ensimmäinen parametri (kirjoittajan nimi tai sen osa) on käyttäjän antama hakutermi ympäröitynä %-merkeillä (esim. "%Otso Kontio%").
 
 ```sql
 SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika,
@@ -180,7 +179,7 @@ LIMIT ? OFFSET ?
 ```
 
 Jos hakutuloksia on enemmän kuin 20, haetaan myös hakutulosten kokonaismäärä.
-Tämä kysely on esitelty kohdassa "Haluan nähdä uusimmat viestit tarvitsematta hakea niitä ensin". Tämän lisäksi tehdään vielä jokaista näytettävää viestiä kohden kyselyt, joilla selvitetään ovat kaikki käyttäjät lukeneet viestin. Nämä kyselyt on eritelty kohdassa "haluan nähdä ovatko kaikki käyttäjät lukeneet viestin".
+Tämä kysely on esitelty kohdassa "Haluan nähdä uusimmat viestit tarvitsematta hakea niitä ensin". Tämän lisäksi tehdään vielä jokaista näytettävää viestiä kohden kyselyt, joilla selvitetään ovat kaikki käyttäjät lukeneet viestin. Nämä kyselyt on eritelty kohdassa "Haluan nähdä ovatko kaikki käyttäjät lukeneet viestin".
 
 ### Haluan hakea tietyllä aikavälillä kirjoitettuja viestejä, jotta voin lukea niitä
 
@@ -204,13 +203,13 @@ LIMIT ? OFFSET ?
 ```
 
 Jos hakutuloksia on enemmän kuin 20, haetaan myös hakutulosten kokonaismäärä.
-Tämä kysely on esitelty kohdassa "Haluan nähdä uusimmat viestit tarvitsematta hakea niitä ensin". Tämän lisäksi tehdään vielä jokaista näytettävää viestiä kohden kyselyt, joilla selvitetään ovat kaikki käyttäjät lukeneet viestin. Nämä kyselyt on eritelty kohdassa "haluan nähdä ovatko kaikki käyttäjät lukeneet viestin".
+Tämä kysely on esitelty kohdassa "Haluan nähdä uusimmat viestit tarvitsematta hakea niitä ensin". Tämän lisäksi tehdään vielä jokaista näytettävää viestiä kohden kyselyt, joilla selvitetään ovat kaikki käyttäjät lukeneet viestin. Nämä kyselyt on eritelty kohdassa "Haluan nähdä ovatko kaikki käyttäjät lukeneet viestin".
 
 ### Haluan yhdistelllä erilaisia hakuja
 
 Viestejä listaavalla sivulla avautuu hakulomake, jolla viestejä voi hakea aiheen, kirjoittajan nimen, kirjoittajan ryhmän ja aikavälin (alkamisajankohdan ja loppumisajankohdan) perusteella. Näitä kyselyitä voi vapaasti yhdistellä, kuitenkin niin, että kullakin hakutyypillä on vain yksi hakuarvo. Hakutuloksia näytetään 20 viestin erissä kirjoitusajan mukaan järjestettyinä uusin ensin.
 
-Kun haetaan kaikilla hakutyypeillä yhtaikaisesti, käytetään seuraavaa SQL-kyselyä siten , että käyttäjän syöttämäät aihe, kirjoittaja ja ryhmä ympäröidään %-merkeillä (esim. "%Otso Kontio%").
+Kun haetaan kaikilla hakutyypeillä yhtaikaisesti, käytetään seuraavaa SQL-kyselyä siten, että käyttäjän syöttämät aihe, kirjoittaja ja ryhmä ympäröidään %-merkeillä (esim. "%Otso Kontio%").
 
 ```sql
 SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika,
@@ -343,16 +342,20 @@ Lisäksi tallennetaan tieto viestiin liittyvistä aihetunnisteista. Tarvittava S
 
 Yksittäisen viestin näkymässä avautuu lomake, johon vastausviesti kirjoitetaan.
 
-ALuksi haetaan luettelo kaikista valittavissa olevista aihetunnisteista seuraavalla SQL-kyselyllä, ks. SQL-kysenlyn esittely ja syyt tähän yllä.
+Aluksi haetaan luettelo kaikista valittavissa olevista aihetunnisteista. 
+Vastauksen ja siihen liittyvien aihetunnisteiden tallentaminen tietokantaan ja kirjoittajan merkitseminen viestin lukeneeksi tapahtuu samoin kuin erillistä viestiä tallennettaessa. Näihin liittyvät SQL-kyselyt on esitelty yllä.
 
-Vastauksen ja siihen liittyvien aihetunnisteiden tallentaminen tietokantaan ja kirjoittajan merkitseminen viestin lukeneeksi tapahtuu samoin kuin erillistä viestiä tallennettaessa, niihin liittyvät SQL-kyselyt on esitelty yllä.
-
-### Haluan muokata itse kirjoittamieni viestejä
+### Haluan muokata itse kirjoittamiani viestejä
 
 Muokkauspyynnön tullessa palvelimelle haetaan ensin viesti (samalla tarkistetaan, että se on olemassa) kyselyllä
 
 ```sql
-SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika, viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko, viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id, viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id, kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus, kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
+SELECT viesti.id AS viesti_id, viesti.kirjoitusaika AS viesti_kirjoitusaika,
+viesti.muokkausaika AS viesti_muokkausaika, viesti.otsikko AS viesti_otsikko,
+viesti.teksti AS viesti_teksti, viesti.kirjoittaja_id AS viesti_kirjoittaja_id,
+viesti.vastattu_id AS viesti_vastattu_id, kayttaja_1.id AS kayttaja_1_id,
+kayttaja_1.nimi AS kayttaja_1_nimi, kayttaja_1.tunnus AS kayttaja_1_tunnus,
+kayttaja_1."salasanaHash" AS "kayttaja_1_salasanaHash", kayttaja_1.admin AS kayttaja_1_admin
 FROM viesti
 LEFT OUTER JOIN kayttaja AS kayttaja_1 ON kayttaja_1.id = viesti.kirjoittaja_id
 WHERE viesti.id = ?
@@ -401,7 +404,9 @@ WHERE ? = viesti.vastattu_id
 Tiedot viestin lukeneista haetaan kyselyllä
 
 ```sql
-SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, 
+kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash",
+kayttaja.admin AS kayttaja_admin
 FROM kayttaja, luetut
 WHERE ? = luetut.viesti_id AND kayttaja.id = luetut.lukija_id
 ```
@@ -414,7 +419,7 @@ FROM aihe, viestiaihe
 WHERE ? = viestiaihe.viesti_id AND aihe.id = viestiaihe.aihe_id
 ```
 
-Sitten poistetaan läydetyt tiedot lukijoista kyselyllä
+Sitten poistetaan löydetyt tiedot lukijoista kyselyllä
 
 ```sql
 DELETE FROM luetut WHERE luetut.viesti_id = ? AND luetut.lukija_id = ?
@@ -437,7 +442,9 @@ DELETE FROM viesti WHERE viesti.id = ?
 Kun sovellus saa pyynnön kirjautua sisään, haetaan kirjautumassa olevan käyttäjän tiedot tietokannasta seuraavalla SQL-kyselyllä:
 
 ```sql
-SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, 
+kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash",
+kayttaja.admin AS kayttaja_admin
 FROM kayttaja
 WHERE kayttaja.tunnus = ?
 LIMIT ? OFFSET ?

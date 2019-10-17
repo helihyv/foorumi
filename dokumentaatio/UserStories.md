@@ -4,13 +4,13 @@
 
 - lukea viestejä
 - nähdä uusimmat viestit tarvitsematta ensin hakea niitä, jotta voin lukea niitä
-- hakea viestejä aiheen perusteella, jotta voin lukea minua kiinnostavia viestejä
-- hakea viestejä niiden kirjoittajan ryhmään kuulumisen perusteella, jotta voin lukea minua kiinostavia viestejä
+- hakea viestejä aiheen perusteella, jotta voin lukea minua kiinnnostavia viestejä
+- hakea viestejä niiden kirjoittajan ryhmään kuulumisen perusteella, jotta voin lukea minua kiinnostavia viestejä
 - hakea viestejä niiden kirjoittajan perusteella, jotta voin lukea minua kiinnostavia viestejä
 - hakea tietyllä aikavälillä kirjoitettuja viestejä, jotta voin lukea niitä
 - yhdistellä erilaisia hakuja
 - nähdä olenko jo lukenut viestin
-- nähdä ovatko kaikki muut jo lukeneet viestin
+- nähdä ovatko kaikki rekisteröityneet käyttäjät jo lukeneet viestin
 - nähdä ketkä ovat lukeneet viestin
 - nähdä viestiin kirjoitetut vastaukset, jotta voin seurata viestiketjua
 - nähdä mihin viestiin viesti on vastannut, jotta voin seurata viestiketjua taaksepäin
@@ -27,7 +27,7 @@
 - nähdä mitä aihetunnisteita foorumissa on jo käytössä
 - luoda uusia aihetunnisteita, jotta voin liittää viestiini sopivan aihetunnisteen
 - nähdä mitä ryhmiä foorumissa on
-- nähdä, keitä ryhmiin kuuluu
+- nähdä keitä ryhmiin kuuluu
 - nähdä tilastoja foorumin käytöstä
   - suosituimmat aiheet
   - eri ryhmien jäsenten kirjoitusten jakautuminen aiheittain
@@ -45,8 +45,6 @@
   - muokata ryhmän nimeä
   - poistaa ryhmiä
 - hallita aihetunnisteita
-
   - muokata aihetunnisteita
   - poistaa aihetunnisteita
-
 - luoda itselleni ylläpitäjän tunnuksen foorumia käyttöönotettaessa
