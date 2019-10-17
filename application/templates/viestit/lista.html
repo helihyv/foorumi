@@ -35,23 +35,23 @@ onclick="this.innerHTML = this.innerHTML ==='Sulje hakulomake' ? 'Hae viestejä'
 
       {% if viestit.items|length > 0 %}
       <div class="alert alert-success">
-      Näytetään viestit
+      Näytetään hakutulokset
 
       {% else %}
       <div class="alert alert-warning">
-      Ei löytynyt viestejä
+      Ei löytynyt hakutuloksia
       {% endif %}
 
       {% if haettu_aihe %}
-      aiheesta {{ haettu_aihe }}
+      aiheella {{ haettu_aihe }}
       {% endif %}
       
       {% if haettu_kirjoittaja%}
-      kirjoittajalta {{haettu_kirjoittaja}}
+      kirjoittajalla {{haettu_kirjoittaja}}
       {% endif %}
       
       {% if haettu_ryhma %}
-      ryhmän {{ haettu_ryhma }} jäseniltä
+      ryhmällä {{ haettu_ryhma }}
       {% endif %}
 
       {% if haettu_aika_alku %}
