@@ -80,8 +80,13 @@ def kayttajat_salasananvaihto():
 def kayttajat_vaihda_salasana():
     form = SalasananVaihtoLomake(request.form)
 
-    if not form.validate():
-        return render_template("kayttajat/salasananvaihto.html", form = form)
+    vanhaSalasanaOikein = bcrypt.check_password_hash(current_user.salasanaHash, form.vanha_salasana.data)
+    if not form.validate() or not vanhaSalasanaOikein:
+        if not vanhaSalasanaOikein:
+            error = "Vanha salasana väärin"
+        return render_template("kayttajat/salasananvaihto.html", form = form, error=error)
+
+
 
     current_user.vaihda_salasana(form.uusi_salasana.data)
 
