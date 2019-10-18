@@ -30,10 +30,12 @@ Tavallisia käyttäjiä voi luoda itse lisää valikon linkistä "Lisää käytt
 
 Keskustelufoorumisovellus yhteisön sisäiseen käyttöön.
 
-Käyttäjä voi lukea fooruminsa kirjoituksia (viestejä) ja lisätä uusia kirjoituksia, jotka voivat olla myös vastauksia aiempiin viesteihin. Kirjoituksia voi hakea kirjoittajan nimen tai ryhmän tai kirjoituksen aiheen tai iän perusteella. Lukija voi myös seurata viestiketjuja.
+Käyttäjä voi lukea foorumin kirjoituksia (viestejä) ja lisätä uusia kirjoituksia, jotka voivat olla myös vastauksia aiempiin viesteihin. Kirjoituksia voi hakea kirjoittajan nimen tai ryhmän tai kirjoituksen aiheen tai iän perusteella. Lukija voi myös seurata viestiketjuja.
 
-Käyttäjän tulee olla kirjautunut sovellukseen nähdäkseen viestit tai lisätäkseen niitä. Oletusarvoisesti lukijalle näytetään tuoreimmat kirjoitukset. Käyttäjä näkee onko lukenut viestin, ja ovatko kaikki muut foorumin käyttäjät lukeneet viestin. Tieto siitä,ketkä ovat lukeneet viestin, on nähtävissä kaikille kirjautuneille käyttäjille.
+Käyttäjän tulee olla kirjautunut sovellukseen nähdäkseen viestit tai lisätäkseen niitä. Oletusarvoisesti lukijalle näytetään tuoreimmat kirjoitukset. Käyttäjä näkee onko lukenut viestin, ja ovatko kaikki muut foorumin käyttäjät lukeneet viestin. Tieto siitä, ketkä ovat lukeneet viestin, on nähtävissä kaikille kirjautuneille käyttäjille.
 
-Kirjautuneilla Käyttäjillä on pääsy myös tilastonäkymään. Siinä näytetään, miten kirjoitukset jakautuvat eri aiheiden kesken, miten eri ryhmien jäsenten kirjoitukset jakautvat aiheittain, sekä aktiivisimmin kirjoittavat käyttäjät ja ryhmät.
+Kirjautunut käyttäjä voi myös lisätä sovellukseen aiheita, joiden perusteella kirjoituksia voidaan merkitä ja hakea. Käyttäjän tulee olla kirjautunut sovellukseen nähdäkseen foorumin aiheet, ryhmät ja ryhmien jäsenet.
 
-Sovellusta käyttöönotettaessa sille luodaan ylläpitäjä-tunnus. Foorumin ylläpitäjällä on oma näkymä, josta ylläpidetään foorumin ryhmiä ja käyttäjien kuulumista niihin, sekä määritellään aiheita, joiden perusteella kirjoituksia voidaan merkitä ja hakea. Foorumin ylläpitäjä voi myös poistaa tai muokata asiattomia viestejä.
+Kirjautuneilla käyttäjillä on pääsy myös tilastonäkymään. Siinä näytetään eniten viestejä kirjoittaneet käyttäjät ja ryhmät, suosituimmat aiheet ja se, miten ryhmien kirjoitukset jakautuvat eri aiheiden kesken.
+
+Sovellusta käyttöönotettaessa sille luodaan ylläpitäjän tunnus. Foorumin ylläpitäjä voi perustaa foorumille ryhmiä, lisätä niihin käyttäjiä, poistaa niistä käyttäjiä ja poistaa ryhmiä. Ylläpitäjä voi muokata ja poistaa foorumilla käytössä olevia aiheita. Foorumin ylläpitäjä voi myös poistaa ja muokata asiattomia viestejä.
