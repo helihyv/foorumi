@@ -4,7 +4,7 @@ Foorumi on python-ohjelmisto, jonka voit asentaa paikallisesti kehitysversiona t
 
 ## Sovelluksen asentaminen paikallisesti
 
-Kloonaa repositorio tai lataa sovelluksen lähdekoodi koneellesi. Anna seuraavat komennot sovelluksen hakemistossa. Tässä oletetaan, että koneellesi on jo asennettuna python3.
+Kloonaa repositorio tai lataa sovelluksen lähdekoodi koneellesi. Anna seuraavat komennot sovelluksen hakemistossa. Tässä oletetaan, että koneellesi on jo asennettuna python3 ja pip.
 
 Luo sovellukselle virtuaaliympäristö komennolla `python3 -m venv venv`
 

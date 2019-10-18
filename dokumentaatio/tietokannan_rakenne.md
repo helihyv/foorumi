@@ -47,7 +47,7 @@ CREATE TABLE aihe (
 
 #### Kuvaus
 
-Sovelluksen rekisteröityneistä käyttäjistä koostuvan ryhmän tiedot.
+Sovellukseen rekisteröityneistä käyttäjistä koostuvan ryhmän tiedot.
 
 #### CREATE TABLE -lause
 

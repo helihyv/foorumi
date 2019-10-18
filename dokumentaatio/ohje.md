@@ -27,7 +27,8 @@ Viestien kirjoittaminen edellyttää kirjautumista.
 
 #### Uuden viestiketjun aloittaminen
 
-Uusi viestiketju aloitetaan valikon kohdasta "Lisää viesti". Viestille annetaan otsikko ja teksti eli viestin sisältö. Viestille voidaan myös asettaa aihetunnisteita. Aihetunnisteita voi valita useita painamalla vaihto- tai ctrl-painikkeita aiheita valitessaan. Viesti tallennetaan painamalla nappia "Lisää viesti".
+Uusi viestiketju aloitetaan valikon kohdasta "Lisää viesti". Viestille annetaan otsikko ja teksti eli viestin sisältö. Viestille voidaan myös asettaa aihetunnisteita. Aihetunnisteita voi valita useita pitämällä
+vaihto- tai ctrl-näppäintä pohjassa aiheita valitessaan. Vaihto-näppäintä pohjassa pidettäessä voidaan valita peräkkäin olevia vaihtoehtoja klikkaamalla niistä ensimmäistä ja viimeistä. Ctrl-näppäintä pohjassa pidettäessä voidaan valita useampia yksittäisiä aiheita klikkaamalla niitä. Viesti tallennetaan painamalla nappia "Lisää viesti".
 
 #### Aiempaan viestiin vastaaminen
 
@@ -39,7 +40,7 @@ Yksittäistä itse kirjoitettua viestiä tarkasteltaessa näkyy "Muokkaa viesti�
 
 ### Omien viestien poistaminen
 
-Yksittäistä itse kirjoitettua viestiä tarkasteltaessa "Tuhoa viesti" -nappi. Napin painamisen jälkeen kysytään vielä haluaako käyttäjä varmasti tuhota viestin.
+Yksittäistä itse kirjoitettua viestiä tarkasteltaessa näkyy "Tuhoa viesti" -nappi. Napin painamisen jälkeen kysytään vielä haluaako käyttäjä varmasti tuhota viestin.
 
 ### Aiheet
 
@@ -67,7 +68,7 @@ Kirjautunut käyttäjä voi vaihtaa oman salasanansa valikon kohdasta "Vaihda sa
 
 ## Sovelluksen ylläpito
 
-Ylläpitäjä voi (tavalliselle käyttäjälle saatavilla olevien toimintojen lisäksi) muokata ja poistaa viestejä, muokata ja poistaa aiheita ja hallinnoida ryhmiä.
+Ylläpitäjä voi (tavalliselle käyttäjälle saatavilla olevien toimintojen lisäksi) muokata ja poistaa muiden käyttäjien viestejä, muokata ja poistaa aiheita ja hallinnoida ryhmiä.
 
 ### Ylläpitäjän tunnuksen luominen
 
@@ -101,8 +102,8 @@ Ylläpitäjälle näkyy ryhmän sivulla nappi "Poista ryhmä ryhmännimi" ryhmä
 
 #### Jäsenen lisääminen ryhmään
 
-Ylläpitäjälle näkyy ryhmän sivulla lomake jäsenien lisäämiseksi ryhmään. Jäseniä voi lisätä useampia kerrallaan painamalla vaihto- tai ctrl-näppäintä valitessaan lisättäviä jäseniä. Valittuasi lisättävät jäsenet, paina nappia "Lisää jäsen".
+Ylläpitäjälle näkyy ryhmän sivulla lomake jäsenien lisäämiseksi ryhmään. Jäseniä voi lisätä useampia kerrallaan painamalla vaihto- tai ctrl-näppäintä valitessaan lisättäviä jäseniä. Vaihto-näppäintä pohjassa pidettäessä voidaan valita peräkkäin olevia vaihtoehtoja klikkaamalla niistä ensimmäistä ja viimeistä. Ctrl-näppäintä pohjassa pidettäessä voidaan valita useampia yksittäisiä käyttäjiä klikkaamalla näitä. Valittuasi lisättävät jäsenet, paina nappia "Lisää jäsen".
 
 #### Jäsenen poistaminen ryhmästä
 
-Ylläpitäjälle näkyy ryhmän sivulla kunkin jäsenen kohdalla "Poista ryhmästä" -nappi. Tämän napin painaminen poistaa jäsenen ryhmästä suoraan ilman vahvistusskyselyä.
+Ylläpitäjälle näkyy ryhmän sivulla kunkin jäsenen kohdalla "Poista ryhmästä" -nappi. Tämän napin painaminen poistaa jäsenen ryhmästä suoraan ilman vahvistuskyselyä.

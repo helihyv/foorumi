@@ -581,7 +581,9 @@ WHERE ryhma.id = ?
 Lisäksi jokaisen ryhmän jäsenen tiedot haetaan erikseen kyselyllä
 
 ```sql
-SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi,
+kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash",
+kayttaja.admin AS kayttaja_admin
 FROM kayttaja
 ```
 
@@ -591,7 +593,7 @@ Tilastot näytetään tilastosivulla /tilastot
 
 #### Haluan nähdä suosituimmat aiheet
 
-Näytetään 5 suosituinta aihetta suosituimmuusjärkjestyksessä ja niillä merkittyjen viestien määrät. Käytetään SQL-kyselyä
+Näytetään 5 suosituinta aihetta suosituimmuusjärjestyksessä ja niillä merkittyjen viestien määrät. Käytetään SQL-kyselyä
 
 ```sql
 SELECT aihe.aihe, COUNT(viestiaihe.viesti_id) AS viestilkm FROM aihe
@@ -646,10 +648,12 @@ LIMIT 5
 
 ## Foorumin ylläpitäjänä
 
-Kaikissa ylläpitäjän oikeuksia vaativissa toiminnoissa tarkistetaan onko rekisteröityneellä käyttäjällä ylläpitäjän oikeudet kyselyllä
+Kaikissa ylläpitäjän oikeuksia vaativissa toiminnoissa tarkistetaan onko rekisteröityneellä käyttäjällä ylläpitäjän oikeudet käyttäen kyselyä
 
 ```sql
-SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi,
+kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash",
+kayttaja.admin AS kayttaja_admin
 FROM kayttaja, kayttajaryhma
 WHERE ? = kayttajaryhma.ryhma_id AND kayttaja.id = kayttajaryhma.kayttaja_id
 ```
@@ -696,7 +700,9 @@ WHERE ryhma.id = ?
 Yksittäisen ryhmän näkymässä on ylläpitäjällä lomake käyttäjän lisäämiseen. Lomaketta varten haetaan tieto niistä käyttäjistä, jotka eivät vielä kuulu ryhmään kyselyllä
 
 ```sql
-SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi, kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash", kayttaja.admin AS kayttaja_admin
+SELECT kayttaja.id AS kayttaja_id, kayttaja.nimi AS kayttaja_nimi,
+kayttaja.tunnus AS kayttaja_tunnus, kayttaja."salasanaHash" AS "kayttaja_salasanaHash",
+kayttaja.admin AS kayttaja_admin
 FROM kayttaja
 WHERE kayttaja.id NOT IN (?, ?)
 ```
@@ -717,17 +723,17 @@ FROM kayttaja
 WHERE kayttaja.id IN (?, ?)
 ```
 
-Varsinainen käyttäjän lisääminen ryhmään tapahtuu SQL-kyselyllä
+Varsinainen käyttäjien lisääminen ryhmään tapahtuu SQL-kyselyllä
 
 ```sql
 INSERT INTO kayttajaryhma (kayttaja_id, ryhma_id) VALUES (?, ?)
 ```
 
-Useamman käyttäjän lisääminen tapahtuu kerralla yhdellä kyselyllä.
+Tällä kyselyllä lisätään kerralla kaikki lisättävät käyttäjät.
 
 #### Haluan poistaa käyttäjän ryhmästä
 
-Ryhmän jäsenten luettelossa on nappi jäsenen poistamiseksi ryhmästä.
+Ryhmän jäsenten luettelossa on ylläpitäjällä nappi jäsenen poistamiseksi ryhmästä.
 
 Aluksi tarkistetaan että ryhmä on olemassa ja haetaan se käyttäen kerran kyselyä
 
@@ -752,7 +758,7 @@ DELETE FROM kayttajaryhma WHERE kayttajaryhma.kayttaja_id = ? AND kayttajaryhma.
 
 #### Haluan muokata ryhmän nimeä
 
-Ryhmän nimeä voi muokata yksittäisen ryhmän sivulla.
+Ylläpitäjä voi muokata ryhmän nimeä yksittäisen ryhmän sivulla.
 
 Ensin haetaan ryhmä ja tarkistetaan että se on olemassa kyselyllä
 
@@ -770,9 +776,9 @@ UPDATE ryhma SET nimi=? WHERE ryhma.id = ?
 
 #### Haluan poistaa ryhmiä
 
-Ryhmän voi poistaa yksittäisen ryhmän sivvulta.
+Ylläpitäjä voi poistaa ryhmän yksittäisen ryhmän sivulta.
 
-Ensin haetaan ryhmä ja tarkistetaan että se on olemassa kyselyllä
+Ensin haetaan ryhmä (ja tarkistetaan että se on olemassa) kyselyllä
 
 ```sql
 SELECT ryhma.id AS ryhma_id, ryhma.nimi AS ryhma_nimi
@@ -796,7 +802,7 @@ DELETE FROM ryhma WHERE ryhma.id = ?
 
 Aihetunnistetta voi muokata yksittäisen aihetunnisteen sivulta /aiheet/<aihe_id>
 
-Aluksi haetaan muokattava aihe (tarkistaen samalla, etää se on olemassa) kyselyllä
+Aluksi haetaan muokattava aihe (tarkistaen samalla, että se on olemassa) kyselyllä
 
 ```sql
 SELECT aihe.id AS aihe_id, aihe.aihe AS aihe_aihe
@@ -855,9 +861,11 @@ DELETE FROM aihe WHERE aihe.id = ?
 Rekisteröitymissivulle mentäessä tarkistetaan, onko ylläpitäjän käyttäjätunnusta jo luotu, ja muokataan käyttäjälle näytettävää tekstiä sen mukaan. Sama tarkistus tehdään, kun saadaan pyyntö luoda uusi käyttäjä. Jos ylläpitäjän käyttäjätunnusta ei vielä ole, luodaan sellainen. Jos ylläpitäjän tunnus on jo olemassa, luodaan tavallinen käyttäjä. Ylläpitäjän tunnuksen olemassaolo tarkistetaan kyselyllä
 
 ```sql
-SELECT EXISTS (SELECT 1
+SELECT EXISTS
+(SELECT 1
 FROM kayttaja
-WHERE kayttaja.admin = 1) AS anon_1
+WHERE kayttaja.admin = 1)
+AS anon_1
 LIMIT ? OFFSET ?
 ```
 
